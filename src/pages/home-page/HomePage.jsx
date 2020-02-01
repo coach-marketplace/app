@@ -20,7 +20,7 @@ class HomePage extends React.Component {
     console.log(this.props);
     return (
       <div className="page-wrapper">
-        <Header>test</Header>
+        <Header />
         <ul>
           {this.state.users.map(user => {
             return <li key={user.id}>{user.name}</li>;

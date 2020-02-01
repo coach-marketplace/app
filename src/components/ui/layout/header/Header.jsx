@@ -1,8 +1,16 @@
 import React from "react";
 import "./header.css";
 
-const Header = props => {
-  return <header className="header">{props.children}</header>;
+import AuthState from "../../../auth/auth-state/AuthState";
+import Logo from "../../logo/Logo";
+
+const Header = () => {
+  return (
+    <header className="header">
+      <Logo />
+      <AuthState />
+    </header>
+  );
 };
 
 export default Header;
