@@ -1,8 +1,8 @@
 import React from "react";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 
 import Header from "../../components/ui/layout/header/Header";
-// import * as actions from "../../store/modules/auth/actions";
+import * as actions from "../../store/modules/auth/actions";
 
 class LoginPage extends React.Component {
   state = {
@@ -16,11 +16,11 @@ class LoginPage extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     console.log("stat", this.state);
-    // this.props.onAuth(this.state.email, this.state.password);
+    this.props.onAuth(this.state.email, this.state.password);
   };
   onLogout = e => {
     e.preventDefault();
-    // this.props.logout();
+    this.props.logout();
   };
 
   render() {
@@ -50,21 +50,20 @@ class LoginPage extends React.Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   console.log("HH", state);
-//   return {
-//     a: state.auth.authUser,
-//     isLoading: state.auth.loading
-//   };
-// };
+const mapStateToProps = state => {
+  console.log("HH", state);
+  return {
+    a: state.auth.authUser,
+    isLoading: state.auth.loading
+  };
+};
 
-// const mapDispatchToProps = dispatch => {
-//   console.log("dispatchdispatch", dispatch);
-//   return {
-//     onAuth: (email, password) => dispatch(actions.auth(email, password)),
-//     logout: () => dispatch({ type: "LOGOUT" })
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  console.log("dispatchdispatch", dispatch);
+  return {
+    onAuth: (email, password) => dispatch(actions.auth(email, password)),
+    logout: () => dispatch({ type: "LOGOUT" })
+  };
+};
 
-export default LoginPage;
-// export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
