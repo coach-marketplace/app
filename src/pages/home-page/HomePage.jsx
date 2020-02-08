@@ -9,11 +9,9 @@ class HomePage extends React.Component {
   };
 
   componentDidMount() {
-    const users = axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then(results => {
-        this.setState({ users: [...results.data] });
-      });
+    axios.get("https://jsonplaceholder.typicode.com/users").then(results => {
+      this.setState({ users: [...results.data] });
+    });
   }
 
   render() {
