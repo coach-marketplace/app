@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/ui/layout/header/Header";
 import * as actions from "../../store/modules/auth/actions";
 
@@ -24,26 +25,27 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <div className="page-wrapper">
-        <Header />
-        <form>
-          <input
-            type="text"
-            placeholder="email"
-            onChange={e => this.onFieldChange("email", e)}
-            value={this.state.email}
-          />
-          <input
-            type="text"
-            placeholder="password"
-            onChange={e => this.onFieldChange("password", e)}
-            value={this.state.password}
-          />
-          <button onClick={this.onSubmit}>Submit</button>
-          <button onClick={this.onLogout}>logout</button>
-        </form>
-        {this.props.a}
-      </div>
+      <Layout
+        header={<Header />}
+        main={
+          <form>
+            <input
+              type="text"
+              placeholder="email"
+              onChange={e => this.onFieldChange("email", e)}
+              value={this.state.email}
+            />
+            <input
+              type="text"
+              placeholder="password"
+              onChange={e => this.onFieldChange("password", e)}
+              value={this.state.password}
+            />
+            <button onClick={this.onSubmit}>Submit</button>
+            <button onClick={this.onLogout}>logout</button>
+          </form>
+        }
+      />
     );
   }
 }

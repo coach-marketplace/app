@@ -1,17 +1,19 @@
-import React from "react";
-import "./header.css";
+import React, { Fragment } from "react";
 
 import AuthState from "../../../auth/auth-state/AuthState";
 import Logo from "../../logo/Logo";
 import Navigation from "../../navigation/Navigation";
+import { RightContainer } from "./styled";
 
 const Header = () => {
   return (
-    <header className="header">
+    <Fragment>
       <Logo />
-      <Navigation />
-      <AuthState />
-    </header>
+      <RightContainer>
+        <Navigation />
+        <AuthState />
+      </RightContainer>
+    </Fragment>
   );
 };
 

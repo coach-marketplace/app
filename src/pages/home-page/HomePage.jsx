@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 
+import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/ui/layout/header/Header";
 
 class HomePage extends React.Component {
@@ -15,16 +16,17 @@ class HomePage extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
-      <div className="page-wrapper">
-        <Header />
-        <ul>
-          {this.state.users.map(user => {
-            return <li key={user.id}>{user.name}</li>;
-          })}
-        </ul>
-      </div>
+      <Layout
+        header={<Header />}
+        main={
+          <ul>
+            {this.state.users.map(user => {
+              return <li key={user.id}>{user.name}</li>;
+            })}
+          </ul>
+        }
+      />
     );
   }
 }
