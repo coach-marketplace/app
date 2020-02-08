@@ -15,8 +15,7 @@ class LoginPage extends React.Component {
   };
   onSubmit = e => {
     e.preventDefault();
-    console.log("stat", this.state);
-    this.props.onAuth(this.state.email, this.state.password);
+    this.props.login(this.state.email, this.state.password);
   };
   onLogout = e => {
     e.preventDefault();
@@ -24,7 +23,6 @@ class LoginPage extends React.Component {
   };
 
   render() {
-    console.log("inside loginpahe", this.props);
     return (
       <div className="page-wrapper">
         <Header />
@@ -51,18 +49,15 @@ class LoginPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("HH", state);
   return {
-    a: state.auth.authUser,
-    isLoading: state.auth.loading
+    isLoginLoading: state.auth.actions.login.loading
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  console.log("dispatchdispatch", dispatch);
   return {
-    onAuth: (email, password) => dispatch(actions.auth(email, password)),
-    logout: () => dispatch({ type: "LOGOUT" })
+    login: (email, password) => dispatch(actions.login(email, password)),
+    logout: () => dispatch(actions.logout())
   };
 };
 

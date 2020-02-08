@@ -1,36 +1,40 @@
 import axios from "axios";
 
-export const authStart = () => {
-  return {
-    type: "AUTH_START"
-  };
+import {
+  LOGIN_LOADING,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  LOGOUT
+} from "./constants";
+
+const { REACT_APP_API_URL } = process.env;
+
+export const loginLoading = () => {
+  return { type: LOGIN_LOADING };
 };
 
-export const authSuccess = authData => {
-  return { type: "AUTH_SUCCESS", authData };
+export const loginSuccess = payload => {
+  return { type: LOGIN_SUCCESS, user: payload };
 };
 
-export const authFail = error => {
-  return { type: "AUTH_FAIL", error };
+export const loginFailed = error => {
+  return { type: LOGIN_FAILED, error };
 };
 
-export const authLogin = payload => {
-  return { type: "AUTH_LOGIN", payload };
+export const logout = () => {
+  return { type: LOGOUT };
 };
 
-export const auth = (email, password) => {
-  console.log("ACTIONS_AUTH...", email, password);
+export const login = (email, password) => {
   return dispatch => {
-    console.log("dispatch", dispatch);
-    // dispatch(authStart());
-    // dispatch(authSuccess({ id: 1, name: "kev" }));
-    axios.get("https://jsonplaceholder.typicode.com/users/1").then(results => {
-      console.log("results", results);
-      dispatch(authLogin(results.data.name));
-    });
-    // .catch(e => {
-    //   dispatch(authFail(e));
-    // });
+    dispatch(loginLoading());
+    axios
+      .post(`${REACT_APP_API_URL}v1/auth/login`, { email, password })
+      .then(response => {
+        dispatch(loginSuccess(response.data));
+      })
+      .catch(error => {
+        dispatch(loginFailed(error.message));
+      });
   };
-  // return { type: "AUTH_LOGIN", payload: email };
 };
