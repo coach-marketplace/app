@@ -8,6 +8,7 @@ export default {
   token: null,
   authUser: null,
   actions: {
+    auto_login: { ...initialActionsState },
     login: { ...initialActionsState }
   }
 };
