@@ -1,14 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+import Button from "../button/Button";
+
+const List = styled.ul`
+  display: flex;
+  height: 40px;
+`;
+const ListItem = styled.li`
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+`;
 
 const Navigation = () => {
   return (
-    <ul className="navigation">
-      <li>
-        <Link to="/customers">Customers</Link>
-        <Link to="/login">Login</Link>
-      </li>
-    </ul>
+    <List className="navigation">
+      <ListItem>
+        <Link to="/services">
+          <Button label="Services" appearance="minimal" />
+        </Link>
+        <Link to="/customers">
+          <Button label="Customers" appearance="minimal" />
+        </Link>
+        <Link to="/schedule">
+          <Button label="Agenda" appearance="minimal" />
+        </Link>
+      </ListItem>
+    </List>
   );
 };
 
