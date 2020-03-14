@@ -45,7 +45,7 @@ export const login = (email, password) => {
   return dispatch => {
     dispatch(loginLoading());
     axios
-      .post(`${REACT_APP_API_URL}v1/auth/login`, { email, password })
+      .post(`${REACT_APP_API_URL}v1/auth/login-local`, { email, password })
       .then(response => {
         dispatch(loginSuccess(response.data));
       })
