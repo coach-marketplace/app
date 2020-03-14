@@ -48,6 +48,7 @@ export const login = (email, password) => {
       .post(`${REACT_APP_API_URL}v1/auth/login-local`, { email, password })
       .then(response => {
         dispatch(loginSuccess(response.data));
+        // browserHistory.push("/");
       })
       .catch(error => {
         dispatch(loginFailed(error.message));
@@ -66,7 +67,7 @@ export const tryAutoLogin = () => {
       headers: { authorization: token }
     })
       .then(response => {
-        const user = response.data.user;
+        const user = response.data;
         user.token = token;
         dispatch(autoLoginSuccess(user));
       })
