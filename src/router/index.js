@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
 
 import HomePage from "../pages/home-page/HomePage";
 import LoginPage from "../pages/login-page/LoginPage";
@@ -9,20 +10,26 @@ import ServicePage from "../pages/service-page/ServicePage";
 import NewServicePage from "../pages/service-page/NewServicePage";
 import SchedulePage from "../pages/schedule-page/SchedulePage";
 
-const Router = () => {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/login" exact component={LoginPage} />
-        <Route path="/customers" exact component={CustomersPage} />
-        <Route path="/customers/new" exact component={NewCustomerPage} />
-        <Route path="/services" exact component={ServicePage} />
-        <Route path="/services/new" exact component={NewServicePage} />
-        <Route path="/schedule" exact component={SchedulePage} />
-      </Switch>
-    </BrowserRouter>
-  );
-};
+class Router extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/login" exact component={LoginPage} />
+          <Route path="/customers" exact component={CustomersPage} />
+          <Route path="/customers/new" exact component={NewCustomerPage} />
+          <Route path="/services" exact component={ServicePage} />
+          <Route path="/services/new" exact component={NewServicePage} />
+          <Route path="/schedule" exact component={SchedulePage} />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
 
-export default Router;
+const mapStateToProps = state => ({
+  authUser: state.auth.authUser
+});
+
+export default connect(mapStateToProps)(Router);

@@ -8,6 +8,7 @@ import AuthMenu from "./auth-menu/AuthMenu";
 import Avatar from "../../ui/avatar/Avatar";
 import Button from "../../ui/button/Button";
 import Spinner from "../../ui/loader/Spinner";
+import * as actions from "../../../store/modules/auth/actions";
 
 // TODO: refactor Popover as a UI component
 
@@ -19,15 +20,19 @@ const AuthState = ({
   isAutoLoginLoading,
   isAutoLoginSuccess,
   isAutoLoginError,
-  authUser
+  authUser,
+  logout
 }) => {
   let content;
 
   if (isAutoLoginLoading && !isAutoLoginSuccess && !isAutoLoginError) {
     content = <Spinner size={16} />;
-  } else if (isAutoLoginSuccess && authUser) {
+  } else if (authUser) {
     content = (
-      <Popover position={Position.TOP_RIGHT} content={AuthMenu}>
+      <Popover
+        position={Position.TOP_RIGHT}
+        content={() => <AuthMenu logout={logout} />}
+      >
         <Button appearance="minimal" height={48} iconAfter="caret-down">
           <Avatar name={`${authUser.first_name} ${authUser.last_name}`} />
         </Button>
@@ -53,4 +58,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(AuthState);
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(actions.logout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthState);

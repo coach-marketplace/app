@@ -1,7 +1,8 @@
 import React from "react";
 import { Menu } from "evergreen-ui";
+import PropTypes from "prop-types";
 
-const AuthMenu = props => {
+const AuthMenu = ({ logout }) => {
   return (
     <Menu>
       <Menu.Group>
@@ -10,12 +11,18 @@ const AuthMenu = props => {
       </Menu.Group>
       <Menu.Divider />
       <Menu.Group>
-        <Menu.Item intent="danger">Logout</Menu.Item>
+        <Menu.Item intent="danger" onSelect={() => logout()}>
+          Logout
+        </Menu.Item>
       </Menu.Group>
     </Menu>
   );
 };
 
-export default AuthMenu;
-
 AuthMenu.displayName = "AuthMenu";
+
+AuthMenu.propTypes = {
+  logout: PropTypes.func.isRequired
+};
+
+export default AuthMenu;

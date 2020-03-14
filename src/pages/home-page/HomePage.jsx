@@ -1,34 +1,26 @@
-import React from "react";
-import axios from "axios";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/ui/layout/header/Header";
 
-class HomePage extends React.Component {
-  state = {
-    users: []
-  };
-
+class HomePage extends Component {
   componentDidMount() {
-    axios.get("https://jsonplaceholder.typicode.com/users").then(results => {
-      this.setState({ users: [...results.data] });
-    });
+    console.log("componentDidMount");
   }
-
   render() {
-    return (
-      <Layout
-        header={<Header />}
-        main={
-          <ul>
-            {this.state.users.map(user => {
-              return <li key={user.id}>{user.name}</li>;
-            })}
-          </ul>
-        }
-      />
-    );
+    if (!this.props.isAutoLoginLoading && !this.props.authUser) {
+      return <Redirect to="/login" />;
+    }
+
+    return <Layout header={<Header />} main={<p>WIP</p>} />;
   }
 }
 
-export default HomePage;
+const mapStateToProps = state => ({
+  isAutoLoginLoading: state.auth.actions.auto_login.loading,
+  authUser: state.auth.authUser
+});
+
+export default connect(mapStateToProps)(HomePage);
