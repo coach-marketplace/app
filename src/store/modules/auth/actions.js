@@ -48,7 +48,6 @@ export const login = (email, password) => {
       .post(`${REACT_APP_API_URL}v1/auth/login-local`, { email, password })
       .then(response => {
         dispatch(loginSuccess(response.data));
-        // browserHistory.push("/");
       })
       .catch(error => {
         dispatch(loginFailed(error.message));
