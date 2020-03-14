@@ -2,21 +2,30 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Popover, Position, Button } from "evergreen-ui";
+import { Popover, Position } from "evergreen-ui";
 
-import Avatar from "../../ui/avatar/Avatar";
 import AuthMenu from "./auth-menu/AuthMenu";
+import Avatar from "../../ui/avatar/Avatar";
+import Button from "../../ui/button/Button";
+import Spinner from "../../ui/loader/Spinner";
+
+// TODO: refactor Popover as a UI component
 
 const Container = styled.div`
   display: flex;
 `;
 
-const AuthState = props => {
-  const { authUser } = props;
-
+const AuthState = ({
+  isAutoLoginLoading,
+  isAutoLoginSuccess,
+  isAutoLoginError,
+  authUser
+}) => {
   let content;
 
-  if (props.authUser) {
+  if (isAutoLoginLoading && !isAutoLoginSuccess && !isAutoLoginError) {
+    content = <Spinner size={16} />;
+  } else if (isAutoLoginSuccess && authUser) {
     content = (
       <Popover position={Position.TOP_RIGHT} content={AuthMenu}>
         <Button appearance="minimal" height={48} iconAfter="caret-down">
@@ -25,7 +34,11 @@ const AuthState = props => {
       </Popover>
     );
   } else {
-    content = <Link to="/login">Login</Link>;
+    content = (
+      <Link to="/login">
+        <Button label="Login" appearance="minimal" />
+      </Link>
+    );
   }
 
   return <Container className="auth-state">{content}</Container>;
@@ -33,6 +46,9 @@ const AuthState = props => {
 
 const mapStateToProps = state => {
   return {
+    isAutoLoginLoading: state.auth.actions.auto_login.loading,
+    isAutoLoginSuccess: state.auth.actions.auto_login.success,
+    isAutoLoginError: state.auth.actions.auto_login.error,
     authUser: state.auth.authUser
   };
 };

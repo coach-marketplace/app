@@ -59,7 +59,6 @@ export const tryAutoLogin = () => {
   return dispatch => {
     dispatch(autoLoginLoading());
     const token = getTokenFromLocalStorage();
-    if (!token) return;
     axios({
       method: "get",
       url: `${REACT_APP_API_URL}v1/auth/me`,
