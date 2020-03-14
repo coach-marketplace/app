@@ -1,21 +1,43 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
+import { connect } from "react-redux";
 
 import Form from "../../../components/ui/form/Form";
 import Field from "../../../components/ui/form/field/Field";
 import Button from "../../../components/ui/button/Button";
 import validationSchema from "./validation";
+import * as actions from "../../../store/modules/customer/actions";
+
+/**
+ * See Formik doc:
+ * https://jaredpalmer.com/formik/docs/api/formik
+ */
 
 class AddCustomerForm extends Component {
   static displayName = "AddCustomerForm";
 
-  state = {
-    customers: {}
+  // state = {
+  //   customers: {}
+  // };
+
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
+
+  onFormSubmit = formData => {
+    console.log("data", formData);
+    this.props.createCustomer();
   };
 
   render() {
     return (
       <div>
+        {this.props.customers.length &&
+          this.props.customers.map(cus => {
+            console.log("++", cus);
+            return <p>{cus.name}</p>;
+          })}
         <Formik
           initialValues={{
             firstName: "",
@@ -24,10 +46,7 @@ class AddCustomerForm extends Component {
             phone: ""
           }}
           validationSchema={validationSchema}
-          onSubmit={(values, a) => {
-            console.log(JSON.stringify(values));
-            console.log("a", a);
-          }}
+          onSubmit={this.onFormSubmit}
         >
           <Form>
             <Field
@@ -62,4 +81,18 @@ class AddCustomerForm extends Component {
   }
 }
 
-export default AddCustomerForm;
+// export default AddCustomerForm;
+
+const mapStateToProps = state => {
+  return {
+    customers: state.customer.list
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createCustomer: () => dispatch(actions.create())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCustomerForm);
