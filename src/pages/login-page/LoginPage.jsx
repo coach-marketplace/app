@@ -1,66 +1,37 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/ui/layout/header/Header";
+import LoginForm from "../../components/auth/login-form/LoginForm";
 import * as actions from "../../store/modules/auth/actions";
 
 class LoginPage extends React.Component {
-  state = {
-    email: "",
-    password: ""
-  };
-
-  onFieldChange = (fieldName, event) => {
-    this.setState({ [fieldName]: event.target.value });
-  };
-  onSubmit = e => {
-    e.preventDefault();
-    this.props.login(this.state.email, this.state.password);
-  };
-  onLogout = e => {
-    e.preventDefault();
-    this.props.logout();
+  onSubmit = ({ email, password }) => {
+    this.props.login(email, password);
   };
 
   render() {
+    if (this.props.authUser) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <Layout
         header={<Header />}
-        main={
-          <form>
-            <input
-              type="text"
-              placeholder="email"
-              onChange={e => this.onFieldChange("email", e)}
-              value={this.state.email}
-            />
-            <input
-              type="text"
-              placeholder="password"
-              onChange={e => this.onFieldChange("password", e)}
-              value={this.state.password}
-            />
-            <button onClick={this.onSubmit}>Submit</button>
-            <button onClick={this.onLogout}>logout</button>
-          </form>
-        }
+        main={<LoginForm onSubmit={this.onSubmit} />}
       />
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isLoginLoading: state.auth.actions.login.loading
-  };
-};
+const mapStateToProps = state => ({
+  authUser: state.auth.authUser
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    login: (email, password) => dispatch(actions.login(email, password)),
-    logout: () => dispatch(actions.logout())
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  login: (email, password) => dispatch(actions.login(email, password))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
