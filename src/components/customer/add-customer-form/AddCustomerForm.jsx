@@ -14,30 +14,13 @@ import * as actions from "../../../store/modules/customer/actions";
  */
 
 class AddCustomerForm extends Component {
-  static displayName = "AddCustomerForm";
-
-  // state = {
-  //   customers: {}
-  // };
-
-  constructor(props) {
-    super(props);
-    console.log(props);
-  }
-
   onFormSubmit = formData => {
-    console.log("data", formData);
-    this.props.createCustomer();
+    this.props.createCustomer(formData);
   };
 
   render() {
     return (
       <div>
-        {this.props.customers.length &&
-          this.props.customers.map(cus => {
-            console.log("++", cus);
-            return <p>{cus.name}</p>;
-          })}
         <Formik
           initialValues={{
             firstName: "",
@@ -81,18 +64,13 @@ class AddCustomerForm extends Component {
   }
 }
 
-// export default AddCustomerForm;
+const mapStateToProps = state => ({
+  customers: state.customer.list,
+  authUser: state.auth.authUser
+});
 
-const mapStateToProps = state => {
-  return {
-    customers: state.customer.list
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    createCustomer: () => dispatch(actions.create())
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  createCustomer: data => dispatch(actions.create(data))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCustomerForm);
