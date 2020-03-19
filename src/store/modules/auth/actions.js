@@ -1,4 +1,5 @@
 import axios from "axios";
+import API from "../../../services/api";
 
 import {
   AUTO_LOGIN_FAILED,
@@ -10,8 +11,6 @@ import {
   LOGOUT
 } from "./constants";
 import { getTokenFromLocalStorage } from "../../../services/local-storage";
-
-const { REACT_APP_API_URL } = process.env;
 
 const autoLoginLoading = () => {
   return { type: AUTO_LOGIN_LOADING };
@@ -44,8 +43,7 @@ export const logout = () => {
 export const login = (email, password) => {
   return dispatch => {
     dispatch(loginLoading());
-    axios
-      .post(`${REACT_APP_API_URL}v1/auth/login-local`, { email, password })
+    API.post("auth/login-local", { email, password })
       .then(response => {
         dispatch(loginSuccess(response.data));
       })
@@ -59,11 +57,8 @@ export const tryAutoLogin = () => {
   return dispatch => {
     dispatch(autoLoginLoading());
     const token = getTokenFromLocalStorage();
-    axios({
-      method: "get",
-      url: `${REACT_APP_API_URL}v1/auth/me`,
-      headers: { authorization: token }
-    })
+    API.setToken(token);
+    API.get("auth/me")
       .then(response => {
         const user = response.data;
         user.token = token;

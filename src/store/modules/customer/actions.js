@@ -1,4 +1,4 @@
-import axios from "axios";
+import API from "../../../services/api";
 
 import {
   GET_ALL_FAILED,
@@ -45,11 +45,7 @@ export const getAll = () => {
       return;
     }
 
-    axios({
-      method: "get",
-      url: `${process.env.REACT_APP_API_URL}v1/coach/${authUser._id}/customers`,
-      headers: { authorization: token }
-    })
+    API.get(`coach/${authUser._id}/customers`)
       .then(response => {
         dispatch(getAllSuccess(response.data));
       })
@@ -77,15 +73,14 @@ export const create = data => {
       phone: data.phone
     };
 
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}v1/coach/${authUser._id}/customers`,
-      headers: { authorization: token },
-      data: normalizedData
-    })
+    API.post(`coach/${authUser._id}/customers`, normalizedData)
       .then(response => {
-        console.log("response", response);
-        // dispatch(createSuccess(response.data));
+        const customerId = response.data.lead;
+
+        return API.get(`coach/${authUser._id}/customers/${customerId}`);
+      })
+      .then(response => {
+        dispatch(createSuccess(response.data));
       })
       .catch(error => {
         dispatch(createFailed(error.message));

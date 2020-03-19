@@ -21,7 +21,7 @@ class CustomersTable extends Component {
 
   renderRow = customer => {
     return (
-      <Table.Row key={customer.id}>
+      <Table.Row key={customer._id}>
         <Table.Cell display="flex" alignItems="center">
           <Avatar name={customer.name} size={26} />
           <Text marginLeft={8} size={300} fontWeight={500}>
