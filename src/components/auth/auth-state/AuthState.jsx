@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -40,9 +40,14 @@ const AuthState = ({
     );
   } else {
     content = (
-      <Link to="/login">
-        <Button label="Login" appearance="minimal" />
-      </Link>
+      <Fragment>
+        <Link to="/login">
+          <Button label="Login" appearance="minimal" />
+        </Link>
+        <Link to="/register">
+          <Button label="Register" appearance="minimal" />
+        </Link>
+      </Fragment>
     );
   }
 
