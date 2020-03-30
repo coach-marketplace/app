@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { TextInputField, Label, Textarea } from "evergreen-ui";
 
 import Button from "../../ui/button/Button";
+import AutoComplete from "../../ui/form/auto-complete/AutoComplete";
 
 class ServiceForm extends Component {
   static displayName = "ServiceForm";
@@ -50,6 +51,8 @@ class ServiceForm extends Component {
           placeholder="Textarea placeholder..."
           marginBottom={4}
         />
+
+        <AutoComplete />
 
         <Button type="submit" label="Create" />
       </form>
