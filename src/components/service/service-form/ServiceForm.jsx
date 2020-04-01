@@ -40,14 +40,17 @@ class ServiceForm extends Component {
           value={this.state.formData.title}
           onChange={this.onFieldChange}
         />
+
         <Label htmlFor="description" marginBottom={4} display="block">
           Description
         </Label>
+
         <Textarea
           id="description"
           placeholder="Textarea placeholder..."
           marginBottom={4}
         />
+
         <Button type="submit" label="Create" />
       </form>
     );

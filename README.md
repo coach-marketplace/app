@@ -7,7 +7,7 @@ This is the app for coach marketplace
 ### Run the project
 
 ```
-yarn start
+npm run start
 ```
 
 Runs the app in the development mode.<br />
@@ -20,4 +20,4 @@ You will also see any lint errors in the console.
 
 ### Libraries
 
-- UI use [evergreen](https://evergreen.segment.com/)
+- UI used is [evergreen](https://evergreen.segment.com/)

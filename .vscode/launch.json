@@ -10,13 +10,6 @@
       "name": "Attach by Process ID",
       "processId": "${command:PickProcess}",
       "skipFiles": ["<node_internals>/**"]
-    },
-    {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Launch Chrome against localhost",
-      "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}"
     }
   ]
 }

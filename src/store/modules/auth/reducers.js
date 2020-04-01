@@ -7,6 +7,9 @@ import {
   LOGIN_LOADING,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  REGISTER_LOADING,
+  REGISTER_SUCCESS,
+  REGISTER_FAILED,
   LOGOUT
 } from "./constants";
 import initialState from "./state";
@@ -80,6 +83,30 @@ const loginSuccess = (state, action) => {
   return newState;
 };
 
+const registerLoading = state => {
+  const newState = cloneDeep(state);
+  newState.actions.register.loading = true;
+  newState.actions.register.success = false;
+  newState.actions.register.error = null;
+
+  return newState;
+};
+
+const registerFailed = (state, action) => {
+  const newState = cloneDeep(state);
+  newState.actions.register.loading = false;
+  newState.actions.register.success = false;
+  newState.actions.register.error = action.error;
+
+  return newState;
+};
+
+const registerSuccess = (state, action) => {
+  const newState = cloneDeep(state);
+
+  return newState;
+};
+
 const logout = state => {
   removeTokenFromLocalStorage();
 
@@ -100,6 +127,12 @@ const reducer = (state = initialState, action) => {
       return loginFailed(state, action);
     case LOGIN_SUCCESS:
       return loginSuccess(state, action);
+    case REGISTER_LOADING:
+      return registerLoading(state);
+    case REGISTER_FAILED:
+      return registerFailed(state, action);
+    case REGISTER_SUCCESS:
+      return registerSuccess(state, action);
     case LOGOUT:
       return logout(initialState);
     default:

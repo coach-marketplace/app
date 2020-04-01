@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
+import { Heading } from "evergreen-ui";
 
 import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/ui/layout/header/Header";
@@ -20,7 +21,12 @@ class LoginPage extends React.Component {
     return (
       <Layout
         header={<Header />}
-        main={<LoginForm onSubmit={this.onSubmit} />}
+        main={
+          <Fragment>
+            <Heading size={900}>Login</Heading>
+            <LoginForm onSubmit={this.onSubmit} />
+          </Fragment>
+        }
       />
     );
   }
