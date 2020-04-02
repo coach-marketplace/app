@@ -7,7 +7,7 @@ export default {
         firstName: "",
         lastName: "",
         email: "",
-        phoneNumber: "",
+        phone: "",
         status: FETCH_USER_PROFILE_INFOS_PENDING,
     }
 }
