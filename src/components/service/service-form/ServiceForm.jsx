@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { TextInputField, Label, Textarea } from "evergreen-ui";
 
+import API from "../../../services/api";
 import Button from "../../ui/button/Button";
 import AutoComplete from "../../ui/form/auto-complete/AutoComplete";
 
@@ -16,8 +17,12 @@ class ServiceForm extends Component {
     this.state = {
       formData: {
         title: "",
-        description: ""
-      }
+        description: "",
+        address: "",
+        coordinates: []
+      },
+      proposition: [],
+      isAutoCompleteLoading: false
     };
   }
 
@@ -26,20 +31,48 @@ class ServiceForm extends Component {
     console.log(this.state.formData);
   };
 
-  onFieldChange = event => {
-    // console.log(event.target.value);
-    this.setState({ formData: { title: event.target.value } });
+  onFieldChange = (value, field) => {
+    const { formData } = this.state;
+    this.setState({ formData: { ...formData, [field]: value } });
+  };
+
+  searchAddresses = async () => {
+    try {
+      const {
+        formData: { address }
+      } = this.state;
+      this.setState({ isAutoCompleteLoading: true });
+      const response = await API.post("geo-spatial/by-address", { address });
+      this.setState({
+        propositions: [
+          ...response.data.map(item => ({
+            label: item.display_name,
+            value: [item.lat, item.lon]
+          }))
+        ],
+        isAutoCompleteLoading: false
+      });
+    } catch (e) {
+      console.log("err", e.message);
+    }
+  };
+
+  onAddressSelected = addressIndex => {
+    const { propositions } = this.state;
+    this.onFieldChange(propositions[addressIndex].label, "address");
   };
 
   render() {
+    const { propositions, formData, isAutoCompleteLoading } = this.state;
+
     return (
       <form onSubmit={this.onServiceSubmitted}>
         <TextInputField
           label="Title of the service that you propose"
           description="Try to be short, use keyword and be clear about what you are coaching."
-          placeholder="Crossfit personnal trainer"
-          value={this.state.formData.title}
-          onChange={this.onFieldChange}
+          placeholder="CrossFit personal trainer"
+          value={formData.title}
+          onChange={e => this.onFieldChange(e.target.value, "title")}
         />
 
         <Label htmlFor="description" marginBottom={4} display="block">
@@ -50,9 +83,18 @@ class ServiceForm extends Component {
           id="description"
           placeholder="Textarea placeholder..."
           marginBottom={4}
+          value={formData.description}
+          onChange={e => this.onFieldChange(e.target.value, "description")}
         />
 
-        <AutoComplete />
+        <AutoComplete
+          propositions={propositions}
+          onChange={value => this.onFieldChange(value, "address")}
+          onSearch={this.searchAddresses}
+          onSelect={this.onAddressSelected}
+          value={formData.address}
+          isLoading={isAutoCompleteLoading}
+        />
 
         <Button type="submit" label="Create" />
       </form>

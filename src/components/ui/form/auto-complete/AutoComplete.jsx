@@ -2,64 +2,70 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { TextInputField } from "evergreen-ui";
 import debounce from "lodash.debounce";
+import styled from "styled-components";
 
-import API from "../../../../services/api";
+import Spinner from "../../loader/Spinner";
+
+const StyledDropDown = styled.div`
+  border: 1px solid black;
+`;
 
 class AutoComplete extends Component {
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  state = {
-    formData: {
-      address: ""
-    },
-    propositions: []
+  static propTypes = {
+    onType: PropTypes.func,
+    onSelect: PropTypes.func,
+    propositions: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.arrayOf(PropTypes.string)
+      })
+    ),
+    isLoading: PropTypes.bool,
+    value: PropTypes.string
   };
 
-  setPropositions = newPropositions => {
-    this.setState({ propositions: [...newPropositions] });
+  static defaultProps = {
+    propositions: [],
+    isLoading: false
   };
 
-  searchAddresses = debounce(async query => {
-    try {
-      const response = await API.post("geo-spatial/by-address", {
-        address: query
-      });
-      console.log("res", response);
-      this.setPropositions(response.data.map(item => item.display_name));
-    } catch (e) {
-      console.log("err", e.message);
-    }
-  }, 200);
+  onSearchFunction = debounce(() => this.props.onSearch(), 200);
 
-  onAddressChange = e => {
+  onChange = e => {
     const {
       target: { value }
     } = e;
+    const { onChange } = this.props;
 
-    if (value.length > 3) {
-      this.searchAddresses(value);
-    }
-
-    this.setState({ formData: { address: value } });
+    onChange(value);
+    value.length > 3 && this.onSearchFunction();
   };
 
   render() {
+    const { isLoading, value, propositions, onSelect } = this.props;
+
     return (
       <div>
         <TextInputField
           label="Location"
           description="Enter your location address, it will help people to find you."
           placeholder="Central station, Brussels"
-          value={this.state.formData.address}
-          onChange={this.onAddressChange}
+          value={value}
+          onChange={this.onChange}
         />
-        <ul>
-          {this.state.propositions.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
+        <StyledDropDown>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <ul>
+              {propositions.map((item, i) => (
+                <li key={i} onClick={() => onSelect(i)}>
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+          )}
+        </StyledDropDown>
       </div>
     );
   }
