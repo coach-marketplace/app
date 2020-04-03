@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { TextInputField } from "evergreen-ui";
+import { TextInputField, Text } from "evergreen-ui";
 import debounce from "lodash.debounce";
-import styled from "styled-components";
 
+import { StyledContainer, StyledDropdownItem } from "./style";
+import Dropdown from "./Dropdown";
 import Spinner from "../../loader/Spinner";
-
-const StyledDropDown = styled.div`
-  border: 1px solid black;
-`;
+import NoResultText from "../../empty-states/NoResultText";
 
 class AutoComplete extends Component {
   static propTypes = {
@@ -17,23 +15,23 @@ class AutoComplete extends Component {
     propositions: PropTypes.arrayOf(
       PropTypes.shape({
         label: PropTypes.string,
-        value: PropTypes.arrayOf(PropTypes.string)
+        value: PropTypes.arrayOf(PropTypes.string),
       })
     ),
     isLoading: PropTypes.bool,
-    value: PropTypes.string
+    value: PropTypes.string,
   };
 
   static defaultProps = {
     propositions: [],
-    isLoading: false
+    isLoading: false,
   };
 
   onSearchFunction = debounce(() => this.props.onSearch(), 200);
 
-  onChange = e => {
+  onChange = (e) => {
     const {
-      target: { value }
+      target: { value },
     } = e;
     const { onChange } = this.props;
 
@@ -41,11 +39,31 @@ class AutoComplete extends Component {
     value.length > 3 && this.onSearchFunction();
   };
 
-  render() {
-    const { isLoading, value, propositions, onSelect } = this.props;
+  renderDropdownContent = () => {
+    const { isLoading, propositions, onSelect } = this.props;
+
+    if (isLoading) return <Spinner />;
+
+    if (!propositions.length) return <NoResultText />;
 
     return (
-      <div>
+      <ul>
+        {propositions.map((item, index) => (
+          <StyledDropdownItem key={index} onClick={() => onSelect(index)}>
+            <Text>{item.label}</Text>
+          </StyledDropdownItem>
+        ))}
+      </ul>
+    );
+  };
+
+  render() {
+    const { value, propositions } = this.props;
+    const isDropdownVisible =
+      value.length >= 3 && !propositions.some((item) => item.label === value);
+
+    return (
+      <StyledContainer>
         <TextInputField
           label="Location"
           description="Enter your location address, it will help people to find you."
@@ -53,20 +71,11 @@ class AutoComplete extends Component {
           value={value}
           onChange={this.onChange}
         />
-        <StyledDropDown>
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <ul>
-              {propositions.map((item, i) => (
-                <li key={i} onClick={() => onSelect(i)}>
-                  {item.label}
-                </li>
-              ))}
-            </ul>
-          )}
-        </StyledDropDown>
-      </div>
+
+        <Dropdown isVisible={isDropdownVisible}>
+          {this.renderDropdownContent()}
+        </Dropdown>
+      </StyledContainer>
     );
   }
 }

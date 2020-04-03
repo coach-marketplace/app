@@ -19,14 +19,14 @@ class ServiceForm extends Component {
         title: "",
         description: "",
         address: "",
-        coordinates: []
+        coordinates: [],
       },
       proposition: [],
-      isAutoCompleteLoading: false
+      isAutoCompleteLoading: false,
     };
   }
 
-  onServiceSubmitted = event => {
+  onServiceSubmitted = (event) => {
     event.preventDefault();
     console.log(this.state.formData);
   };
@@ -39,25 +39,26 @@ class ServiceForm extends Component {
   searchAddresses = async () => {
     try {
       const {
-        formData: { address }
+        formData: { address },
       } = this.state;
-      this.setState({ isAutoCompleteLoading: true });
-      const response = await API.post("geo-spatial/by-address", { address });
-      this.setState({
-        propositions: [
-          ...response.data.map(item => ({
-            label: item.display_name,
-            value: [item.lat, item.lon]
-          }))
-        ],
-        isAutoCompleteLoading: false
+      this.setState({ isAutoCompleteLoading: true }, async () => {
+        const response = await API.post("geo-spatial/by-address", { address });
+        this.setState({
+          propositions: [
+            ...response.data.map((item) => ({
+              label: item.display_name,
+              value: [item.lat, item.lon],
+            })),
+          ],
+          isAutoCompleteLoading: false,
+        });
       });
     } catch (e) {
       console.log("err", e.message);
     }
   };
 
-  onAddressSelected = addressIndex => {
+  onAddressSelected = (addressIndex) => {
     const { propositions } = this.state;
     this.onFieldChange(propositions[addressIndex].label, "address");
   };
@@ -72,7 +73,7 @@ class ServiceForm extends Component {
           description="Try to be short, use keyword and be clear about what you are coaching."
           placeholder="CrossFit personal trainer"
           value={formData.title}
-          onChange={e => this.onFieldChange(e.target.value, "title")}
+          onChange={(e) => this.onFieldChange(e.target.value, "title")}
         />
 
         <Label htmlFor="description" marginBottom={4} display="block">
@@ -84,12 +85,12 @@ class ServiceForm extends Component {
           placeholder="Textarea placeholder..."
           marginBottom={4}
           value={formData.description}
-          onChange={e => this.onFieldChange(e.target.value, "description")}
+          onChange={(e) => this.onFieldChange(e.target.value, "description")}
         />
 
         <AutoComplete
           propositions={propositions}
-          onChange={value => this.onFieldChange(value, "address")}
+          onChange={(value) => this.onFieldChange(value, "address")}
           onSearch={this.searchAddresses}
           onSelect={this.onAddressSelected}
           value={formData.address}
