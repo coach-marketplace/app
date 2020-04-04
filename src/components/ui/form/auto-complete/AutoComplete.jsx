@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { TextInputField, Text } from "evergreen-ui";
 import debounce from "lodash.debounce";
 
 import { StyledContainer, StyledDropdownItem } from "./style";
 import Dropdown from "./Dropdown";
+import Input from "../input/Input";
 import Spinner from "../../loader/Spinner";
 import NoResultText from "../../empty-states/NoResultText";
+import Text from "../../text/Text";
 
 class AutoComplete extends Component {
   static propTypes = {
@@ -20,6 +21,8 @@ class AutoComplete extends Component {
     ),
     isLoading: PropTypes.bool,
     value: PropTypes.string,
+    placeholder: PropTypes.string,
+    id: PropTypes.string,
   };
 
   static defaultProps = {
@@ -58,18 +61,18 @@ class AutoComplete extends Component {
   };
 
   render() {
-    const { value, propositions } = this.props;
+    const { value, propositions, placeholder, id } = this.props;
     const isDropdownVisible =
       value.length >= 3 && !propositions.some((item) => item.label === value);
 
     return (
       <StyledContainer>
-        <TextInputField
-          label="Location"
-          description="Enter your location address, it will help people to find you."
-          placeholder="Central station, Brussels"
+        <Input
+          placeholder={placeholder}
           value={value}
           onChange={this.onChange}
+          style={{ width: `100%` }}
+          id={id}
         />
 
         <Dropdown isVisible={isDropdownVisible}>
