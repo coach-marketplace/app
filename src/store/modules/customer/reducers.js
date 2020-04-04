@@ -6,15 +6,15 @@ import {
   GET_ALL_SUCCESS,
   CREATE_LOADING,
   CREATE_FAILED,
-  CREATE_SUCCESS
+  CREATE_SUCCESS,
 } from "./constants";
 import initialState from "./state";
 
 const getAllFailed = (state, action) => {
   const newState = cloneDeep(state);
-  newState.actions.get_all.loading = false;
-  newState.actions.get_all.success = false;
-  newState.actions.get_all.error = action.error;
+  newState.actions.getAll.loading = false;
+  newState.actions.getAll.success = false;
+  newState.actions.getAll.error = action.error;
 
   return newState;
 };
@@ -23,18 +23,18 @@ const getAllSuccess = (state, action) => {
   const newState = cloneDeep(state);
   const users = action.user;
   newState.list = [...users];
-  newState.actions.get_all.loading = false;
-  newState.actions.get_all.error = null;
-  newState.actions.get_all.success = true;
+  newState.actions.getAll.loading = false;
+  newState.actions.getAll.error = null;
+  newState.actions.getAll.success = true;
 
   return newState;
 };
 
-const getAllLoading = state => {
+const getAllLoading = (state) => {
   const newState = cloneDeep(state);
-  newState.actions.get_all.loading = true;
-  newState.actions.get_all.success = false;
-  newState.actions.get_all.error = null;
+  newState.actions.getAll.loading = true;
+  newState.actions.getAll.success = false;
+  newState.actions.getAll.error = null;
 
   return newState;
 };
@@ -59,7 +59,7 @@ const createSuccess = (state, action) => {
   return newState;
 };
 
-const createLoading = state => {
+const createLoading = (state) => {
   const newState = cloneDeep(state);
   newState.actions.create.loading = true;
   newState.actions.create.success = false;
