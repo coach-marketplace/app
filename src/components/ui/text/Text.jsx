@@ -5,9 +5,7 @@
 import React from "react";
 import { Text as TextUI } from "evergreen-ui";
 
-const Text = props => {
-  return <TextUI {...props} />;
-};
+const Text = (props) => <TextUI {...props} />;
 
 export default Text;
 

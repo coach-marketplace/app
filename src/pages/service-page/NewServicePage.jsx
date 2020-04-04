@@ -1,16 +1,48 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 
 import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/ui/layout/header/Header";
 import ServiceForm from "../../components/service/service-form/ServiceForm";
-import Button from "../../components/ui/button/Button";
+import toaster from "../../components/ui/toaster/toaster";
+import { create as createService } from "../../store/modules/service/actions";
 
 class NewServicePage extends React.Component {
+  /**
+   * Adding empty state because of getDerivedStateFromProps
+   *
+   * see: https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html#new-lifecycle-getderivedstatefromprops
+   */
+  state = {};
+
+  static getDerivedStateFromProps(props, state) {
+    const {
+      isCreateServiceError,
+      isCreateServiceLoading,
+      isCreateServiceSuccess,
+    } = props;
+
+    if (!isCreateServiceLoading && isCreateServiceSuccess) {
+      toaster.success("Service successfully created");
+      props.history.push("/services");
+    } else if (!isCreateServiceLoading && isCreateServiceError) {
+      toaster.danger("Error when creating the service");
+    }
+
+    return state;
+  }
+
   render() {
-    if (!this.props.isAutoLoginLoading && !this.props.authUser) {
+    const {
+      authUser,
+      isAutoLoginLoading,
+      isCreateServiceLoading,
+      createService,
+      history,
+    } = this.props;
+
+    if (!isAutoLoginLoading && !authUser) {
       return <Redirect to="/login" />;
     }
 
@@ -19,10 +51,11 @@ class NewServicePage extends React.Component {
         header={<Header />}
         main={
           <Fragment>
-            <Link to="/services">
-              <Button label="Back" />
-            </Link>
-            <ServiceForm />
+            <ServiceForm
+              isLoading={isCreateServiceLoading}
+              onSubmit={createService}
+              onCancel={() => history.push("/services")}
+            />
           </Fragment>
         }
       />
@@ -30,9 +63,16 @@ class NewServicePage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAutoLoginLoading: state.auth.actions.auto_login.loading,
-  authUser: state.auth.authUser
+  authUser: state.auth.authUser,
+  isCreateServiceLoading: state.service.actions.create.loading,
+  isCreateServiceSuccess: state.service.actions.create.success,
+  isCreateServiceError: state.service.actions.create.error,
 });
 
-export default connect(mapStateToProps)(NewServicePage);
+const mapDispatchToProps = (dispatch) => ({
+  createService: (data) => dispatch(createService(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewServicePage);

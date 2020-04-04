@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Spinner as SpinnerUI } from "evergreen-ui";
+import Text from "../text/Text";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -9,14 +9,17 @@ const StyledContainer = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
 `;
 
-const Spinner = (props) => (
+const NoResultText = () => (
   <StyledContainer>
-    <SpinnerUI {...props} />
+    <Text>No result</Text>
   </StyledContainer>
 );
 
-Spinner.displayName = "Spinner";
+NoResultText.displayName = "NoResultText";
 
-export default Spinner;
+export default NoResultText;

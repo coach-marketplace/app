@@ -3,12 +3,14 @@ import thunk from "redux-thunk";
 
 import authReducer from "./modules/auth/reducers";
 import customerReducer from "./modules/customer/reducers";
+import serviceReducer from "./modules/service/reducers";
 import useReducer from "./modules/user/reducers";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   customer: customerReducer,
-  user: useReducer
+  service: serviceReducer,
+  user: useReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

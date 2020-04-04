@@ -36,19 +36,19 @@ class CustomersPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     customerList: state.customer.list,
-    isGetAllCustomersLoading: state.customer.actions.get_all.loading,
-    isGetAllCustomersError: state.customer.actions.get_all.error,
+    isGetAllCustomersLoading: state.customer.actions.getAll.loading,
+    isGetAllCustomersError: state.customer.actions.getAll.error,
     isAutoLoginLoading: state.auth.actions.auto_login.loading,
-    authUser: state.auth.authUser
+    authUser: state.auth.authUser,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getCustomers: () => dispatch(actions.getAll())
+    getCustomers: () => dispatch(actions.getAll()),
   };
 };
 
