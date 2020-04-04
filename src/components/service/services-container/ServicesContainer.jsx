@@ -28,7 +28,9 @@ class ServicesContainer extends Component {
       return <NoResultText />;
     }
 
-    return services.map((service) => <ServiceCard title={service.title} />);
+    return services.map((service) => (
+      <ServiceCard title={service.title} key={service.title} />
+    ));
   };
 
   render() {

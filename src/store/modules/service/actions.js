@@ -41,7 +41,7 @@ export const create = (data) => {
     const {
       auth: { authUser },
     } = store.getState();
-    console.log("action data", data);
+
     const normalizedData = {
       title: data.title,
       description: data.description,
