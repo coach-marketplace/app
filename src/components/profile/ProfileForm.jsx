@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInputField, Alert } from "evergreen-ui";
+import { TextInputField, Alert, Text, Link } from "evergreen-ui";
 import Button from "../ui/button/Button";
 import Spinner from "../ui/loader/Spinner"
 
@@ -56,6 +56,10 @@ class ProfileForm extends React.Component {
                             defaultValue={ this.props.profileData.email }
                             onChange={ (event) => this.props.profileData.email = event.target.value }
                         />
+                        
+                        <Text>Password</Text> <br/>
+                        <Link href="/password">Change password</Link>
+
                         <TextInputField
                             label="Phone number"
                             description=""
@@ -63,6 +67,7 @@ class ProfileForm extends React.Component {
                             defaultValue={ this.props.profileData.phone }
                             onChange={ (event) => this.props.profileData.phone = event.target.value }
                         />
+            
                         <Button type="submit" label="Save" />
                     </form>
         )

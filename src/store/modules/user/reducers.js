@@ -7,7 +7,11 @@ import {
 
   UPDATE_USER_PROFILE_INFOS_PENDING,
   UPDATE_USER_PROFILE_INFOS_SUCCESS,
-  UPDATE_USER_PROFILE_INFOS_ERROR
+  UPDATE_USER_PROFILE_INFOS_ERROR,
+
+  UPDATE_USER_PASSWORD_PENDING,
+  UPDATE_USER_PASSWORD_SUCCESS,
+  UPDATE_USER_PASSWORD_ERROR,
 } from "./constants";
 
 import cloneDeep from "lodash.clonedeep";
@@ -64,6 +68,31 @@ const userProfileDataUpdateFailed = state => {
   return newState;
 };
 
+// CHANGE USER PASSWORD
+
+const changeUserPasswordLoading = state => {
+  const newState = cloneDeep(state);
+  newState.passwordData.status = UPDATE_USER_PASSWORD_PENDING;
+
+  return newState;
+};
+
+const changeUserPasswordSuccess = (state, payload) => {
+  const newState = cloneDeep(state);
+  newState.passwordData.status = UPDATE_USER_PASSWORD_SUCCESS;
+  newState.passwordData.message = payload.message;
+  
+  return newState;
+};
+
+const changeUserPasswordFailed = (state, payload) => {
+  const newState = cloneDeep(state);
+  newState.passwordData.status = UPDATE_USER_PASSWORD_ERROR;
+  newState.passwordData.message = payload.message;
+
+  return newState;
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
       //FETCH USER PROFILE INFOS
@@ -81,6 +110,14 @@ const reducer = (state = initialState, action) => {
         return userProfileDataUpdateSuccess(state, action.data);
       case UPDATE_USER_PROFILE_INFOS_ERROR:
         return userProfileDataUpdateFailed(state);
+
+      //CHANGE USER PASSWORD
+      case UPDATE_USER_PASSWORD_PENDING:
+        return changeUserPasswordLoading(state);
+      case UPDATE_USER_PASSWORD_SUCCESS:
+        return changeUserPasswordSuccess(state, action.data);
+      case UPDATE_USER_PASSWORD_ERROR:
+        return changeUserPasswordFailed(state, action.data);
 
       default:
         return state;

@@ -2,9 +2,14 @@ import {
     FETCH_USER_PROFILE_INFOS_PENDING,
     FETCH_USER_PROFILE_INFOS_SUCCESS,
     FETCH_USER_PROFILE_INFOS_ERROR,
+
     UPDATE_USER_PROFILE_INFOS_PENDING,
     UPDATE_USER_PROFILE_INFOS_SUCCESS,
-    UPDATE_USER_PROFILE_INFOS_ERROR
+    UPDATE_USER_PROFILE_INFOS_ERROR,
+
+    UPDATE_USER_PASSWORD_PENDING,
+    UPDATE_USER_PASSWORD_SUCCESS,
+    UPDATE_USER_PASSWORD_ERROR,
 } from "./constants";
 
 /***
@@ -30,7 +35,7 @@ export const fetchUserProfileInfosFailed = () => {
  */
 
 export const updateUserProfileInfosPending = () => {
-   return {type: UPDATE_USER_PROFILE_INFOS_PENDING}
+   return { type: UPDATE_USER_PROFILE_INFOS_PENDING }
 }
 
 export const updateUserProfileInfosSuccess = (payload) => {
@@ -41,5 +46,27 @@ export const updateUserProfileInfosSuccess = (payload) => {
 }
 
 export const updateUserProfileInfosFailed = () => {
-   return { type: UPDATE_USER_PROFILE_INFOS_ERROR}
+   return { type: UPDATE_USER_PROFILE_INFOS_ERROR }
+}
+
+/**
+ * change user password
+ */
+
+export const changeUserPasswordPending = () => {
+   return { type: UPDATE_USER_PASSWORD_PENDING }
+}
+
+export const changeUserPasswordSuccess = (payload) => {
+   return { 
+      type: UPDATE_USER_PASSWORD_SUCCESS,
+      data: payload
+   }
+}
+
+export const changeUserPasswordFailed = (payload) => {
+   return { 
+            type: UPDATE_USER_PASSWORD_ERROR,
+            data: payload
+         }
 }

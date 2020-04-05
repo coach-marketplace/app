@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 
 import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/ui/layout/header/Header";
-import ProfileForm from "../../components/profile/ProfileForm";
+import ChangePasswordForm from "../../components/profile/ChangePasswordForm";
 
-class ProfilePage extends Component {
+class ChangePasswordPage extends Component {
 
     render() {
         if (!this.props.isAutoLoginLoading && !this.props.authUser) {
@@ -16,10 +16,7 @@ class ProfilePage extends Component {
         return (
             <Layout
                 header={<Header />}
-                main={
-                    <>
-                    <ProfileForm />
-                    </> }
+                main={<ChangePasswordForm /> }
             />
         );
     }
@@ -30,5 +27,5 @@ const mapStateToProps = state => ({
     authUser: state.auth.authUser
   });
   
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps)(ChangePasswordPage);
   

@@ -11,6 +11,7 @@ import ServicePage from "../pages/service-page/ServicePage";
 import NewServicePage from "../pages/service-page/NewServicePage";
 import SchedulePage from "../pages/schedule-page/SchedulePage";
 import ProfilePage from "../pages/profile-page/ProfilePage";
+import ChangePasswordPage from "../pages/profile-page/ChangePasswordPage";
 
 class Router extends Component {
   render() {
@@ -26,6 +27,7 @@ class Router extends Component {
           <Route path="/services/new" exact component={NewServicePage} />
           <Route path="/schedule" exact component={SchedulePage} />
           <Route path="/profile" exact component={ProfilePage} />
+          <Route path="/password" exact component={ChangePasswordPage} />
         </Switch>
       </BrowserRouter>
     );

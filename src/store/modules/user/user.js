@@ -2,9 +2,14 @@ import {
     fetchUserProfileInfosPending, 
     fetchUserProfileInfosSuccess, 
     fetchUserProfileInfosFailed,
+
     updateUserProfileInfosPending,
     updateUserProfileInfosSuccess,
-    updateUserProfileInfosFailed } from './actions';
+    updateUserProfileInfosFailed,
+
+    changeUserPasswordPending,
+    changeUserPasswordSuccess,
+    changeUserPasswordFailed } from './actions';
 
 import API from "../../../services/api";
 import store from "../..";
@@ -32,5 +37,25 @@ export const updateUserProfileInfos = (updatedProfileData) => {
             .catch(error => {
                 dispatch(updateUserProfileInfosFailed());
             });
+    }
+}
+
+export const changeUserPassword = (passwords) => {
+    return dispatch => {
+        dispatch(changeUserPasswordPending());
+        if(passwords.newPwd !== passwords.newPwdConf || passwords.newPwd === ""){
+            dispatch(changeUserPasswordFailed({message:"passwords don't match or are empty"}))
+        }
+        else {
+            API.post("user/password/"+store.getState().auth.authUser._id, 
+            {currentPassword:passwords.oldPwd, newPassword:passwords.newPwd})
+            .then( response => {
+                dispatch(changeUserPasswordSuccess({message:"your password has been successfully changed"}));        
+            })
+            .catch( error => {
+                //TODO: how to get error public message?
+                dispatch(changeUserPasswordFailed({message:"We could not update your password. Please try again later."}));
+            })
+        }
     }
 }
