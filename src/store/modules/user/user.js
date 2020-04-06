@@ -22,7 +22,7 @@ export const fetchUserProfileInfos = () => {
                 dispatch(fetchUserProfileInfosSuccess(response.data))
             })
             .catch(error => {
-                dispatch(fetchUserProfileInfosFailed());
+                dispatch(fetchUserProfileInfosFailed({message:"We could not retrieve your data. PLease try again later."}));
             });
     }
 }
@@ -32,10 +32,11 @@ export const updateUserProfileInfos = (updatedProfileData) => {
         dispatch(updateUserProfileInfosPending());
         API.post("user/"+store.getState().auth.authUser._id, updatedProfileData)
             .then( response => {
+                updatedProfileData.message = "We updated your profile succesfully!"
                 dispatch(updateUserProfileInfosSuccess(updatedProfileData));
             })
             .catch(error => {
-                dispatch(updateUserProfileInfosFailed());
+                dispatch(updateUserProfileInfosFailed({message: "We could not update your profile. Please try again later."}));
             });
     }
 }

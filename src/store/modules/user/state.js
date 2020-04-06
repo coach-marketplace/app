@@ -9,6 +9,7 @@ export default {
         email: "",
         phone: "",
         status: FETCH_USER_PROFILE_INFOS_PENDING,
+        message: "",
     },
     passwordData : {
         status: "",

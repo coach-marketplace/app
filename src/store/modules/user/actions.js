@@ -26,8 +26,11 @@ export const fetchUserProfileInfosSuccess = (payload) => {
     }
 } 
 
-export const fetchUserProfileInfosFailed = () => {
-   return {type: FETCH_USER_PROFILE_INFOS_ERROR}
+export const fetchUserProfileInfosFailed = (payload) => {
+   return {
+      type: FETCH_USER_PROFILE_INFOS_ERROR,
+      data: payload 
+   }
 } 
 
 /**
@@ -45,8 +48,11 @@ export const updateUserProfileInfosSuccess = (payload) => {
    }
 }
 
-export const updateUserProfileInfosFailed = () => {
-   return { type: UPDATE_USER_PROFILE_INFOS_ERROR }
+export const updateUserProfileInfosFailed = (payload) => {
+   return { 
+      type: UPDATE_USER_PROFILE_INFOS_ERROR,
+      data: payload,
+   }
 }
 
 /**

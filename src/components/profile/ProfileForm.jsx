@@ -81,14 +81,14 @@ class ProfileForm extends React.Component {
                 return(
                     <Alert
                         intent="danger"
-                        title="We encountered an error. Please try again later."
+                        title={this.props.profileData.message}
                     />
                 )
             case UPDATE_USER_PROFILE_INFOS_SUCCESS:
                     return(
                        [<Alert key={0}
                            intent="success"
-                           title="your changes have been successfuly saved."
+                           title={this.props.profileData.message}
                        />,
                        this.getBasicScreen()]
                     )

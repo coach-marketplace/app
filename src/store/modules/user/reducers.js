@@ -34,9 +34,10 @@ const userProfileDataSuccess = (state, payload) => {
   return newState;
 };
 
-const userProfileDataFailed = state => {
+const userProfileDataFailed = (state, payload) => {
   const newState = cloneDeep(state);
   newState.profileData.status = FETCH_USER_PROFILE_INFOS_ERROR;
+  newState.profileData.message = payload.message;
 
   return newState;
 };
@@ -53,6 +54,7 @@ const userProfileDataUpdateLoading = state => {
 const userProfileDataUpdateSuccess = (state, payload) => {
   const newState = cloneDeep(state);
   newState.profileData.status = UPDATE_USER_PROFILE_INFOS_SUCCESS;
+  newState.profileData.message = payload.message !== undefined ? payload.message : "";
   newState.profileData.firstName = payload.firstName !== undefined ? payload.firstName : "";
   newState.profileData.lastName = payload.lastName !== undefined ? payload.lastName : "";
   newState.profileData.email = payload.email !== undefined ? payload.email : "";
@@ -61,9 +63,10 @@ const userProfileDataUpdateSuccess = (state, payload) => {
   return newState;
 };
 
-const userProfileDataUpdateFailed = state => {
+const userProfileDataUpdateFailed = (state, payload) => {
   const newState = cloneDeep(state);
   newState.profileData.status = UPDATE_USER_PROFILE_INFOS_ERROR;
+  newState.profileData.message = payload.message;
 
   return newState;
 };
@@ -101,7 +104,7 @@ const reducer = (state = initialState, action) => {
       case FETCH_USER_PROFILE_INFOS_SUCCESS:
         return userProfileDataSuccess(state, action.data);
       case FETCH_USER_PROFILE_INFOS_ERROR:
-        return userProfileDataFailed(state);
+        return userProfileDataFailed(state, action.data);
       
       //UPDATE USER PROFILE INFOS
       case UPDATE_USER_PROFILE_INFOS_PENDING:
@@ -109,7 +112,7 @@ const reducer = (state = initialState, action) => {
       case UPDATE_USER_PROFILE_INFOS_SUCCESS:
         return userProfileDataUpdateSuccess(state, action.data);
       case UPDATE_USER_PROFILE_INFOS_ERROR:
-        return userProfileDataUpdateFailed(state);
+        return userProfileDataUpdateFailed(state, action.data);
 
       //CHANGE USER PASSWORD
       case UPDATE_USER_PASSWORD_PENDING:
