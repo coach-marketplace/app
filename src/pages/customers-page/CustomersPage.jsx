@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 
 import * as actions from "../../store/modules/customer/actions";
-import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
-import Header from "../../components/ui/layout/header/Header";
+import Layout from "../../components/layout/main-page-layout/MainPageLayout";
+import Header from "../../components/layout/header/Header";
 import CustomersTable from "../../components/customer/customers-table/CustomersTable";
 
 class CustomersPage extends React.Component {

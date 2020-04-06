@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 
 import { retrieveAll as retrieveServices } from "../../store/modules/service/actions";
-import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
-import Header from "../../components/ui/layout/header/Header";
+import Layout from "../../components/layout/main-page-layout/MainPageLayout";
+import Header from "../../components/layout/header/Header";
 import Button from "../../components/ui/button/Button";
 import ServicesContainer from "../../components/service/services-container/ServicesContainer";
 
