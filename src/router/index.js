@@ -11,6 +11,7 @@ import ServicePage from "../pages/service-page/ServicePage";
 import NewServicePage from "../pages/service-page/NewServicePage";
 import SchedulePage from "../pages/schedule-page/SchedulePage";
 import ProfilePage from "../pages/profile-page/ProfilePage";
+import LibraryPage from "../pages/library-page/LibraryPage";
 
 class Router extends Component {
   render() {
@@ -26,14 +27,15 @@ class Router extends Component {
           <Route path="/services/new" exact component={NewServicePage} />
           <Route path="/schedule" exact component={SchedulePage} />
           <Route path="/profile" exact component={ProfilePage} />
+          <Route path="/library/:type" exact component={LibraryPage} />
         </Switch>
       </BrowserRouter>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  authUser: state.auth.authUser
+const mapStateToProps = (state) => ({
+  authUser: state.auth.authUser,
 });
 
 export default connect(mapStateToProps)(Router);
