@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Redirect } from "react-router";
 
 import { retrieveAll as retrieveServices } from "../../store/modules/service/actions";
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
@@ -11,15 +10,13 @@ import ServicesContainer from "../../components/service/services-container/Servi
 
 class ServicePage extends React.Component {
   componentDidMount() {
-    this.props.retrieveServices();
+    const { retrieveServices } = this.props;
+
+    retrieveServices();
   }
 
   render() {
     const { isFetchServicesLoading, serviceList } = this.props;
-
-    if (!this.props.isAutoLoginLoading && !this.props.authUser) {
-      return <Redirect to="/login" />;
-    }
 
     return (
       <Layout
@@ -41,8 +38,6 @@ class ServicePage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  authUser: state.auth.authUser,
-  isAutoLoginLoading: state.auth.actions.auto_login.loading,
   serviceList: state.service.list,
   isFetchServicesLoading: state.service.actions.getAll.loading,
 });

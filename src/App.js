@@ -9,29 +9,28 @@ import "./style/main.css";
 
 class App extends Component {
   componentDidMount() {
-    this.props.autoLogin();
+    const { autoLogin } = this.props;
+
+    autoLogin();
   }
 
   render() {
-    if (
-      this.props.isAutoLoginLoading ||
-      (!this.props.isAutoLoginSuccess && !this.props.isAutoLoginError)
-    ) {
+    const { isAutoLoginLoading } = this.props;
+
+    if (isAutoLoginLoading) {
       return <Spinner />;
     }
+
     return <Router />;
   }
 }
 
-const mapStateToProps = state => ({
-  authUser: state.auth.authUser,
+const mapStateToProps = (state) => ({
   isAutoLoginLoading: state.auth.actions.auto_login.loading,
-  isAutoLoginSuccess: state.auth.actions.auto_login.success,
-  isAutoLoginError: state.auth.actions.auto_login.error
 });
 
-const mapDispatchToProps = dispatch => ({
-  autoLogin: () => dispatch(actions.tryAutoLogin())
+const mapDispatchToProps = (dispatch) => ({
+  autoLogin: () => dispatch(actions.tryAutoLogin()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

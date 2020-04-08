@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router";
 
 import * as actions from "../../store/modules/customer/actions";
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
@@ -10,13 +9,13 @@ import CustomersTable from "../../components/customer/customers-table/CustomersT
 
 class CustomersPage extends React.Component {
   componentDidMount() {
-    !this.props.customerList.length && this.props.getCustomers();
+    const { customerList, getCustomers } = this.props;
+
+    !customerList.length && getCustomers();
   }
 
   render() {
-    if (!this.props.isAutoLoginLoading && !this.props.authUser) {
-      return <Redirect to="/login" />;
-    }
+    const { isGetAllCustomersLoading, customerList } = this.props;
 
     return (
       <Layout
@@ -24,10 +23,10 @@ class CustomersPage extends React.Component {
         main={
           <div>
             <Link to="/customers/new">Add customer</Link>
-            {this.props.isGetAllCustomersLoading ? (
+            {isGetAllCustomersLoading ? (
               "loading..."
             ) : (
-              <CustomersTable customers={this.props.customerList} />
+              <CustomersTable customers={customerList} />
             )}
           </div>
         }
@@ -41,8 +40,6 @@ const mapStateToProps = (state) => {
     customerList: state.customer.list,
     isGetAllCustomersLoading: state.customer.actions.getAll.loading,
     isGetAllCustomersError: state.customer.actions.getAll.error,
-    isAutoLoginLoading: state.auth.actions.auto_login.loading,
-    authUser: state.auth.authUser,
   };
 };
 
