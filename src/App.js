@@ -8,6 +8,21 @@ import Spinner from "./components/ui/loader/Spinner";
 import "./style/main.css";
 
 class App extends Component {
+  state = {
+    previousIsAutoLoginLoading: false,
+    isAutoLoginDone: false,
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    const { isAutoLoginLoading } = props;
+
+    return {
+      ...state,
+      previousIsAutoLoginLoading: isAutoLoginLoading,
+      isAutoLoginDone: state.previousIsAutoLoginLoading,
+    };
+  }
+
   componentDidMount() {
     const { autoLogin } = this.props;
 
@@ -15,9 +30,9 @@ class App extends Component {
   }
 
   render() {
-    const { isAutoLoginLoading } = this.props;
+    const { isAutoLoginDone } = this.state;
 
-    if (isAutoLoginLoading) {
+    if (!isAutoLoginDone) {
       return <Spinner />;
     }
 
@@ -26,7 +41,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isAutoLoginLoading: state.auth.actions.auto_login.loading,
+  isAutoLoginLoading: state.auth.actions.autoLogin.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -21,7 +21,7 @@ const AuthState = ({
   isAutoLoginSuccess,
   isAutoLoginError,
   authUser,
-  logout
+  logout,
 }) => {
   let content;
 
@@ -54,17 +54,17 @@ const AuthState = ({
   return <Container className="auth-state">{content}</Container>;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isAutoLoginLoading: state.auth.actions.auto_login.loading,
-    isAutoLoginSuccess: state.auth.actions.auto_login.success,
-    isAutoLoginError: state.auth.actions.auto_login.error,
-    authUser: state.auth.authUser
+    isAutoLoginLoading: state.auth.actions.autoLogin.loading,
+    isAutoLoginSuccess: state.auth.actions.autoLogin.success,
+    isAutoLoginError: state.auth.actions.autoLogin.error,
+    authUser: state.auth.authUser,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(actions.logout())
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(actions.logout()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthState);
