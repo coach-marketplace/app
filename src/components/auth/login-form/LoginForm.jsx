@@ -11,18 +11,20 @@ class LoginForm extends Component {
   static displayName = "LoginForm";
 
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
   };
 
   render() {
+    const { onRegister, onSubmit } = this.props;
+
     return (
       <Formik
         initialValues={{
           email: "",
-          password: ""
+          password: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={this.props.onSubmit}
+        onSubmit={onSubmit}
       >
         <Form>
           <Field
@@ -37,7 +39,16 @@ class LoginForm extends Component {
             type="password"
             placeholder="********"
           />
-          <Button type="submit">Login</Button>
+          <div>
+            <Button type="submit">Login</Button>
+            {onRegister && (
+              <Button
+                label="No account yet? Register"
+                appearance="minimal"
+                onClick={onRegister}
+              />
+            )}
+          </div>
         </Form>
       </Formik>
     );

@@ -13,16 +13,16 @@ class RegisterForm extends Component {
   state = {
     isRegistrationLoading: false,
     email: "",
-    password: ""
+    password: "",
   };
   // TODO: login when register is complete
 
-  onSubmit = data => {
+  onSubmit = (data) => {
     this.setState(
       {
         isRegistrationLoading: true,
         email: data.email,
-        password: data.password
+        password: data.password,
       },
       () => {
         this.props.register(data);
@@ -33,12 +33,13 @@ class RegisterForm extends Component {
   // TODO: validation form
   render() {
     const { isRegistrationLoading, email, password } = this.state;
+    const { onLogin } = this.props;
 
     return (
       <Formik
         initialValues={{
           email: email,
-          password: password
+          password: password,
         }}
         // validationSchema={validationSchema}
         onSubmit={this.onSubmit}
@@ -60,24 +61,35 @@ class RegisterForm extends Component {
             disabled={isRegistrationLoading}
           />
 
-          <Button type="submit" isLoading={isRegistrationLoading}>
-            Register
-          </Button>
+          <div>
+            <Button
+              label="Register"
+              type="submit"
+              isLoading={isRegistrationLoading}
+            />
+            {onLogin && (
+              <Button
+                label="Already an account? Log in"
+                appearance="minimal"
+                onClick={onLogin}
+              />
+            )}
+          </div>
         </Form>
       </Formik>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isRegisterLoading: state.auth.actions.register.loading,
   isRegisterError: state.auth.actions.register.error,
   isRegisterSuccess: state.auth.actions.register.success,
-  authUser: state.auth.authUser
+  authUser: state.auth.authUser,
 });
 
-const mapDispatchToProps = dispatch => ({
-  register: data => dispatch(actions.register(data))
+const mapDispatchToProps = (dispatch) => ({
+  register: (data) => dispatch(actions.register(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
