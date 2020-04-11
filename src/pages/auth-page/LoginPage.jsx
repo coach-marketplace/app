@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import { Heading } from "evergreen-ui";
 
-import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
-import Header from "../../components/ui/layout/header/Header";
+import Layout from "../../components/layout/main-page-layout/MainPageLayout";
+import Header from "../../components/layout/header/Header";
 import LoginForm from "../../components/auth/login-form/LoginForm";
 import * as actions from "../../store/modules/auth/actions";
 
@@ -32,12 +32,12 @@ class LoginPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  authUser: state.auth.authUser
+const mapStateToProps = (state) => ({
+  authUser: state.auth.authUser,
 });
 
-const mapDispatchToProps = dispatch => ({
-  login: (email, password) => dispatch(actions.login(email, password))
+const mapDispatchToProps = (dispatch) => ({
+  login: (email, password) => dispatch(actions.login(email, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

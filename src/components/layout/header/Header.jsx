@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 
-import AuthState from "../../../auth/auth-state/AuthState";
-import Logo from "../../logo/Logo";
+import AuthState from "../../auth/auth-state/AuthState";
+import Logo from "../../ui/logo/Logo";
 import Navigation from "../../navigation/Navigation";
 import { RightContainer } from "./styled";
 
@@ -18,9 +18,9 @@ const Header = ({ authUser }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    authUser: state.auth.authUser
+    authUser: state.auth.authUser,
   };
 };
 
