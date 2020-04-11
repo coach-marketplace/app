@@ -10,9 +10,9 @@ import ServicesContainer from "../../components/service/services-container/Servi
 
 class ServicePage extends React.Component {
   componentDidMount() {
-    const { retrieveServices } = this.props;
+    const { retrieveServices, serviceList } = this.props;
 
-    retrieveServices();
+    !serviceList.length && retrieveServices();
   }
 
   render() {
