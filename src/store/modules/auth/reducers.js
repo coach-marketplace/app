@@ -70,9 +70,9 @@ const loginFailed = (state, action) => {
 
 const loginSuccess = (state, action) => {
   const newState = cloneDeep(state);
-  const token = action.user.token;
-  const user = action.user;
-  delete user.token;
+  const token = action.payload.token;
+  const user = action.payload.user;
+
   newState.token = token;
   newState.authUser = user;
   newState.actions.login.loading = false;
@@ -103,6 +103,9 @@ const registerFailed = (state, action) => {
 
 const registerSuccess = (state, action) => {
   const newState = cloneDeep(state);
+  newState.actions.register.loading = false;
+  newState.actions.register.success = true;
+  newState.actions.register.error = null;
 
   return newState;
 };
