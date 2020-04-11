@@ -2,7 +2,7 @@ import React, { Fragment, Component } from "react";
 import PropTypes from "prop-types";
 
 import LibraryNavigation from "../library-navigation/LibraryNavigation";
-import Heading from "../../ui/heading/Heading";
+import Title from "../../ui/typography/Title";
 import ExercisesContainer from "../../exercise/exercises-container/ExercisesContainer";
 
 class LibraryContainer extends Component {
@@ -24,9 +24,7 @@ class LibraryContainer extends Component {
   render() {
     return (
       <Fragment>
-        <Heading size={800} is="h1">
-          Library
-        </Heading>
+        <Title>Library</Title>
 
         <LibraryNavigation />
 
