@@ -6,6 +6,7 @@ import { retrieveAll as retrieveServices } from "../../store/modules/service/act
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/layout/header/Header";
 import Button from "../../components/ui/button/Button";
+import Title from "../../components/ui/typography/Title";
 import ServicesContainer from "../../components/service/services-container/ServicesContainer";
 
 class ServicePage extends React.Component {
@@ -23,6 +24,7 @@ class ServicePage extends React.Component {
         header={<Header />}
         main={
           <Fragment>
+            <Title>Your services</Title>
             <Link to="/services/new">
               <Button label="New" iconBefore="plus" appearance="minimal" />
             </Link>
