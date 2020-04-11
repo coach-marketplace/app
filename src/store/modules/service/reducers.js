@@ -4,9 +4,9 @@ import {
   GET_SERVICES_FAILED,
   GET_SERVICES_LOADING,
   GET_SERVICES_SUCCESS,
-  CREATE_LOADING,
-  CREATE_FAILED,
-  CREATE_SUCCESS,
+  CREATE_SERVICE_LOADING,
+  CREATE_SERVICE_FAILED,
+  CREATE_SERVICE_SUCCESS,
 } from "./constants";
 import initialState from "./state";
 
@@ -78,11 +78,11 @@ const reducer = (state = initialState, action) => {
       return getServicesLoading(state);
     case GET_SERVICES_SUCCESS:
       return getServicesSuccess(state, action);
-    case CREATE_FAILED:
+    case CREATE_SERVICE_FAILED:
       return createFailed(state, action);
-    case CREATE_LOADING:
+    case CREATE_SERVICE_LOADING:
       return createLoading(state);
-    case CREATE_SUCCESS:
+    case CREATE_SERVICE_SUCCESS:
       return createSuccess(state, action);
     default:
       return state;
