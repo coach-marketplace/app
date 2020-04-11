@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import Button from "../button/Button";
+import Button from "../ui/button/Button";
 
 const List = styled.ul`
   display: flex;
@@ -26,6 +26,9 @@ const Navigation = () => {
         </Link>
         <Link to="/schedule">
           <Button label="Agenda" appearance="minimal" />
+        </Link>
+        <Link to="/library/exercises">
+          <Button label="Library" appearance="minimal" />
         </Link>
       </ListItem>
     </List>

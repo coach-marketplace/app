@@ -10,28 +10,28 @@ import {
   REGISTER_LOADING,
   REGISTER_SUCCESS,
   REGISTER_FAILED,
-  LOGOUT
+  LOGOUT,
 } from "./constants";
 import initialState from "./state";
 import {
   addTokenToLocalStorage,
-  removeTokenFromLocalStorage
+  removeTokenFromLocalStorage,
 } from "../../../services/local-storage";
 
-const autoLoginLoading = state => {
+const autoLoginLoading = (state) => {
   const newState = cloneDeep(state);
-  newState.actions.auto_login.loading = true;
-  newState.actions.auto_login.success = false;
-  newState.actions.auto_login.error = null;
+  newState.actions.autoLogin.loading = true;
+  newState.actions.autoLogin.success = false;
+  newState.actions.autoLogin.error = null;
 
   return newState;
 };
 
 const autoLoginFailed = (state, action) => {
   const newState = cloneDeep(state);
-  newState.actions.auto_login.loading = false;
-  newState.actions.auto_login.success = false;
-  newState.actions.auto_login.error = action.error;
+  newState.actions.autoLogin.loading = false;
+  newState.actions.autoLogin.success = false;
+  newState.actions.autoLogin.error = action.error;
 
   return newState;
 };
@@ -43,14 +43,14 @@ const autoLoginSuccess = (state, action) => {
   delete user.token;
   newState.token = token;
   newState.authUser = user;
-  newState.actions.auto_login.loading = false;
-  newState.actions.auto_login.error = null;
-  newState.actions.auto_login.success = true;
+  newState.actions.autoLogin.loading = false;
+  newState.actions.autoLogin.error = null;
+  newState.actions.autoLogin.success = true;
 
   return newState;
 };
 
-const loginLoading = state => {
+const loginLoading = (state) => {
   const newState = cloneDeep(state);
   newState.actions.login.loading = true;
   newState.actions.login.success = false;
@@ -83,7 +83,7 @@ const loginSuccess = (state, action) => {
   return newState;
 };
 
-const registerLoading = state => {
+const registerLoading = (state) => {
   const newState = cloneDeep(state);
   newState.actions.register.loading = true;
   newState.actions.register.success = false;
@@ -107,7 +107,7 @@ const registerSuccess = (state, action) => {
   return newState;
 };
 
-const logout = state => {
+const logout = (state) => {
   removeTokenFromLocalStorage();
 
   return cloneDeep(state);
