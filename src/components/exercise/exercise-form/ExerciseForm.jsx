@@ -53,7 +53,7 @@ class ExerciseForm extends Component {
   };
 
   render() {
-    const { onCancel, isLoading } = this.props;
+    const { onCancel } = this.props;
     const { formData } = this.state;
 
     return (
