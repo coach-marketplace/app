@@ -1,9 +1,9 @@
 import cloneDeep from "lodash.clonedeep";
 
 import {
-  GET_ALL_FAILED,
-  GET_ALL_LOADING,
-  GET_ALL_SUCCESS,
+  GET_CUSTOMERS_FAILED,
+  GET_CUSTOMERS_LOADING,
+  GET_CUSTOMERS_SUCCESS,
   CREATE_LOADING,
   CREATE_FAILED,
   CREATE_SUCCESS,
@@ -21,8 +21,9 @@ const getAllFailed = (state, action) => {
 
 const getAllSuccess = (state, action) => {
   const newState = cloneDeep(state);
-  const users = action.user;
-  newState.list = [...users];
+  const customers = action.payload;
+
+  newState.list = [...customers];
   newState.actions.getAll.loading = false;
   newState.actions.getAll.error = null;
   newState.actions.getAll.success = true;
@@ -32,6 +33,7 @@ const getAllSuccess = (state, action) => {
 
 const getAllLoading = (state) => {
   const newState = cloneDeep(state);
+
   newState.actions.getAll.loading = true;
   newState.actions.getAll.success = false;
   newState.actions.getAll.error = null;
@@ -41,6 +43,7 @@ const getAllLoading = (state) => {
 
 const createFailed = (state, action) => {
   const newState = cloneDeep(state);
+
   newState.actions.create.loading = false;
   newState.actions.create.success = false;
   newState.actions.create.error = action.error;
@@ -50,8 +53,9 @@ const createFailed = (state, action) => {
 
 const createSuccess = (state, action) => {
   const newState = cloneDeep(state);
-  const user = action.user;
-  newState.list = [...newState.list, user];
+  const newCustomer = action.payload;
+
+  newState.list = [...newState.list, newCustomer];
   newState.actions.create.loading = false;
   newState.actions.create.error = null;
   newState.actions.create.success = true;
@@ -61,6 +65,7 @@ const createSuccess = (state, action) => {
 
 const createLoading = (state) => {
   const newState = cloneDeep(state);
+
   newState.actions.create.loading = true;
   newState.actions.create.success = false;
   newState.actions.create.error = null;
@@ -70,11 +75,11 @@ const createLoading = (state) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL_FAILED:
+    case GET_CUSTOMERS_FAILED:
       return getAllFailed(state, action);
-    case GET_ALL_LOADING:
+    case GET_CUSTOMERS_LOADING:
       return getAllLoading(state);
-    case GET_ALL_SUCCESS:
+    case GET_CUSTOMERS_SUCCESS:
       return getAllSuccess(state, action);
     case CREATE_FAILED:
       return createFailed(state, action);
