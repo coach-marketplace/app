@@ -11,16 +11,18 @@ class MainPageLayout extends Component {
 
     return (
       <Container>
-        <Pane
-          is="header"
-          display="flex"
-          padding={16}
-          background="tint2"
-          borderRadius={3}
-          alignItems="center"
-        >
-          {header}
-        </Pane>
+        {header && (
+          <Pane
+            is="header"
+            display="flex"
+            padding={16}
+            background="tint2"
+            borderRadius={3}
+            alignItems="center"
+          >
+            {header}
+          </Pane>
+        )}
         <Main>{main}</Main>
         {footer && <Footer>{footer}</Footer>}
       </Container>

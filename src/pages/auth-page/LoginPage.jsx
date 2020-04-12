@@ -4,13 +4,18 @@ import { Redirect } from "react-router";
 import { Heading } from "evergreen-ui";
 
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
-import Header from "../../components/layout/header/Header";
 import LoginForm from "../../components/auth/login-form/LoginForm";
 import * as actions from "../../store/modules/auth/actions";
 
 class LoginPage extends React.Component {
   onSubmit = ({ email, password }) => {
     this.props.login(email, password);
+  };
+
+  goToRegisterPage = () => {
+    const { history } = this.props;
+
+    history.push("/register");
   };
 
   render() {
@@ -20,11 +25,13 @@ class LoginPage extends React.Component {
 
     return (
       <Layout
-        header={<Header />}
         main={
           <Fragment>
             <Heading size={900}>Login</Heading>
-            <LoginForm onSubmit={this.onSubmit} />
+            <LoginForm
+              onSubmit={this.onSubmit}
+              onRegister={this.goToRegisterPage}
+            />
           </Fragment>
         }
       />
