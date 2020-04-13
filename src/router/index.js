@@ -14,6 +14,7 @@ import NewServicePage from "../pages/service-page/NewServicePage";
 import SchedulePage from "../pages/schedule-page/SchedulePage";
 import ProfilePage from "../pages/profile-page/ProfilePage";
 import LibraryPage from "../pages/library-page/LibraryPage";
+import InboxPage from "../pages/inbox-page/InboxPage";
 
 class Router extends Component {
   render() {
@@ -39,6 +40,7 @@ class Router extends Component {
           <ProtectedRoute path="/schedule" exact component={SchedulePage} />
           <ProtectedRoute path="/profile" exact component={ProfilePage} />
           <ProtectedRoute path="/library/:type" exact component={LibraryPage} />
+          <ProtectedRoute path="/inbox" exact component={InboxPage} />
         </Switch>
       </BrowserRouter>
     );
