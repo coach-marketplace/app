@@ -9,7 +9,15 @@ import {
 
     changeUserPasswordPending,
     changeUserPasswordSuccess,
-    changeUserPasswordFailed } from './actions';
+    changeUserPasswordFailed,
+
+    fetchUserBodyInfosPending, 
+    fetchUserBodyInfosSuccess, 
+    fetchUserBodyInfosFailed,
+
+    updateUserBodyInfosPending,
+    updateUserBodyInfosSuccess,
+    updateUserBodyInfosFailed,} from './actions';
 
 import API from "../../../services/api";
 import store from "../..";
@@ -22,7 +30,7 @@ export const fetchUserProfileInfos = () => {
                 dispatch(fetchUserProfileInfosSuccess(response.data))
             })
             .catch(error => {
-                dispatch(fetchUserProfileInfosFailed({message:"We could not retrieve your data. PLease try again later."}));
+                dispatch(fetchUserProfileInfosFailed({message:"We could not retrieve your data. Please try again later."}));
             });
     }
 }
@@ -58,5 +66,32 @@ export const changeUserPassword = (passwords) => {
                 dispatch(changeUserPasswordFailed({message:"We could not update your password. Please try again later."}));
             })
         }
+    }
+}
+
+export const fetchUserBodyInfos = () => {
+    return dispatch => { 
+        dispatch(fetchUserBodyInfosPending());
+        API.get("user/body/"+store.getState().auth.authUser._id)
+            .then( response => {
+                dispatch(fetchUserBodyInfosSuccess(response.data))
+            })
+            .catch(error => {
+                dispatch(fetchUserBodyInfosFailed({message:"We could not retrieve your data. Please try again later."}));
+            });
+    }
+}
+
+export const updateUserBodyInfos = (updatedBodyData) => {
+    return dispatch => {
+        dispatch(updateUserBodyInfosPending());
+        API.post("user/body/"+store.getState().auth.authUser._id, updatedBodyData)
+            .then( response => {
+                updatedBodyData.message = "We updated your data succesfully!"
+                dispatch(updateUserBodyInfosSuccess(updatedBodyData));
+            })
+            .catch(error => {
+                dispatch(updateUserBodyInfosFailed({message: "We could not update your data. Please try again later."}));
+            });
     }
 }

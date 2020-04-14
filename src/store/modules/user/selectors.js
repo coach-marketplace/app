@@ -5,3 +5,7 @@ export const getProfileInfos = (store) => {
 export const getChangePasswordInfos = (store) => {
     return store.user.passwordData;
 }
+
+export const getBodyInfos = (store) => {
+    return store.user.bodyData;
+}
