@@ -5,11 +5,13 @@ import authReducer from "./modules/auth/reducers";
 import customerReducer from "./modules/customer/reducers";
 import serviceReducer from "./modules/service/reducers";
 import useReducer from "./modules/user/reducers";
+import exerciseReducer from "./modules/exercise/reducers";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   customer: customerReducer,
   service: serviceReducer,
+  exercise: exerciseReducer,
   user: useReducer,
 });
 

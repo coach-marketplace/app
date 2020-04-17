@@ -1,34 +1,19 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Redirect } from "react-router";
 
-import * as actions from "../../store/modules/customer/actions";
-import Layout from "../../components/ui/layout/main-page-layout/MainPageLayout";
-import Header from "../../components/ui/layout/header/Header";
-import CustomersTable from "../../components/customer/customers-table/CustomersTable";
+import Layout from "../../components/layout/main-page-layout/MainPageLayout";
+import Header from "../../components/layout/header/Header";
+import Title from "../../components/ui/typography/Title";
+import CustomersContainer from "../../components/customer/customers-container/CustomersContainer";
 
 class CustomersPage extends React.Component {
-  componentDidMount() {
-    !this.props.customerList.length && this.props.getCustomers();
-  }
-
   render() {
-    if (!this.props.isAutoLoginLoading && !this.props.authUser) {
-      return <Redirect to="/login" />;
-    }
-
     return (
       <Layout
         header={<Header />}
         main={
           <div>
-            <Link to="/customers/new">Add customer</Link>
-            {this.props.isGetAllCustomersLoading ? (
-              "loading..."
-            ) : (
-              <CustomersTable customers={this.props.customerList} />
-            )}
+            <Title>Your customers</Title>
+            <CustomersContainer />
           </div>
         }
       />
@@ -36,20 +21,4 @@ class CustomersPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    customerList: state.customer.list,
-    isGetAllCustomersLoading: state.customer.actions.getAll.loading,
-    isGetAllCustomersError: state.customer.actions.getAll.error,
-    isAutoLoginLoading: state.auth.actions.auto_login.loading,
-    authUser: state.auth.authUser,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getCustomers: () => dispatch(actions.getAll()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustomersPage);
+export default CustomersPage;

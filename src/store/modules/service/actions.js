@@ -1,22 +1,22 @@
 import API from "../../../services/api";
 
 import {
-  GET_ALL_FAILED,
-  GET_ALL_LOADING,
-  GET_ALL_SUCCESS,
-  CREATE_LOADING,
-  CREATE_FAILED,
-  CREATE_SUCCESS,
+  GET_SERVICES_FAILED,
+  GET_SERVICES_LOADING,
+  GET_SERVICES_SUCCESS,
+  CREATE_SERVICE_LOADING,
+  CREATE_SERVICE_FAILED,
+  CREATE_SERVICE_SUCCESS,
 } from "./constants";
 import store from "../../index";
 
-const getAllLoading = () => ({ type: GET_ALL_LOADING });
-const getAllSuccess = (payload) => ({ type: GET_ALL_SUCCESS, user: payload });
-const getAllFailed = (error) => ({ type: GET_ALL_FAILED, error });
+const getAllLoading = () => ({ type: GET_SERVICES_LOADING });
+const getAllSuccess = (payload) => ({ type: GET_SERVICES_SUCCESS, payload });
+const getAllFailed = (error) => ({ type: GET_SERVICES_FAILED, error });
 
-const createLoading = () => ({ type: CREATE_LOADING });
-const createSuccess = (payload) => ({ type: CREATE_SUCCESS, user: payload });
-const createFailed = (error) => ({ type: CREATE_FAILED, error });
+const createLoading = () => ({ type: CREATE_SERVICE_LOADING });
+const createSuccess = (payload) => ({ type: CREATE_SERVICE_SUCCESS, payload });
+const createFailed = (error) => ({ type: CREATE_SERVICE_FAILED, error });
 
 export const retrieveAll = () => {
   return (dispatch) => {

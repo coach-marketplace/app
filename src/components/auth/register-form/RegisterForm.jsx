@@ -1,47 +1,31 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { Formik } from "formik";
 
 // import validationSchema from "./validation";
 import Form from "../../ui/form/Form";
 import Field from "../../ui/form/field/Field";
 import Button from "../../ui/button/Button";
-import * as actions from "../../../store/modules/auth/actions";
 
 class RegisterForm extends Component {
-  state = {
-    isRegistrationLoading: false,
-    email: "",
-    password: ""
-  };
-  // TODO: login when register is complete
-
-  onSubmit = data => {
-    this.setState(
-      {
-        isRegistrationLoading: true,
-        email: data.email,
-        password: data.password
-      },
-      () => {
-        this.props.register(data);
-      }
-    );
+  static propTypes = {
+    isLoading: PropTypes.bool,
+    onLogin: PropTypes.func,
+    onSubmit: PropTypes.func.isRequired,
   };
 
   // TODO: validation form
   render() {
-    const { isRegistrationLoading, email, password } = this.state;
+    const { onLogin, isLoading, onSubmit } = this.props;
 
     return (
       <Formik
         initialValues={{
-          email: email,
-          password: password
+          email: "",
+          password: "",
         }}
         // validationSchema={validationSchema}
-        onSubmit={this.onSubmit}
+        onSubmit={onSubmit}
       >
         <Form>
           <Field
@@ -49,7 +33,7 @@ class RegisterForm extends Component {
             name="email"
             type="email"
             placeholder="john@doe.com"
-            disabled={isRegistrationLoading}
+            disabled={isLoading}
           />
 
           <Field
@@ -57,27 +41,23 @@ class RegisterForm extends Component {
             name="password"
             type="password"
             placeholder="********"
-            disabled={isRegistrationLoading}
+            disabled={isLoading}
           />
 
-          <Button type="submit" isLoading={isRegistrationLoading}>
-            Register
-          </Button>
+          <div>
+            <Button label="Register" type="submit" isLoading={isLoading} />
+            {onLogin && (
+              <Button
+                label="Already an account? Log in"
+                appearance="minimal"
+                onClick={onLogin}
+              />
+            )}
+          </div>
         </Form>
       </Formik>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  isRegisterLoading: state.auth.actions.register.loading,
-  isRegisterError: state.auth.actions.register.error,
-  isRegisterSuccess: state.auth.actions.register.success,
-  authUser: state.auth.authUser
-});
-
-const mapDispatchToProps = dispatch => ({
-  register: data => dispatch(actions.register(data))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
+export default RegisterForm;

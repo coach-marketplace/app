@@ -8,30 +8,44 @@ import Spinner from "./components/ui/loader/Spinner";
 import "./style/main.css";
 
 class App extends Component {
+  state = {
+    previousIsAutoLoginLoading: false,
+    isAutoLoginDone: false,
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    const { isAutoLoginLoading } = props;
+
+    return {
+      ...state,
+      previousIsAutoLoginLoading: isAutoLoginLoading,
+      isAutoLoginDone: state.previousIsAutoLoginLoading,
+    };
+  }
+
   componentDidMount() {
-    this.props.autoLogin();
+    const { autoLogin } = this.props;
+
+    autoLogin();
   }
 
   render() {
-    if (
-      this.props.isAutoLoginLoading ||
-      (!this.props.isAutoLoginSuccess && !this.props.isAutoLoginError)
-    ) {
+    const { isAutoLoginDone } = this.state;
+
+    if (!isAutoLoginDone) {
       return <Spinner />;
     }
+
     return <Router />;
   }
 }
 
-const mapStateToProps = state => ({
-  authUser: state.auth.authUser,
-  isAutoLoginLoading: state.auth.actions.auto_login.loading,
-  isAutoLoginSuccess: state.auth.actions.auto_login.success,
-  isAutoLoginError: state.auth.actions.auto_login.error
+const mapStateToProps = (state) => ({
+  isAutoLoginLoading: state.auth.actions.autoLogin.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  autoLogin: () => dispatch(actions.tryAutoLogin())
+const mapDispatchToProps = (dispatch) => ({
+  autoLogin: () => dispatch(actions.tryAutoLogin()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
