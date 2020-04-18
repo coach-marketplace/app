@@ -1,6 +1,7 @@
 /**
  * This is a description of the MyClass constructor function.
- * The logic is following this video: https://www.youtube.com/watch?v=SdIYREbBSoo
+ * The logic is following this video:
+ * https://www.youtube.com/watch?v=SdIYREbBSoo
  */
 class Month {
   constructor(year, month) {
@@ -32,25 +33,22 @@ class Month {
     this.month = month || new Date().getMonth();
   }
 
-  getFirstDayOfMonth() {
-    return new Date(this.year, this.month);
-  }
-
-  getLastDayOfMonth() {
-    const firstMonthDay = this.getFirstDayOfMonth();
-    const firstNextMonthDay = new Date(firstMonthDay.setMonth(this.month + 1));
-    const lastMonthDay = new Date(firstNextMonthDay.setDate(0));
-
-    return lastMonthDay.getDate();
+  /**
+   * Get a new cloned date
+   * @param {date} dateToClone The date to clone
+   * @return {date} The cloned date
+   */
+  cloneDate(dateToClone) {
+    return new Date(dateToClone.getTime());
   }
 
   /**
-   * Get list of days for the month
+   * Get list of days for the current month
    * @return {[object]} List of month day
    */
   getDays() {
     const days = [];
-    const firstDayOfMonth = this.getFirstDayOfMonth();
+    const firstDayOfMonth = new Date(this.year, this.month);
     /**
      * We first get the day from the previous month
      * We want to set the first day as monday so we do `- 1`
@@ -95,10 +93,6 @@ class Month {
     }
 
     return days;
-  }
-
-  cloneDate(dateToClone) {
-    return new Date(dateToClone.getTime());
   }
 }
 
