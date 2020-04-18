@@ -2,7 +2,8 @@ import React, { Fragment } from "react";
 
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/layout/header/Header";
-import ServiceSchedule from "../../components/service/service-schedule/ServiceSchedule";
+// import ServiceSchedule from "../../components/service/service-schedule/ServiceSchedule";
+import Calendar from "../../components/ui/calendar/Calendar";
 
 class SchedulePage extends React.Component {
   render() {
@@ -11,7 +12,7 @@ class SchedulePage extends React.Component {
         header={<Header />}
         main={
           <Fragment>
-            <ServiceSchedule />
+            <Calendar />
           </Fragment>
         }
       />
