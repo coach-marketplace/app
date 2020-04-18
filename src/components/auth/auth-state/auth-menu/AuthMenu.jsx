@@ -9,7 +9,7 @@ const AuthMenu = ({ logout }) => {
   return (
     <Menu>
       <Menu.Group>
-        <Menu.Item onSelect={() => history.push("account/profile")}>
+        <Menu.Item onSelect={() => history.push("/account/profile")}>
           Account
         </Menu.Item>
       </Menu.Group>
