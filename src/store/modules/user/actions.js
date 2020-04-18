@@ -1,129 +1,92 @@
 import {
-    FETCH_USER_PROFILE_INFOS_PENDING,
-    FETCH_USER_PROFILE_INFOS_SUCCESS,
-    FETCH_USER_PROFILE_INFOS_ERROR,
-
-    UPDATE_USER_PROFILE_INFOS_PENDING,
-    UPDATE_USER_PROFILE_INFOS_SUCCESS,
-    UPDATE_USER_PROFILE_INFOS_ERROR,
-
-    UPDATE_USER_PASSWORD_PENDING,
-    UPDATE_USER_PASSWORD_SUCCESS,
-    UPDATE_USER_PASSWORD_ERROR,
-
-    FETCH_USER_BODY_INFOS_PENDING,
-    FETCH_USER_BODY_INFOS_SUCCESS,
-    FETCH_USER_BODY_INFOS_ERROR,
-
-    UPDATE_USER_BODY_INFOS_PENDING,
-    UPDATE_USER_BODY_INFOS_SUCCESS,
-    UPDATE_USER_BODY_INFOS_ERROR,
+  FETCH_USER_PROFILE_PENDING,
+  FETCH_USER_PROFILE_SUCCESS,
+  FETCH_USER_PROFILE_ERROR,
+  UPDATE_USER_PROFILE_PENDING,
+  UPDATE_USER_PROFILE_SUCCESS,
+  UPDATE_USER_PROFILE_ERROR,
+  UPDATE_USER_PASSWORD_PENDING,
+  UPDATE_USER_PASSWORD_SUCCESS,
+  UPDATE_USER_PASSWORD_ERROR,
+  FETCH_USER_PHYSICAL_METRICS_PENDING,
+  FETCH_USER_PHYSICAL_METRICS_SUCCESS,
+  FETCH_USER_PHYSICAL_METRICS_ERROR,
+  ADD_USER_PHYSICAL_METRICS_PENDING,
+  ADD_USER_PHYSICAL_METRICS_SUCCESS,
+  ADD_USER_PHYSICAL_METRICS_ERROR,
 } from "./constants";
 
 /***
  * Fetch profile infos
  */
-export const fetchUserProfileInfosPending = () => {
-   return {type: FETCH_USER_PROFILE_INFOS_PENDING}
-}
-  
-export const fetchUserProfileInfosSuccess = (payload) => {
-   return {
-       type: FETCH_USER_PROFILE_INFOS_SUCCESS,
-       data: payload 
-    }
-} 
-
-export const fetchUserProfileInfosFailed = (payload) => {
-   return {
-      type: FETCH_USER_PROFILE_INFOS_ERROR,
-      data: payload 
-   }
-} 
+export const fetchUserProfilePending = () => ({
+  type: FETCH_USER_PROFILE_PENDING,
+});
+export const fetchUserProfileSuccess = (payload) => ({
+  type: FETCH_USER_PROFILE_SUCCESS,
+  data: payload,
+});
+export const fetchUserProfileFailed = (payload) => ({
+  type: FETCH_USER_PROFILE_ERROR,
+  data: payload,
+});
 
 /**
  * Update profile infos
  */
-
-export const updateUserProfileInfosPending = () => {
-   return { type: UPDATE_USER_PROFILE_INFOS_PENDING }
-}
-
-export const updateUserProfileInfosSuccess = (payload) => {
-   return {
-      type: UPDATE_USER_PROFILE_INFOS_SUCCESS,
-      data: payload
-   }
-}
-
-export const updateUserProfileInfosFailed = (payload) => {
-   return { 
-      type: UPDATE_USER_PROFILE_INFOS_ERROR,
-      data: payload,
-   }
-}
+export const updateUserProfilePending = () => ({
+  type: UPDATE_USER_PROFILE_PENDING,
+});
+export const updateUserProfileSuccess = (payload) => ({
+  type: UPDATE_USER_PROFILE_SUCCESS,
+  data: payload,
+});
+export const updateUserProfileFailed = (payload) => ({
+  type: UPDATE_USER_PROFILE_ERROR,
+  data: payload,
+});
 
 /**
- * change user password
+ * Update user password
  */
-
-export const changeUserPasswordPending = () => {
-   return { type: UPDATE_USER_PASSWORD_PENDING }
-}
-
-export const changeUserPasswordSuccess = (payload) => {
-   return { 
-      type: UPDATE_USER_PASSWORD_SUCCESS,
-      data: payload
-   }
-}
-
-export const changeUserPasswordFailed = (payload) => {
-   return { 
-            type: UPDATE_USER_PASSWORD_ERROR,
-            data: payload
-         }
-}
+export const updateUserPasswordPending = () => ({
+  type: UPDATE_USER_PASSWORD_PENDING,
+});
+export const updateUserPasswordSuccess = (payload) => ({
+  type: UPDATE_USER_PASSWORD_SUCCESS,
+  data: payload,
+});
+export const updateUserPasswordFailed = (payload) => ({
+  type: UPDATE_USER_PASSWORD_ERROR,
+  data: payload,
+});
 
 /***
- * Fetch BODY infos
+ * Fetch physical metrics infos
  */
-export const fetchUserBodyInfosPending = () => {
-   return {type: FETCH_USER_BODY_INFOS_PENDING}
-}
-  
-export const fetchUserBodyInfosSuccess = (payload) => {
-   return {
-       type: FETCH_USER_BODY_INFOS_SUCCESS,
-       data: payload 
-    }
-} 
-
-export const fetchUserBodyInfosFailed = (payload) => {
-   return {
-      type: FETCH_USER_BODY_INFOS_ERROR,
-      data: payload 
-   }
-} 
+export const fetchUserPhysicalMetricsPending = () => ({
+  type: FETCH_USER_PHYSICAL_METRICS_PENDING,
+});
+export const fetchUserPhysicalMetricsSuccess = (payload) => ({
+  type: FETCH_USER_PHYSICAL_METRICS_SUCCESS,
+  data: payload,
+});
+export const fetchUserPhysicalMetricsFailed = (payload) => ({
+  type: FETCH_USER_PHYSICAL_METRICS_ERROR,
+  data: payload,
+});
 
 /**
- * Update Body infos
+ * Add physical metrics
  */
-
-export const updateUserBodyInfosPending = () => {
-   return { type: UPDATE_USER_BODY_INFOS_PENDING }
-}
-
-export const updateUserBodyInfosSuccess = (payload) => {
-   return {
-      type: UPDATE_USER_BODY_INFOS_SUCCESS,
-      data: payload
-   }
-}
-
-export const updateUserBodyInfosFailed = (payload) => {
-   return { 
-      type: UPDATE_USER_BODY_INFOS_ERROR,
-      data: payload,
-   }
-}
+export const addUserPhysicalMetricsPending = () => ({
+  type: ADD_USER_PHYSICAL_METRICS_PENDING,
+});
+export const addUserPhysicalMetricsSuccess = (payload) => ({
+  type: ADD_USER_PHYSICAL_METRICS_SUCCESS,
+  data: payload,
+});
+export const addUserPhysicalMetricsFailed = (payload) => ({
+  type: ADD_USER_PHYSICAL_METRICS_ERROR,
+  data: payload,
+});

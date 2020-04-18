@@ -12,9 +12,9 @@ import NewCustomerPage from "../pages/customers-page/NewCustomerPage";
 import ServicePage from "../pages/service-page/ServicePage";
 import NewServicePage from "../pages/service-page/NewServicePage";
 import SchedulePage from "../pages/schedule-page/SchedulePage";
-import ProfilePage from "../pages/profile-page/ProfilePage";
-import ChangePasswordPage from "../pages/profile-page/ChangePasswordPage";
-import BodyPage from "../pages/profile-page/BodyPage";
+import AccountPage from "../pages/user-page/AccountPage";
+// import ChangePasswordPage from "../components/account/security-section/SecuritySection";
+// import BodyPage from "../pages/profile-page/BodyPage";
 import LibraryPage from "../pages/library-page/LibraryPage";
 
 class Router extends Component {
@@ -24,9 +24,8 @@ class Router extends Component {
         <Switch>
           <Route path="/login" exact component={LoginPage} />
           <Route path="/register" exact component={RegisterPage} />
-          <Route path="/profile" exact component={ProfilePage} />
-          <Route path="/password" exact component={ChangePasswordPage} />
-          <Route path="/body" exact component={BodyPage} />
+
+          {/* <Route path="/password" exact component={ChangePasswordPage} /> */}
 
           <ProtectedRoute path="/" exact component={HomePage} />
           <ProtectedRoute path="/customers" exact component={CustomersPage} />
@@ -42,7 +41,11 @@ class Router extends Component {
             component={NewServicePage}
           />
           <ProtectedRoute path="/schedule" exact component={SchedulePage} />
-          <ProtectedRoute path="/profile" exact component={ProfilePage} />
+          <ProtectedRoute
+            path="/account/:section"
+            exact
+            component={AccountPage}
+          />
           <ProtectedRoute path="/library/:type" exact component={LibraryPage} />
         </Switch>
       </BrowserRouter>

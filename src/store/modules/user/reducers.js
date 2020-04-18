@@ -1,211 +1,239 @@
+import cloneDeep from "lodash.clonedeep";
+
 import initialState from "./state";
-
 import {
-  FETCH_USER_PROFILE_INFOS_PENDING,
-  FETCH_USER_PROFILE_INFOS_SUCCESS,
-  FETCH_USER_PROFILE_INFOS_ERROR,
-
-  UPDATE_USER_PROFILE_INFOS_PENDING,
-  UPDATE_USER_PROFILE_INFOS_SUCCESS,
-  UPDATE_USER_PROFILE_INFOS_ERROR,
-
+  FETCH_USER_PROFILE_PENDING,
+  FETCH_USER_PROFILE_SUCCESS,
+  FETCH_USER_PROFILE_ERROR,
+  UPDATE_USER_PROFILE_PENDING,
+  UPDATE_USER_PROFILE_SUCCESS,
+  UPDATE_USER_PROFILE_ERROR,
   UPDATE_USER_PASSWORD_PENDING,
   UPDATE_USER_PASSWORD_SUCCESS,
   UPDATE_USER_PASSWORD_ERROR,
-
-  FETCH_USER_BODY_INFOS_PENDING,
-  FETCH_USER_BODY_INFOS_SUCCESS,
-  FETCH_USER_BODY_INFOS_ERROR,
-
-  UPDATE_USER_BODY_INFOS_PENDING,
-  UPDATE_USER_BODY_INFOS_SUCCESS,
-  UPDATE_USER_BODY_INFOS_ERROR,
+  FETCH_USER_PHYSICAL_METRICS_PENDING,
+  FETCH_USER_PHYSICAL_METRICS_SUCCESS,
+  FETCH_USER_PHYSICAL_METRICS_ERROR,
+  ADD_USER_PHYSICAL_METRICS_PENDING,
+  ADD_USER_PHYSICAL_METRICS_SUCCESS,
+  ADD_USER_PHYSICAL_METRICS_ERROR,
 } from "./constants";
 
-import cloneDeep from "lodash.clonedeep";
-
-// FETCH USER INFOS 
-
-const userProfileDataLoading = state => {
+/**
+ * Fetch user profile
+ */
+const userProfileLoading = (state) => {
   const newState = cloneDeep(state);
-  newState.profileData.status = FETCH_USER_PROFILE_INFOS_PENDING;
-  return newState;
-};
 
-const userProfileDataSuccess = (state, payload) => {
-  const newState = cloneDeep(state);
-  newState.profileData.status = FETCH_USER_PROFILE_INFOS_SUCCESS;
-  newState.profileData.firstName = payload.firstName !== undefined ? payload.firstName : "";
-  newState.profileData.lastName = payload.lastName !== undefined ? payload.lastName : "";
-  newState.profileData.email = payload.email !== undefined ? payload.email : "";
-  newState.profileData.phone = payload.phone !== undefined ? payload.phone : "";
-  return newState;
-};
-
-const userProfileDataFailed = (state, payload) => {
-  const newState = cloneDeep(state);
-  newState.profileData.status = FETCH_USER_PROFILE_INFOS_ERROR;
-  newState.profileData.message = payload.message;
+  newState.actions.fetchUserProfile.status = FETCH_USER_PROFILE_PENDING;
+  newState.actions.fetchUserProfile.error = "";
 
   return newState;
 };
 
-//UPDATE USER INFOS
-
-const userProfileDataUpdateLoading = state => {
+const userProfileSuccess = (state, payload) => {
   const newState = cloneDeep(state);
-  newState.profileData.status = UPDATE_USER_PROFILE_INFOS_PENDING;
+  const { firstName, lastName, email, phone, dateOfBirth, gender } = payload;
+
+  firstName && (newState.firstName = firstName);
+  lastName && (newState.lastName = lastName);
+  email && (newState.email = email);
+  phone && (newState.phone = phone);
+  dateOfBirth && (newState.dateOfBirth = dateOfBirth);
+  gender && (newState.gender = gender);
+
+  newState.actions.fetchUserProfile.status = FETCH_USER_PROFILE_SUCCESS;
+  newState.actions.fetchUserProfile.error = "";
 
   return newState;
 };
 
-const userProfileDataUpdateSuccess = (state, payload) => {
+const userProfileFailed = (state, payload) => {
   const newState = cloneDeep(state);
-  newState.profileData.status = UPDATE_USER_PROFILE_INFOS_SUCCESS;
-  newState.profileData.message = payload.message !== undefined ? payload.message : "";
-  newState.profileData.firstName = payload.firstName !== undefined ? payload.firstName : "";
-  newState.profileData.lastName = payload.lastName !== undefined ? payload.lastName : "";
-  newState.profileData.email = payload.email !== undefined ? payload.email : "";
-  newState.profileData.phoneNumber = payload.phone !== undefined ? payload.phone : "";
+
+  newState.actions.fetchUserProfile.status = FETCH_USER_PROFILE_ERROR;
+  newState.actions.fetchUserProfile.error = payload.message;
 
   return newState;
 };
 
-const userProfileDataUpdateFailed = (state, payload) => {
+/**
+ * Update user profile
+ */
+const userProfileUpdateLoading = (state) => {
   const newState = cloneDeep(state);
-  newState.profileData.status = UPDATE_USER_PROFILE_INFOS_ERROR;
-  newState.profileData.message = payload.message;
+
+  newState.actions.updateUserProfile.status = UPDATE_USER_PROFILE_PENDING;
+  newState.actions.updateUserProfile.error = "";
 
   return newState;
 };
 
-// CHANGE USER PASSWORD
-
-const changeUserPasswordLoading = state => {
+const userProfileUpdateSuccess = (state, payload) => {
   const newState = cloneDeep(state);
-  newState.passwordData.status = UPDATE_USER_PASSWORD_PENDING;
+  const { firstName, lastName, email, phone, dateOfBirth, gender } = payload;
+
+  firstName && (newState.firstName = firstName);
+  lastName && (newState.lastName = lastName);
+  email && (newState.email = email);
+  phone && (newState.phone = phone);
+  dateOfBirth && (newState.dateOfBirth = dateOfBirth);
+  gender && (newState.gender = gender);
+
+  newState.actions.updateUserProfile.status = UPDATE_USER_PROFILE_SUCCESS;
+  newState.actions.updateUserProfile.error = "";
 
   return newState;
 };
 
-const changeUserPasswordSuccess = (state, payload) => {
+const userProfileUpdateFailed = (state, payload) => {
   const newState = cloneDeep(state);
-  newState.passwordData.status = UPDATE_USER_PASSWORD_SUCCESS;
-  newState.passwordData.message = payload.message;
-  
-  return newState;
-};
 
-const changeUserPasswordFailed = (state, payload) => {
-  const newState = cloneDeep(state);
-  newState.passwordData.status = UPDATE_USER_PASSWORD_ERROR;
-  newState.passwordData.message = payload.message;
+  newState.actions.updateUserProfile.status = UPDATE_USER_PROFILE_ERROR;
+  newState.actions.updateUserProfile.error = payload.message;
 
   return newState;
 };
 
-// FETCH USER INFOS 
-
-const userBodyDataLoading = state => {
+/**
+ * Update user password
+ */
+const userPasswordLoading = (state) => {
   const newState = cloneDeep(state);
-  newState.bodyData.status = FETCH_USER_BODY_INFOS_PENDING;
-  return newState;
-};
 
-const userBodyDataSuccess = (state, payload) => {
-  const newState = cloneDeep(state);
-  newState.bodyData.status = FETCH_USER_BODY_INFOS_SUCCESS;
-  newState.bodyData.firstName = payload.firstName !== undefined ? payload.firstName : "";
-  newState.bodyData.lastName = payload.lastName !== undefined ? payload.lastName : "";
-  newState.bodyData.email = payload.email !== undefined ? payload.email : "";
-  newState.bodyData.phone = payload.phone !== undefined ? payload.phone : "";
-  return newState;
-};
-
-const userBodyDataFailed = (state, payload) => {
-  const newState = cloneDeep(state);
-  newState.bodyData.status = FETCH_USER_BODY_INFOS_ERROR;
-  newState.bodyData.message = payload.message;
+  newState.actions.updatePassword.status = UPDATE_USER_PASSWORD_PENDING;
+  newState.actions.updatePassword.error = "";
 
   return newState;
 };
 
-//UPDATE USER INFOS
-
-const userBodyDataUpdateLoading = state => {
+const userPasswordSuccess = (state, payload) => {
   const newState = cloneDeep(state);
-  newState.bodyData.status = UPDATE_USER_BODY_INFOS_PENDING;
+
+  newState.actions.updatePassword.status = UPDATE_USER_PASSWORD_SUCCESS;
+  newState.actions.updatePassword.error = "";
 
   return newState;
 };
 
-const userBodyDataUpdateSuccess = (state, payload) => {
+const userPasswordFailed = (state, payload) => {
   const newState = cloneDeep(state);
-  newState.bodyData.status = UPDATE_USER_BODY_INFOS_SUCCESS;
-  newState.bodyData.message = payload.message !== undefined ? payload.message : "";
-  newState.bodyData.weight = payload.weight !== undefined ? payload.weight : "";
-  newState.bodyData.height = payload.height !== undefined ? payload.height : "";
-  newState.bodyData.age = payload.age !== undefined ? payload.age : "";
-  newState.bodyData.gender = payload.gender !== undefined ? payload.gender : "";
+
+  newState.actions.updatePassword.status = UPDATE_USER_PASSWORD_ERROR;
+  newState.actions.updatePassword.error = payload.message;
 
   return newState;
 };
 
-const userBodyDataUpdateFailed = (state, payload) => {
+/**
+ * Fetch user physical metrics
+ */
+const userPhysicalMetricsFetchLoading = (state) => {
   const newState = cloneDeep(state);
-  newState.bodyData.status = UPDATE_USER_BODY_INFOS_ERROR;
-  newState.bodyData.message = payload.message;
+
+  newState.actions.fetchPhysicalMetrics.status = FETCH_USER_PHYSICAL_METRICS_PENDING;
+  newState.actions.fetchPhysicalMetrics.error = "";
 
   return newState;
 };
 
-// REDUCER
+const userPhysicalMetricsFetchSuccess = (state, payload) => {
+  const newState = cloneDeep(state);
+
+  newState.physicalMetrics = [...payload];
+
+  newState.actions.fetchPhysicalMetrics.status = FETCH_USER_PHYSICAL_METRICS_SUCCESS;
+  newState.actions.fetchPhysicalMetrics.error = "";
+
+  return newState;
+};
+
+const userPhysicalMetricsFetchFailed = (state, payload) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.fetchPhysicalMetrics.status = FETCH_USER_PHYSICAL_METRICS_ERROR;
+  newState.actions.fetchPhysicalMetrics.error = payload.message;
+
+  return newState;
+};
+
+/**
+ * Update user physical metrics
+ */
+const userPhysicalMetricsAddLoading = (state) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.addPhysicalMetrics.status = ADD_USER_PHYSICAL_METRICS_PENDING;
+  newState.actions.addPhysicalMetrics.error = "";
+
+  return newState;
+};
+
+const userPhysicalMetricsAddSuccess = (state, payload) => {
+  const newState = cloneDeep(state);
+
+  newState.physicalMetrics.push(payload);
+
+  newState.actions.addPhysicalMetrics.status = ADD_USER_PHYSICAL_METRICS_SUCCESS;
+  newState.actions.addPhysicalMetrics.error = "";
+
+  return newState;
+};
+
+const userPhysicalMetricsAddFailed = (state, payload) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.addPhysicalMetrics.status = ADD_USER_PHYSICAL_METRICS_ERROR;
+  newState.actions.addPhysicalMetrics.error = payload.message;
+
+  return newState;
+};
 
 const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      //FETCH USER BODY INFOS
-      case FETCH_USER_PROFILE_INFOS_PENDING:
-        return userProfileDataLoading(state);
-      case FETCH_USER_PROFILE_INFOS_SUCCESS:
-        return userProfileDataSuccess(state, action.data);
-      case FETCH_USER_PROFILE_INFOS_ERROR:
-        return userProfileDataFailed(state, action.data);
-      
-      //UPDATE USER PROFILE INFOS
-      case UPDATE_USER_PROFILE_INFOS_PENDING:
-        return userProfileDataUpdateLoading(state);
-      case UPDATE_USER_PROFILE_INFOS_SUCCESS:
-        return userProfileDataUpdateSuccess(state, action.data);
-      case UPDATE_USER_PROFILE_INFOS_ERROR:
-        return userProfileDataUpdateFailed(state, action.data);
+  switch (action.type) {
+    //FETCH USER PROFILE INFOS
+    case FETCH_USER_PROFILE_PENDING:
+      return userProfileLoading(state);
+    case FETCH_USER_PROFILE_SUCCESS:
+      return userProfileSuccess(state, action.data);
+    case FETCH_USER_PROFILE_ERROR:
+      return userProfileFailed(state, action.data);
 
-      //CHANGE USER PASSWORD
-      case UPDATE_USER_PASSWORD_PENDING:
-        return changeUserPasswordLoading(state);
-      case UPDATE_USER_PASSWORD_SUCCESS:
-        return changeUserPasswordSuccess(state, action.data);
-      case UPDATE_USER_PASSWORD_ERROR:
-        return changeUserPasswordFailed(state, action.data);
+    //UPDATE USER PROFILE INFOS
+    case UPDATE_USER_PROFILE_PENDING:
+      return userProfileUpdateLoading(state);
+    case UPDATE_USER_PROFILE_SUCCESS:
+      return userProfileUpdateSuccess(state, action.data);
+    case UPDATE_USER_PROFILE_ERROR:
+      return userProfileUpdateFailed(state, action.data);
 
-      //FETCH USER BODY INFOS
-      case FETCH_USER_BODY_INFOS_PENDING:
-        return userBodyDataLoading(state);
-      case FETCH_USER_BODY_INFOS_SUCCESS:
-        return userBodyDataSuccess(state, action.data);
-      case FETCH_USER_BODY_INFOS_ERROR:
-        return userBodyDataFailed(state, action.data);
-      
-      //UPDATE USER BODY INFOS
-      case UPDATE_USER_BODY_INFOS_PENDING:
-        return userBodyDataUpdateLoading(state);
-      case UPDATE_USER_BODY_INFOS_SUCCESS:
-        return userBodyDataUpdateSuccess(state, action.data);
-      case UPDATE_USER_BODY_INFOS_ERROR:
-        return userBodyDataUpdateFailed(state, action.data);
+    //Update USER PASSWORD
+    case UPDATE_USER_PASSWORD_PENDING:
+      return userPasswordLoading(state);
+    case UPDATE_USER_PASSWORD_SUCCESS:
+      return userPasswordSuccess(state);
+    case UPDATE_USER_PASSWORD_ERROR:
+      return userPasswordFailed(state, action.data);
 
-      default:
-        return state;
-    }
-  };
+    //FETCH USER BODY INFOS
+    case FETCH_USER_PHYSICAL_METRICS_PENDING:
+      return userPhysicalMetricsFetchLoading(state);
+    case FETCH_USER_PHYSICAL_METRICS_SUCCESS:
+      return userPhysicalMetricsFetchSuccess(state, action.data);
+    case FETCH_USER_PHYSICAL_METRICS_ERROR:
+      return userPhysicalMetricsFetchFailed(state, action.data);
+
+    //ADD USER BODY INFOS
+    case ADD_USER_PHYSICAL_METRICS_PENDING:
+      return userPhysicalMetricsAddLoading(state);
+    case ADD_USER_PHYSICAL_METRICS_SUCCESS:
+      return userPhysicalMetricsAddSuccess(state, action.data);
+    case ADD_USER_PHYSICAL_METRICS_ERROR:
+      return userPhysicalMetricsAddFailed(state, action.data);
+
+    default:
+      return state;
+  }
+};
 
 export default reducer;
