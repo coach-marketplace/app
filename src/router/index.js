@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { connect } from "react-redux";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -12,7 +11,7 @@ import NewCustomerPage from "../pages/customers-page/NewCustomerPage";
 import ServicePage from "../pages/service-page/ServicePage";
 import NewServicePage from "../pages/service-page/NewServicePage";
 import SchedulePage from "../pages/schedule-page/SchedulePage";
-import ProfilePage from "../pages/profile-page/ProfilePage";
+// import ProfilePage from "../pages/profile-page/ProfilePage";
 import LibraryPage from "../pages/library-page/LibraryPage";
 import InboxPage from "../pages/inbox-page/InboxPage";
 
@@ -38,7 +37,7 @@ class Router extends Component {
             component={NewServicePage}
           />
           <ProtectedRoute path="/schedule" exact component={SchedulePage} />
-          <ProtectedRoute path="/profile" exact component={ProfilePage} />
+          {/* <ProtectedRoute path="/profile" exact component={ProfilePage} /> */}
           <ProtectedRoute path="/library/:type" exact component={LibraryPage} />
           <ProtectedRoute path="/inbox" exact component={InboxPage} />
         </Switch>
@@ -47,8 +46,4 @@ class Router extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  authUser: state.auth.authUser,
-});
-
-export default connect(mapStateToProps)(Router);
+export default Router;

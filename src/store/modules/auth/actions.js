@@ -1,9 +1,6 @@
 import API from "../../../services/api";
 
 import {
-  AUTO_LOGIN_FAILED,
-  AUTO_LOGIN_LOADING,
-  AUTO_LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOGIN_LOADING,
   LOGIN_SUCCESS,
@@ -12,14 +9,6 @@ import {
   REGISTER_SUCCESS,
   LOGOUT,
 } from "./constants";
-import { getTokenFromLocalStorage } from "../../../services/local-storage";
-
-const autoLoginLoading = () => ({ type: AUTO_LOGIN_LOADING });
-const autoLoginSuccess = (payload) => ({
-  type: AUTO_LOGIN_SUCCESS,
-  user: payload,
-});
-const autoLoginFailed = (error) => ({ type: AUTO_LOGIN_FAILED, error });
 
 const loginLoading = () => ({ type: LOGIN_LOADING });
 const loginSuccess = (payload) => ({ type: LOGIN_SUCCESS, payload });
@@ -29,7 +18,10 @@ const registerLoading = () => ({ type: REGISTER_LOADING });
 const registerSuccess = (payload) => ({ type: REGISTER_SUCCESS, payload });
 const registerFailed = (error) => ({ type: REGISTER_FAILED, error });
 
-export const logout = () => ({ type: LOGOUT });
+export const logout = () => {
+  console.log("logout");
+  return { type: LOGOUT };
+};
 
 /**
  * Register
@@ -68,27 +60,6 @@ export const login = (email, password) => {
       })
       .catch((error) => {
         dispatch(loginFailed(error.message));
-      });
-  };
-};
-
-/**
- * TryAutoLogin
- * @return {void}
- */
-export const tryAutoLogin = () => {
-  return (dispatch) => {
-    dispatch(autoLoginLoading());
-    const token = getTokenFromLocalStorage();
-    API.setToken(token);
-    API.get("auth/me")
-      .then((response) => {
-        const user = response.data;
-        user.token = token;
-        dispatch(autoLoginSuccess(user));
-      })
-      .catch((error) => {
-        dispatch(autoLoginFailed(error.message));
       });
   };
 };

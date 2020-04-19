@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/layout/header/Header";
-import Title from "../../components/ui/typography/Title";
+// import Title from "../../components/ui/typography/Title";
 import ConversationsContainer from "../../components/chat/conversations-container/ConversationsContainer";
 import { retrieveAll as retrieveConversations } from "../../store/modules/conversation/actions";
 
-class InboxPage extends Component {
+class ConversationPage extends Component {
   componentDidMount() {
     const { conversations, fetchConversations } = this.props;
 
@@ -21,11 +21,10 @@ class InboxPage extends Component {
         header={<Header />}
         main={
           <>
-            <Title>Your messages</Title>
-            <ConversationsContainer
+            {/* <ConversationsContainer
               isLoading={isFetchConversationsLoading}
               conversations={conversations}
-            />
+            /> */}
           </>
         }
       />
@@ -34,14 +33,14 @@ class InboxPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  conversations: state.conversation.list,
-  isFetchConversationsLoading: state.conversation.actions.getAll.loading,
-  isFetchConversationsSuccess: state.conversation.actions.getAll.success,
-  isFetchConversationsError: state.conversation.actions.getAll.error,
+  // conversation: state.conversation.list,
+  // isFetchConversationsLoading: state.conversation.actions.getAll.loading,
+  // isFetchConversationsSuccess: state.conversation.actions.getAll.success,
+  // isFetchConversationsError: state.conversation.actions.getAll.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchConversations: () => dispatch(retrieveConversations()),
+  // fetchConversations: () => dispatch(retrieveConversations()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(InboxPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ConversationPage);

@@ -1,9 +1,6 @@
 import cloneDeep from "lodash.clonedeep";
 
 import {
-  AUTO_LOGIN_FAILED,
-  AUTO_LOGIN_LOADING,
-  AUTO_LOGIN_SUCCESS,
   LOGIN_LOADING,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
@@ -18,40 +15,9 @@ import {
   removeTokenFromLocalStorage,
 } from "../../../services/local-storage";
 
-const autoLoginLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.autoLogin.loading = true;
-  newState.actions.autoLogin.success = false;
-  newState.actions.autoLogin.error = null;
-
-  return newState;
-};
-
-const autoLoginFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.autoLogin.loading = false;
-  newState.actions.autoLogin.success = false;
-  newState.actions.autoLogin.error = action.error;
-
-  return newState;
-};
-
-const autoLoginSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const token = action.user.token;
-  const user = action.user;
-  delete user.token;
-  newState.token = token;
-  newState.authUser = user;
-  newState.actions.autoLogin.loading = false;
-  newState.actions.autoLogin.error = null;
-  newState.actions.autoLogin.success = true;
-
-  return newState;
-};
-
 const loginLoading = (state) => {
   const newState = cloneDeep(state);
+
   newState.actions.login.loading = true;
   newState.actions.login.success = false;
   newState.actions.login.error = null;
@@ -61,6 +27,7 @@ const loginLoading = (state) => {
 
 const loginFailed = (state, action) => {
   const newState = cloneDeep(state);
+
   newState.actions.login.loading = false;
   newState.actions.login.success = false;
   newState.actions.login.error = action.error;
@@ -70,11 +37,9 @@ const loginFailed = (state, action) => {
 
 const loginSuccess = (state, action) => {
   const newState = cloneDeep(state);
-  const token = action.payload.token;
-  const user = action.payload.user;
+  const { token } = action.payload;
 
   newState.token = token;
-  newState.authUser = user;
   newState.actions.login.loading = false;
   newState.actions.login.error = null;
   newState.actions.login.success = true;
@@ -85,6 +50,7 @@ const loginSuccess = (state, action) => {
 
 const registerLoading = (state) => {
   const newState = cloneDeep(state);
+
   newState.actions.register.loading = true;
   newState.actions.register.success = false;
   newState.actions.register.error = null;
@@ -94,6 +60,7 @@ const registerLoading = (state) => {
 
 const registerFailed = (state, action) => {
   const newState = cloneDeep(state);
+
   newState.actions.register.loading = false;
   newState.actions.register.success = false;
   newState.actions.register.error = action.error;
@@ -103,6 +70,7 @@ const registerFailed = (state, action) => {
 
 const registerSuccess = (state, action) => {
   const newState = cloneDeep(state);
+
   newState.actions.register.loading = false;
   newState.actions.register.success = true;
   newState.actions.register.error = null;
@@ -112,18 +80,13 @@ const registerSuccess = (state, action) => {
 
 const logout = (state) => {
   removeTokenFromLocalStorage();
+  window.location = "/login";
 
   return cloneDeep(state);
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTO_LOGIN_FAILED:
-      return autoLoginFailed(state, action);
-    case AUTO_LOGIN_LOADING:
-      return autoLoginLoading(state);
-    case AUTO_LOGIN_SUCCESS:
-      return autoLoginSuccess(state, action);
     case LOGIN_LOADING:
       return loginLoading(state);
     case LOGIN_FAILED:

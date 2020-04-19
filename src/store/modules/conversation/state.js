@@ -1,8 +1,9 @@
 import { INITIAL_ACTION_STATE } from "../../../helper/constants";
 
 export default {
-  current: null,
+  list: [],
   actions: {
-    fetchAuthUser: { ...INITIAL_ACTION_STATE },
+    getAll: { ...INITIAL_ACTION_STATE },
+    // create: { ...INITIAL_ACTION_STATE },
   },
 };

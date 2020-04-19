@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import Socket from "./services/socket";
 import Router from "./router";
-import * as actions from "./store/modules/auth/actions";
+import { fetchAuthUser } from "./store/modules/user/actions";
 import Spinner from "./components/ui/loader/Spinner";
 
 import "./style/main.css";
@@ -29,6 +30,13 @@ class App extends Component {
     autoLogin();
   }
 
+  componentDidUpdate() {
+    const { user } = this.props;
+    const { isAutoLoginDone } = this.state;
+
+    isAutoLoginDone && user && Socket.init({ userId: user._id });
+  }
+
   render() {
     const { isAutoLoginDone } = this.state;
 
@@ -41,11 +49,12 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isAutoLoginLoading: state.auth.actions.autoLogin.loading,
+  user: state.user.current,
+  isAutoLoginLoading: state.user.actions.fetchAuthUser.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  autoLogin: () => dispatch(actions.tryAutoLogin()),
+  autoLogin: () => dispatch(fetchAuthUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
