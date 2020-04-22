@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/layout/header/Header";
-// import Title from "../../components/ui/typography/Title";
+import Title from "../../components/ui/typography/Title";
 import ConversationsContainer from "../../components/chat/conversations-container/ConversationsContainer";
 import { retrieveAll as retrieveConversations } from "../../store/modules/conversation/actions";
 
-class ConversationPage extends Component {
+class ConversationsPage extends Component {
   componentDidMount() {
-    const { conversations, fetchConversations } = this.props;
+    const { fetchConversations, isFetchConversationsSuccess } = this.props;
 
-    !conversations.length && fetchConversations();
+    !isFetchConversationsSuccess && fetchConversations();
   }
 
   render() {
@@ -21,10 +21,11 @@ class ConversationPage extends Component {
         header={<Header />}
         main={
           <>
-            {/* <ConversationsContainer
+            <Title>Your messages</Title>
+            <ConversationsContainer
               isLoading={isFetchConversationsLoading}
               conversations={conversations}
-            /> */}
+            />
           </>
         }
       />
@@ -33,14 +34,14 @@ class ConversationPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  // conversation: state.conversation.list,
-  // isFetchConversationsLoading: state.conversation.actions.getAll.loading,
-  // isFetchConversationsSuccess: state.conversation.actions.getAll.success,
-  // isFetchConversationsError: state.conversation.actions.getAll.error,
+  conversations: state.conversation.list,
+  isFetchConversationsLoading: state.conversation.actions.getAll.loading,
+  isFetchConversationsSuccess: state.conversation.actions.getAll.success,
+  isFetchConversationsError: state.conversation.actions.getAll.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // fetchConversations: () => dispatch(retrieveConversations()),
+  fetchConversations: () => dispatch(retrieveConversations()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConversationPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ConversationsPage);

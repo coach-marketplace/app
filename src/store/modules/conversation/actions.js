@@ -4,6 +4,9 @@ import {
   GET_CONVERSATIONS_FAILED,
   GET_CONVERSATIONS_LOADING,
   GET_CONVERSATIONS_SUCCESS,
+  GET_CONVERSATION_FAILED,
+  GET_CONVERSATION_LOADING,
+  GET_CONVERSATION_SUCCESS,
   // CREATE_CONVERSATION_LOADING,
   // CREATE_CONVERSATION_FAILED,
   // CREATE_CONVERSATION_SUCCESS,
@@ -16,6 +19,13 @@ const getAllSuccess = (payload) => ({
   payload,
 });
 const getAllFailed = (error) => ({ type: GET_CONVERSATIONS_FAILED, error });
+
+const getOneLoading = () => ({ type: GET_CONVERSATION_LOADING });
+const getOneSuccess = (payload) => ({
+  type: GET_CONVERSATION_SUCCESS,
+  payload,
+});
+const getOneFailed = (error) => ({ type: GET_CONVERSATION_FAILED, error });
 
 // const createLoading = () => ({ type: CREATE_CONVERSATION_LOADING });
 // const createSuccess = (payload) => ({ type: CREATE_CONVERSATION_SUCCESS, payload });
@@ -34,6 +44,23 @@ export const retrieveAll = () => {
       })
       .catch((error) => {
         dispatch(getAllFailed(error.message));
+      });
+  };
+};
+
+export const retrieveOne = (conversationId) => {
+  return (dispatch) => {
+    dispatch(getOneLoading());
+    const {
+      user: { current: user },
+    } = store.getState();
+
+    API.get(`user/${user._id}/conversations/${conversationId}`)
+      .then((response) => {
+        dispatch(getOneSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getOneFailed(error.message));
       });
   };
 };

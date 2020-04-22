@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import ConversationCard from "../conversation-card/ConversationCard";
 
@@ -16,8 +16,7 @@ class ConversationsContainer extends Component {
   };
 
   goToConversationPage = (id) => {
-    const history = useHistory();
-
+    const { history } = this.props;
     history.push(`/conversation/${id}`);
   };
 
@@ -29,10 +28,7 @@ class ConversationsContainer extends Component {
         {conversations.map((conversation) => (
           <ConversationCard
             key={conversation._id}
-            message={"coucou"}
-            participants={conversation.participants}
-            date={conversation.date}
-            isRead={conversation.updatedAt}
+            conversation={conversation}
             onClick={() => this.goToConversationPage(conversation._id)}
           />
         ))}
@@ -41,4 +37,4 @@ class ConversationsContainer extends Component {
   }
 }
 
-export default ConversationsContainer;
+export default withRouter(ConversationsContainer);

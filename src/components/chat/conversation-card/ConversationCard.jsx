@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import Pane from "../../ui/pane/Pane";
+import { ContainerCard } from "./style";
 import Text from "../../ui/text/Text";
+import Conversation from "../../../services/domains/Conversation";
 
-const ConversationCard = ({ message, onClick, participantNames }) => {
+const ConversationCard = ({ conversation, onClick, user }) => {
+  const [conv, setConv] = useState(null);
+
+  useEffect(() => {
+    !conv && setConv(new Conversation(conversation));
+  }, [conv, conversation]);
+
   return (
-    <Pane
+    <ContainerCard
       elevation={1}
       display="flex"
       justifyContent="flexStart"
@@ -15,21 +23,18 @@ const ConversationCard = ({ message, onClick, participantNames }) => {
       marginTop={10}
       onClick={onClick}
     >
-      <Text>{message}</Text>
-    </Pane>
+      <Text>{conv && conv.getParticipantsNames(user._id)}</Text>
+    </ContainerCard>
   );
 };
 
 ConversationCard.propTypes = {
-  message: PropTypes.string.isRequired,
-  participantNames: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  isRead: PropTypes.bool,
+  conversation: PropTypes.object,
   onClick: PropTypes.func,
 };
 
-ConversationCard.defaultProps = {
-  isRead: false,
-};
+const mapStateToProps = (state) => ({
+  user: state.user.current,
+});
 
-export default ConversationCard;
+export default connect(mapStateToProps)(ConversationCard);

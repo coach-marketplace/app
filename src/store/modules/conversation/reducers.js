@@ -4,6 +4,9 @@ import {
   GET_CONVERSATIONS_FAILED,
   GET_CONVERSATIONS_LOADING,
   GET_CONVERSATIONS_SUCCESS,
+  GET_CONVERSATION_FAILED,
+  GET_CONVERSATION_LOADING,
+  GET_CONVERSATION_SUCCESS,
   // CREATE_CONVERSATION_LOADING,
   // CREATE_CONVERSATION_FAILED,
   // CREATE_CONVERSATION_SUCCESS,
@@ -38,6 +41,38 @@ const getAllLoading = (state) => {
   newState.actions.getAll.loading = true;
   newState.actions.getAll.success = false;
   newState.actions.getAll.error = null;
+
+  return newState;
+};
+
+const getOneFailed = (state, action) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.getOne.loading = false;
+  newState.actions.getOne.success = false;
+  newState.actions.getOne.error = action.error;
+
+  return newState;
+};
+
+const getOneSuccess = (state, action) => {
+  const newState = cloneDeep(state);
+  const conversation = action.payload;
+
+  newState.list = [...state.list, conversation];
+  newState.actions.getOne.loading = false;
+  newState.actions.getOne.error = null;
+  newState.actions.getOne.success = true;
+
+  return newState;
+};
+
+const getOneLoading = (state) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.getOne.loading = true;
+  newState.actions.getOne.success = false;
+  newState.actions.getOne.error = null;
 
   return newState;
 };
@@ -80,6 +115,12 @@ const reducer = (state = initialState, action) => {
       return getAllLoading(state);
     case GET_CONVERSATIONS_SUCCESS:
       return getAllSuccess(state, action);
+    case GET_CONVERSATION_FAILED:
+      return getOneFailed(state, action);
+    case GET_CONVERSATION_LOADING:
+      return getOneLoading(state);
+    case GET_CONVERSATION_SUCCESS:
+      return getOneSuccess(state, action);
     // case CREATE_CONVERSATION_FAILED:
     //   return createFailed(state, action);
     // case CREATE_CONVERSATION_LOADING:
