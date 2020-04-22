@@ -15,12 +15,6 @@ import Button from "../ui/button/Button";
 import { retrieveAllConversationMessages } from "../../store/modules/message/actions";
 import Conversation from "../../services/domains/Conversation";
 
-const getParticipantsNames = (conversation) => {
-  // console.log("getParticipantsNames", conversation);
-
-  return "???";
-};
-
 /**
  * The chat is represented by a Channel who represent the conversation itself,
  * and conversation is the conversation data from the DB

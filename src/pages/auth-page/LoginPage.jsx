@@ -31,6 +31,8 @@ class LoginPage extends React.Component {
 
       return { step: 1 };
     }
+
+    return null;
   }
 
   onSubmit = ({ email, password }) => {

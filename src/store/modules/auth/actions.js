@@ -18,10 +18,7 @@ const registerLoading = () => ({ type: REGISTER_LOADING });
 const registerSuccess = (payload) => ({ type: REGISTER_SUCCESS, payload });
 const registerFailed = (error) => ({ type: REGISTER_FAILED, error });
 
-export const logout = () => {
-  console.log("logout");
-  return { type: LOGOUT };
-};
+export const logout = () => ({ type: LOGOUT });
 
 /**
  * Register

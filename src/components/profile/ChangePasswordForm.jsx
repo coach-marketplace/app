@@ -12,7 +12,7 @@ import {
 } from "../../store/modules/user/constants";
 
 // import { changeUserPassword } from "../../store/modules/user/user";
-
+// TODO: Make this page functional
 class ChangePasswordForm extends React.Component {
   state = {
     oldPwd: "",

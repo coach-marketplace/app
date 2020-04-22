@@ -44,6 +44,7 @@ const fetchAuthUserFailed = (error) => ({
  */
 export const fetchAuthUser = () => {
   return (dispatch) => {
+    // TODO: find a way to store the token into the store state.auth.token
     dispatch(fetchAuthUserLoading());
     API.setToken(getTokenFromLocalStorage());
     API.get("user/me")

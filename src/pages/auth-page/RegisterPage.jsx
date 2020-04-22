@@ -47,8 +47,10 @@ class RegisterPage extends Component {
       return { isRegisterDone: true };
     }
 
-    if (isLoginSuccess && isRegisterDone)
+    if (isLoginSuccess && isRegisterDone) {
+      window.location = "/";
       return { isLoading: false, isRegisterDone: false };
+    }
 
     return null;
   }

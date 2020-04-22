@@ -1,24 +1,24 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import Month from "./Months";
 import Day from "./Day";
 
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+// const MONTHS = [
+//   "January",
+//   "February",
+//   "March",
+//   "April",
+//   "May",
+//   "June",
+//   "July",
+//   "August",
+//   "September",
+//   "October",
+//   "November",
+//   "December",
+// ];
 
 const DAYS = [
   "Monday",
@@ -68,7 +68,7 @@ class MonthView extends Component {
       <div>
         <HeaderContainer>
           {[...Array(7).keys()].map((i) => {
-            return <div>{DAYS[i]}</div>;
+            return <div key={i}>{DAYS[i]}</div>;
           })}
         </HeaderContainer>
         <MonthContainer>

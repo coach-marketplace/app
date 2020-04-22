@@ -9,6 +9,7 @@ import {
 // import DatePicker from "react-date-picker";
 import Button from "../ui/button/Button";
 import Spinner from "../ui/loader/Spinner";
+// TODO: clean this page
 
 import { connect } from "react-redux";
 import { getBodyInfos } from "../../store/modules/user/selectors";
@@ -30,7 +31,7 @@ class UserMetricsForm extends React.Component {
   state = {};
 
   componentDidMount() {
-    this.props.fetchUserBodyInfos();
+    // this.props.fetchUserBodyInfos();
   }
 
   onBodyChangeSubmitted = (event) => {
