@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import MonthView from "./MonthView";
+import WeekView from "./WeekView";
 
 class Calendar extends Component {
   static propTypes = {};
@@ -11,7 +12,7 @@ class Calendar extends Component {
   render() {
     return (
       <div>
-        <MonthView month={3} />
+        <WeekView />
       </div>
     );
   }
