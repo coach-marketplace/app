@@ -4,15 +4,19 @@ import thunk from "redux-thunk";
 import authReducer from "./modules/auth/reducers";
 import customerReducer from "./modules/customer/reducers";
 import serviceReducer from "./modules/service/reducers";
-import useReducer from "./modules/user/reducers";
+import userReducer from "./modules/user/reducers";
 import exerciseReducer from "./modules/exercise/reducers";
+import conversationReducer from "./modules/conversation/reducers";
+import messageReducer from "./modules/message/reducers";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   customer: customerReducer,
   service: serviceReducer,
   exercise: exerciseReducer,
-  user: useReducer,
+  user: userReducer,
+  conversation: conversationReducer,
+  message: messageReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

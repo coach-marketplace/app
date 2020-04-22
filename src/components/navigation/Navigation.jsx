@@ -30,6 +30,9 @@ const Navigation = () => {
         <Link to="/library/exercises">
           <Button label="Library" appearance="minimal" />
         </Link>
+        <Link to="/inbox">
+          <Button label="Messages" appearance="minimal" />
+        </Link>
       </ListItem>
     </List>
   );

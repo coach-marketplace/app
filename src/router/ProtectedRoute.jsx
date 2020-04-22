@@ -7,7 +7,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      rest.authUser ? (
+      rest.user ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -22,7 +22,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
 );
 
 const mapStateToProps = (state) => ({
-  authUser: state.auth.authUser,
+  user: state.user.current,
 });
 
 export default connect(mapStateToProps)(ProtectedRoute);

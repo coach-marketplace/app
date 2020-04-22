@@ -1,13 +1,15 @@
 import React from "react";
 import { Menu } from "evergreen-ui";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const AuthMenu = ({ logout }) => {
   return (
     <Menu>
       <Menu.Group>
-        <Menu.Item>Account</Menu.Item>
-        <Menu.Item>Setting</Menu.Item>
+        <Link to="/account/profile">
+          <Menu.Item>Account</Menu.Item>
+        </Link>
       </Menu.Group>
       <Menu.Divider />
       <Menu.Group>
@@ -19,10 +21,8 @@ const AuthMenu = ({ logout }) => {
   );
 };
 
-AuthMenu.displayName = "AuthMenu";
-
 AuthMenu.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
 };
 
 export default AuthMenu;

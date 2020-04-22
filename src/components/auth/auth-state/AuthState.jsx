@@ -7,7 +7,6 @@ import { Popover, Position } from "evergreen-ui";
 import AuthMenu from "./auth-menu/AuthMenu";
 import Avatar from "../../ui/avatar/Avatar";
 import Button from "../../ui/button/Button";
-import Spinner from "../../ui/loader/Spinner";
 import * as actions from "../../../store/modules/auth/actions";
 
 // TODO: refactor Popover as a UI component
@@ -16,25 +15,17 @@ const Container = styled.div`
   display: flex;
 `;
 
-const AuthState = ({
-  isAutoLoginLoading,
-  isAutoLoginSuccess,
-  isAutoLoginError,
-  authUser,
-  logout,
-}) => {
+const AuthState = ({ user, logout }) => {
   let content;
 
-  if (isAutoLoginLoading && !isAutoLoginSuccess && !isAutoLoginError) {
-    content = <Spinner size={16} />;
-  } else if (authUser) {
+  if (user) {
     content = (
       <Popover
         position={Position.TOP_RIGHT}
         content={() => <AuthMenu logout={logout} />}
       >
         <Button appearance="minimal" height={48} iconAfter="caret-down">
-          <Avatar name={`${authUser.first_name} ${authUser.last_name}`} />
+          <Avatar name={`${user.firstName} ${user.lastName}`} />
         </Button>
       </Popover>
     );
@@ -56,10 +47,7 @@ const AuthState = ({
 
 const mapStateToProps = (state) => {
   return {
-    isAutoLoginLoading: state.auth.actions.autoLogin.loading,
-    isAutoLoginSuccess: state.auth.actions.autoLogin.success,
-    isAutoLoginError: state.auth.actions.autoLogin.error,
-    authUser: state.auth.authUser,
+    user: state.user.current,
   };
 };
 

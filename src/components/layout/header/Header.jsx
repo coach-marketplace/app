@@ -6,12 +6,12 @@ import Logo from "../../ui/logo/Logo";
 import Navigation from "../../navigation/Navigation";
 import { RightContainer } from "./styled";
 
-const Header = ({ authUser }) => {
+const Header = ({ user }) => {
   return (
     <Fragment>
       <Logo />
       <RightContainer>
-        {authUser && <Navigation />}
+        {user && <Navigation />}
         <AuthState />
       </RightContainer>
     </Fragment>
@@ -20,7 +20,7 @@ const Header = ({ authUser }) => {
 
 const mapStateToProps = (state) => {
   return {
-    authUser: state.auth.authUser,
+    user: state.user.current,
   };
 };
 

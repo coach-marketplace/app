@@ -22,10 +22,10 @@ export const retrieveAll = () => {
   return (dispatch) => {
     dispatch(getAllLoading());
     const {
-      auth: { authUser },
+      user: { current: user },
     } = store.getState();
 
-    API.get(`coach/${authUser._id}/exercises`)
+    API.get(`coach/${user._id}/exercises`)
       .then((response) => {
         dispatch(getAllSuccess(response.data));
       })
@@ -39,19 +39,19 @@ export const create = (data) => {
   return (dispatch) => {
     dispatch(createLoading());
     const {
-      auth: { authUser },
+      user: { current: user },
     } = store.getState();
 
     const normalizedData = {
       name: data.name,
       instructions: data.instructions,
-      lang: data.lang || authUser.lang,
+      lang: data.lang || user.lang,
       isPrivate: data.isPrivate,
-      userOwnerId: authUser._id,
+      userOwnerId: user._id,
       videoUrl: data.videoUrl,
     };
 
-    API.post(`coach/${authUser._id}/exercises/add`, normalizedData)
+    API.post(`coach/${user._id}/exercises/add`, normalizedData)
       .then((response) => {
         console.log("response", response);
         dispatch(createSuccess(response.data));

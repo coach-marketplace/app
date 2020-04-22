@@ -22,10 +22,10 @@ export const retrieveAll = () => {
   return (dispatch) => {
     dispatch(getAllLoading());
     const {
-      auth: { authUser },
+      user: { current: user },
     } = store.getState();
 
-    API.get(`coach/${authUser._id}/services`)
+    API.get(`coach/${user._id}/services`)
       .then((response) => {
         dispatch(getAllSuccess(response.data));
       })
@@ -39,7 +39,7 @@ export const create = (data) => {
   return (dispatch) => {
     dispatch(createLoading());
     const {
-      auth: { authUser },
+      user: { current: user },
     } = store.getState();
 
     const normalizedData = {
@@ -51,7 +51,7 @@ export const create = (data) => {
       coordinates: data.coordinates,
     };
 
-    API.post(`coach/${authUser._id}/services/add`, normalizedData)
+    API.post(`coach/${user._id}/services/add`, normalizedData)
       .then((response) => {
         dispatch(createSuccess(response.data));
       })

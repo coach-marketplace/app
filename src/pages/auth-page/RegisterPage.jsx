@@ -47,8 +47,10 @@ class RegisterPage extends Component {
       return { isRegisterDone: true };
     }
 
-    if (isLoginSuccess && isRegisterDone)
+    if (isLoginSuccess && isRegisterDone) {
+      window.location = "/";
       return { isLoading: false, isRegisterDone: false };
+    }
 
     return null;
   }
@@ -73,9 +75,9 @@ class RegisterPage extends Component {
   };
 
   render() {
-    const { authUser, isLoading } = this.props;
+    const { user, isLoading } = this.props;
 
-    if (authUser) return <Redirect to="/" />;
+    if (user) return <Redirect to="/" />;
 
     return (
       <Layout
@@ -101,7 +103,7 @@ const mapStateToProps = (state) => ({
   isLoginLoading: state.auth.actions.login.loading,
   isLoginError: state.auth.actions.login.error,
   isLoginSuccess: state.auth.actions.login.success,
-  authUser: state.auth.authUser,
+  user: state.user.current,
 });
 
 const mapDispatchToProps = (dispatch) => ({

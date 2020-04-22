@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { connect } from "react-redux";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -12,8 +11,13 @@ import NewCustomerPage from "../pages/customers-page/NewCustomerPage";
 import ServicePage from "../pages/service-page/ServicePage";
 import NewServicePage from "../pages/service-page/NewServicePage";
 import SchedulePage from "../pages/schedule-page/SchedulePage";
-import ProfilePage from "../pages/profile-page/ProfilePage";
+// import ProfilePage from "../pages/profile-page/ProfilePage";
+import AccountPage from "../pages/user-page/AccountPage";
+// import ChangePasswordPage from "../components/account/security-section/SecuritySection";
+// import BodyPage from "../pages/profile-page/BodyPage";
 import LibraryPage from "../pages/library-page/LibraryPage";
+import ConversationsPage from "../pages/conversations-page/ConversationsPage";
+import ConversationPage from "../pages/conversations-page/ConversationPage";
 
 class Router extends Component {
   render() {
@@ -22,6 +26,8 @@ class Router extends Component {
         <Switch>
           <Route path="/login" exact component={LoginPage} />
           <Route path="/register" exact component={RegisterPage} />
+
+          {/* <Route path="/password" exact component={ChangePasswordPage} /> */}
 
           <ProtectedRoute path="/" exact component={HomePage} />
           <ProtectedRoute path="/customers" exact component={CustomersPage} />
@@ -37,16 +43,23 @@ class Router extends Component {
             component={NewServicePage}
           />
           <ProtectedRoute path="/schedule" exact component={SchedulePage} />
-          <ProtectedRoute path="/profile" exact component={ProfilePage} />
+          {/* <ProtectedRoute path="/profile" exact component={ProfilePage} /> */}
+          <ProtectedRoute
+            path="/account/:section"
+            exact
+            component={AccountPage}
+          />
           <ProtectedRoute path="/library/:type" exact component={LibraryPage} />
+          <ProtectedRoute path="/inbox" exact component={ConversationsPage} />
+          <ProtectedRoute
+            path="/conversation/:id"
+            exact
+            component={ConversationPage}
+          />
         </Switch>
       </BrowserRouter>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  authUser: state.auth.authUser,
-});
-
-export default connect(mapStateToProps)(Router);
+export default Router;
