@@ -51,7 +51,7 @@ export const create = (data) => {
       videoUrl: data.videoUrl,
     };
 
-    API.post(`coach/${user._id}/exercises/add`, normalizedData)
+    API.post(`coach/${user._id}/exercises`, normalizedData)
       .then((response) => {
         console.log("response", response);
         dispatch(createSuccess(response.data));
