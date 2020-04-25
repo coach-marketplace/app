@@ -30,16 +30,28 @@ class Router extends Component {
           {/* <Route path="/password" exact component={ChangePasswordPage} /> */}
 
           <ProtectedRoute path="/" exact component={HomePage} />
-          <ProtectedRoute path="/customers" exact component={CustomersPage} />
+          <ProtectedRoute
+            path="/customers"
+            exact
+            component={CustomersPage}
+            onlyCoach
+          />
           <ProtectedRoute
             path="/customers/new"
             exact
+            onlyCoach
             component={NewCustomerPage}
           />
-          <ProtectedRoute path="/services" exact component={ServicePage} />
+          <ProtectedRoute
+            path="/services"
+            exact
+            component={ServicePage}
+            onlyCoach
+          />
           <ProtectedRoute
             path="/services/new"
             exact
+            onlyCoach
             component={NewServicePage}
           />
           <ProtectedRoute path="/schedule" exact component={SchedulePage} />
@@ -49,7 +61,12 @@ class Router extends Component {
             exact
             component={AccountPage}
           />
-          <ProtectedRoute path="/library/:type" exact component={LibraryPage} />
+          <ProtectedRoute
+            path="/library/:type"
+            exact
+            component={LibraryPage}
+            onlyCoach
+          />
           <ProtectedRoute path="/inbox" exact component={ConversationsPage} />
           <ProtectedRoute
             path="/conversation/:id"
