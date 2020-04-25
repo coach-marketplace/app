@@ -15,4 +15,11 @@ export const Z_INDEX = {
 
 export const COLOR = {
   CORNFLOWER_BLUE: "#425A70",
+  SUN: "#F9A409",
+  WHITE_LILAC: "#EDEAF7",
+};
+
+export const SYSTEM_COLOR = {
+  PRIMARY: COLOR.SUN,
+  BACKGROUND_LIGHT: COLOR.WHITE_LILAC,
 };

@@ -1,5 +1,7 @@
 import cloneDeep from "lodash.clonedeep";
 
+import { INITIAL_ACTION_STATE } from "../../../helper/constants";
+
 import {
   GET_CONVERSATIONS_FAILED,
   GET_CONVERSATIONS_LOADING,
@@ -7,9 +9,10 @@ import {
   GET_CONVERSATION_FAILED,
   GET_CONVERSATION_LOADING,
   GET_CONVERSATION_SUCCESS,
-  // CREATE_CONVERSATION_LOADING,
-  // CREATE_CONVERSATION_FAILED,
-  // CREATE_CONVERSATION_SUCCESS,
+  CREATE_CONVERSATION_LOADING,
+  CREATE_CONVERSATION_FAILED,
+  CREATE_CONVERSATION_SUCCESS,
+  CREATE_CLEAN,
 } from "./constants";
 import initialState from "./state";
 
@@ -77,35 +80,46 @@ const getOneLoading = (state) => {
   return newState;
 };
 
-// const createFailed = (state, action) => {
-//   const newState = cloneDeep(state);
-//   newState.actions.create.loading = false;
-//   newState.actions.create.success = false;
-//   newState.actions.create.error = action.error;
+const createFailed = (state, action) => {
+  const newState = cloneDeep(state);
 
-//   return newState;
-// };
+  newState.actions.create.loading = false;
+  newState.actions.create.success = false;
+  newState.actions.create.error = action.error;
 
-// const createSuccess = (state, action) => {
-//   const newState = cloneDeep(state);
-//   const newExercise = action.payload;
+  return newState;
+};
 
-//   newState.list = [...newState.list, newExercise];
-//   newState.actions.create.loading = false;
-//   newState.actions.create.error = null;
-//   newState.actions.create.success = true;
+const createSuccess = (state, action) => {
+  const newState = cloneDeep(state);
+  const newConversation = action.payload;
 
-//   return newState;
-// };
+  newState.list = [...newState.list, newConversation];
+  newState.actions.create.data = newConversation._id;
+  newState.actions.create.loading = false;
+  newState.actions.create.error = null;
+  newState.actions.create.success = true;
 
-// const createLoading = (state) => {
-//   const newState = cloneDeep(state);
-//   newState.actions.create.loading = true;
-//   newState.actions.create.success = false;
-//   newState.actions.create.error = null;
+  return newState;
+};
 
-//   return newState;
-// };
+const createLoading = (state) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.create.loading = true;
+  newState.actions.create.success = false;
+  newState.actions.create.error = null;
+
+  return newState;
+};
+
+const createClean = (state) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.create = { ...INITIAL_ACTION_STATE };
+
+  return newState;
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -121,12 +135,15 @@ const reducer = (state = initialState, action) => {
       return getOneLoading(state);
     case GET_CONVERSATION_SUCCESS:
       return getOneSuccess(state, action);
-    // case CREATE_CONVERSATION_FAILED:
-    //   return createFailed(state, action);
-    // case CREATE_CONVERSATION_LOADING:
-    //   return createLoading(state);
-    // case CREATE_CONVERSATION_SUCCESS:
-    //   return createSuccess(state, action);
+    case CREATE_CONVERSATION_FAILED:
+      return createFailed(state, action);
+    case CREATE_CONVERSATION_LOADING:
+      return createLoading(state);
+    case CREATE_CONVERSATION_SUCCESS:
+      return createSuccess(state, action);
+    case CREATE_CLEAN:
+      return createClean(state);
+
     default:
       return state;
   }

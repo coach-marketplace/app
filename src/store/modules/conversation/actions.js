@@ -7,9 +7,10 @@ import {
   GET_CONVERSATION_FAILED,
   GET_CONVERSATION_LOADING,
   GET_CONVERSATION_SUCCESS,
-  // CREATE_CONVERSATION_LOADING,
-  // CREATE_CONVERSATION_FAILED,
-  // CREATE_CONVERSATION_SUCCESS,
+  CREATE_CONVERSATION_LOADING,
+  CREATE_CONVERSATION_FAILED,
+  CREATE_CONVERSATION_SUCCESS,
+  CREATE_CLEAN,
 } from "./constants";
 import store from "../../index";
 
@@ -27,9 +28,13 @@ const getOneSuccess = (payload) => ({
 });
 const getOneFailed = (error) => ({ type: GET_CONVERSATION_FAILED, error });
 
-// const createLoading = () => ({ type: CREATE_CONVERSATION_LOADING });
-// const createSuccess = (payload) => ({ type: CREATE_CONVERSATION_SUCCESS, payload });
-// const createFailed = (error) => ({ type: CREATE_CONVERSATION_FAILED, error });
+const createLoading = () => ({ type: CREATE_CONVERSATION_LOADING });
+const createSuccess = (payload) => ({
+  type: CREATE_CONVERSATION_SUCCESS,
+  payload,
+});
+const createFailed = (error) => ({ type: CREATE_CONVERSATION_FAILED, error });
+const createClean = () => ({ type: CREATE_CLEAN });
 
 export const retrieveAll = () => {
   return (dispatch) => {
@@ -65,29 +70,25 @@ export const retrieveOne = (conversationId) => {
   };
 };
 
-// export const create = (data) => {
-//   return (dispatch) => {
-//     dispatch(createLoading());
-//     const {
-//       auth: { authUser },
-//     } = store.getState();
+export const create = (memberIds) => {
+  return (dispatch) => {
+    dispatch(createLoading());
+    const {
+      user: { current: user },
+    } = store.getState();
 
-//     const normalizedData = {
-//       name: data.name,
-//       instructions: data.instructions,
-//       lang: data.lang || authUser.lang,
-//       isPrivate: data.isPrivate,
-//       userOwnerId: authUser._id,
-//       videoUrl: data.videoUrl,
-//     };
+    const normalizedData = {
+      memberIds: [...memberIds],
+    };
 
-// API.post(`coach/${authUser._id}/exercises/add`, normalizedData)
-//   .then((response) => {
-//     console.log("response", response);
-//     dispatch(createSuccess(response.data));
-//   })
-//   .catch((error) => {
-//     dispatch(createFailed(error.message));
-//   });
-// };
-// };
+    API.post(`user/${user._id}/conversations`, normalizedData)
+      .then((response) => {
+        dispatch(createSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(createFailed(error.message));
+      });
+  };
+};
+
+export const resetCreateAction = () => (dispatch) => dispatch(createClean());

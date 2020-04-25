@@ -4,8 +4,16 @@ import PropTypes from "prop-types";
 import Pane from "../../ui/pane/Pane";
 import Text from "../../ui/text/Text";
 import Avatar from "../../ui/avatar/Avatar";
+import Button from "../../ui/button/Button";
 
-const UserCard = ({ email, onClick, firstName, lastName, avatarUrl }) => {
+const UserCard = ({
+  email,
+  onClick,
+  firstName,
+  lastName,
+  avatarUrl,
+  onMessageClick,
+}) => {
   return (
     <Pane
       elevation={1}
@@ -19,6 +27,7 @@ const UserCard = ({ email, onClick, firstName, lastName, avatarUrl }) => {
     >
       <Avatar name={`${firstName} ${lastName}`} src={avatarUrl} />
       <Text marginTop={25}>{email}</Text>
+      <Button onClick={onMessageClick}>Message</Button>
     </Pane>
   );
 };
@@ -29,6 +38,7 @@ UserCard.propTypes = {
   fistName: PropTypes.string,
   lastName: PropTypes.string,
   onClick: PropTypes.func,
+  onMessageClick: PropTypes.func,
 };
 
 UserCard.defaultProps = {

@@ -5,6 +5,6 @@ export default {
   actions: {
     getAll: { ...INITIAL_ACTION_STATE },
     getOne: { ...INITIAL_ACTION_STATE },
-    // create: { ...INITIAL_ACTION_STATE },
+    create: { ...INITIAL_ACTION_STATE },
   },
 };
