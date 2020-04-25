@@ -26,8 +26,6 @@ const Chat = ({ conversation, messages, user, postMessage }) => {
 
     !channel && setChannel(new Conversation(conversation));
   }, [conversation, channel]);
-  console.log("channel", channel);
-  console.log("channel ?", !channel);
 
   if (!channel) {
     return <Spinner />;
@@ -42,7 +40,6 @@ const Chat = ({ conversation, messages, user, postMessage }) => {
       <ChatForm
         onSubmit={(event) => {
           event.preventDefault();
-          console.log("tok", message);
           postMessage(channel.getId(), {
             text: message,
           });
