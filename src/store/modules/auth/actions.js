@@ -22,17 +22,15 @@ export const logout = () => ({ type: LOGOUT });
 
 /**
  * Register
- * @param {string} email Email of the user
- * @param {string} password Password of the user
+ * @param {object} data Register data
+ * @param {string} data.email Email of the user
+ * @param {string} data.password Password of the user
  * @return {void}
  */
-export const register = (email, password) => {
+export const register = (data) => {
   return (dispatch) => {
     dispatch(registerLoading());
-    API.post("auth/register-local", {
-      email: email,
-      password: password,
-    })
+    API.post("auth/register-local", data)
       .then((response) => {
         dispatch(registerSuccess(response.data));
       })
@@ -44,14 +42,15 @@ export const register = (email, password) => {
 
 /**
  * Login
- * @param {string} email Email of the user
- * @param {string} password Password of the user
+ * @param {object} data Authentication data
+ * @param {string} data.email Email of the user
+ * @param {string} data.password Password of the user
  * @return {void}
  */
-export const login = (email, password) => {
+export const login = (data) => {
   return (dispatch) => {
     dispatch(loginLoading());
-    API.post("auth/login-local", { email, password })
+    API.post("auth/login-local", { email: data.email, password: data.password })
       .then((response) => {
         dispatch(loginSuccess(response.data));
       })

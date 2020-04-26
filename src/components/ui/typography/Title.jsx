@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 import Heading from "../heading/Heading";
 
-const Title = ({ children, h, size }) => (
-  <Heading size={size} is={`h${h}`}>
+const Title = ({ children, h, size, marginBottom, ...props }) => (
+  <Heading size={size} is={`h${h}`} {...props} marginBottom={marginBottom}>
     {children}
   </Heading>
 );
@@ -16,6 +16,7 @@ Title.propTypes = {
 };
 
 Title.defaultProps = {
+  marginBottom: 20,
   size: 800,
   h: 1,
 };

@@ -42,12 +42,19 @@ export const create = (data) => {
       user: { current: user },
     } = store.getState();
 
-    const normalizedData = {
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      phone: data.phone,
-    };
+    let normalizedData;
+    if (data.customerId) {
+      normalizedData = {
+        leadId: data.customerId,
+      };
+    } else {
+      normalizedData = {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+      };
+    }
 
     API.post(`coach/${user._id}/customers`, normalizedData)
       // .then(response => {

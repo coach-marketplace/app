@@ -1,76 +1,56 @@
-import React, { Fragment } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
-import { Heading } from "evergreen-ui";
 
-import toaster from "../../components/ui/toaster/toaster";
+import { Title, toaster } from "../../components/ui";
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import LoginForm from "../../components/auth/login-form/LoginForm";
 import * as actions from "../../store/modules/auth/actions";
 
-class LoginPage extends React.Component {
-  state = {
-    isLoading: false,
-  };
+const LoginPage = ({
+  isLoginError,
+  isLoginLoading,
+  isLoginSuccess,
+  user,
+  history,
+  login,
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
 
-  static getDerivedStateFromProps(props, state) {
-    const { isLoginError, isLoginLoading, isLoginSuccess, user } = props;
-
-    if (user) {
-      return null;
-    }
-
-    if (isLoginLoading) {
-      return { isLoading: true };
-    } else if (isLoginError) {
-      toaster.danger("Error during login");
-
-      return { isLoading: false };
-    } else if (isLoginSuccess) {
+  useEffect(() => {
+    if (!isLoginLoading && isLoginSuccess) {
       window.location = "/";
-
-      return { step: 1 };
+    } else if (!isLoginLoading && isLoginError) {
+      toaster.danger("Email or password incorrect");
     }
+  }, [isLoginError, isLoginLoading, isLoginSuccess]);
 
-    return null;
-  }
-
-  onSubmit = ({ email, password }) => {
-    const { login } = this.props;
-
-    login(email, password);
+  const onSubmit = (data) => {
+    setIsLoading(true);
+    login(data);
   };
 
-  goToRegisterPage = () => {
-    const { history } = this.props;
+  const goToRegisterPage = () => history.push("/register");
 
-    history.push("/register");
-  };
-
-  render() {
-    const { user } = this.props;
-    const { isLoading } = this.state;
-
-    if (user) {
-      return <Redirect to="/" />;
-    }
-
-    return (
-      <Layout
-        main={
-          <Fragment>
-            <Heading size={900}>Login</Heading>
-            <LoginForm
-              onSubmit={this.onSubmit}
-              onRegister={this.goToRegisterPage}
-              isLoading={isLoading}
-            />
-          </Fragment>
-        }
-      />
-    );
+  if (user) {
+    return <Redirect to="/" />;
   }
-}
+
+  return (
+    <Layout
+      main={
+        <>
+          <Title>Login</Title>
+          <LoginForm
+            onSubmit={onSubmit}
+            onRegister={goToRegisterPage}
+            isLoading={isLoading}
+          />
+        </>
+      }
+    />
+  );
+};
 
 const mapStateToProps = (state) => ({
   isLoginError: state.auth.actions.login.error,
@@ -80,7 +60,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (email, password) => dispatch(actions.login(email, password)),
+  login: (data) => dispatch(actions.login(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
