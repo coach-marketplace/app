@@ -2,8 +2,9 @@ import React, { Fragment, Component } from "react";
 import PropTypes from "prop-types";
 
 import LibraryNavigation from "../library-navigation/LibraryNavigation";
-import Title from "../../ui/typography/Title";
+import { Title } from "../../ui";
 import ExercisesContainer from "../../exercise/exercises-container/ExercisesContainer";
+import WorkoutsContainer from "../../workout/workouts-container/WorkoutsContainer";
 
 class LibraryContainer extends Component {
   static propTypes = {
@@ -16,6 +17,8 @@ class LibraryContainer extends Component {
     switch (type) {
       case "exercises":
         return <ExercisesContainer />;
+      case "workouts":
+        return <WorkoutsContainer />;
       default:
         return <ExercisesContainer />;
     }
