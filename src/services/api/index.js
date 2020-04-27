@@ -1,4 +1,5 @@
 import axios from "axios";
+import queryString from "query-string";
 
 /**
  * API
@@ -17,11 +18,16 @@ class API {
     this.headers.authorization = token;
   }
 
-  static get(endPoint, params = {}) {
+  static get(endPoint, params = {}, query = {}) {
+    let queryUrl = "";
+    if (Object.keys(query).length > 0) {
+      queryUrl += `?${queryString.stringify(query)}`;
+    }
+
     return axios({
       method: "get",
-      url: `${this.baseUrl}${endPoint}`,
-      headers: this.headers
+      url: `${this.baseUrl}${endPoint}${queryUrl}`,
+      headers: this.headers,
     });
   }
 
@@ -30,7 +36,7 @@ class API {
       method: "post",
       url: `${this.baseUrl}${endPoint}`,
       headers: this.headers,
-      data
+      data,
     });
   }
 }

@@ -1,63 +1,82 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Formik } from "formik";
+import { useFormik } from "formik";
 
-// import validationSchema from "./validation";
-import Form from "../../ui/form/Form";
-import Field from "../../ui/form/field/Field";
-import Button from "../../ui/button/Button";
+import validationSchema from "./validation";
+import { Form, Field, Button } from "../../ui";
 
-class RegisterForm extends Component {
-  static propTypes = {
-    isLoading: PropTypes.bool,
-    onLogin: PropTypes.func,
-    onSubmit: PropTypes.func.isRequired,
-  };
+const RegisterForm = ({ initialValues, onLogin, isLoading, onSubmit }) => {
+  const {
+    handleSubmit,
+    handleBlur,
+    handleChange,
+    touched,
+    values,
+    errors,
+  } = useFormik({
+    initialValues: {
+      email: initialValues.email || "",
+      password: initialValues.password || "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      onSubmit(values);
+    },
+  });
 
-  // TODO: validation form
-  render() {
-    const { onLogin, isLoading, onSubmit } = this.props;
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Field
+        label="Email"
+        name="email"
+        type="email"
+        placeholder="john@doe.com"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.email}
+        errorMessage={touched.email && errors.email}
+        isRequired
+        marginRight={20}
+        disabled={isLoading}
+      />
 
-    return (
-      <Formik
-        initialValues={{
-          email: "",
-          password: "",
-        }}
-        // validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
-        <Form>
-          <Field
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="john@doe.com"
+      <Field
+        label="Password"
+        name="password"
+        type="password"
+        placeholder="********"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.password}
+        errorMessage={touched.password && errors.password}
+        isRequired
+        marginRight={20}
+        disabled={isLoading}
+      />
+
+      <div>
+        <Button label="Register" type="submit" isLoading={isLoading} />
+        {onLogin && (
+          <Button
+            label="Already an account? Log in"
+            appearance="minimal"
+            onClick={onLogin}
             disabled={isLoading}
           />
+        )}
+      </div>
+    </Form>
+  );
+};
 
-          <Field
-            label="Password"
-            name="password"
-            type="password"
-            placeholder="********"
-            disabled={isLoading}
-          />
+RegisterForm.propTypes = {
+  onLogin: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+};
 
-          <div>
-            <Button label="Register" type="submit" isLoading={isLoading} />
-            {onLogin && (
-              <Button
-                label="Already an account? Log in"
-                appearance="minimal"
-                onClick={onLogin}
-              />
-            )}
-          </div>
-        </Form>
-      </Formik>
-    );
-  }
-}
+RegisterForm.defaultProps = {
+  initialValues: {},
+};
 
 export default RegisterForm;

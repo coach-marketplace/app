@@ -22,10 +22,10 @@ export const retrieveAll = () => {
   return (dispatch) => {
     dispatch(getAllLoading());
     const {
-      auth: { authUser },
+      user: { current: user },
     } = store.getState();
 
-    API.get(`coach/${authUser._id}/customers`)
+    API.get(`coach/${user._id}/customers`)
       .then((response) => {
         dispatch(getAllSuccess(response.data));
       })
@@ -39,17 +39,24 @@ export const create = (data) => {
   return (dispatch) => {
     dispatch(createLoading());
     const {
-      auth: { authUser },
+      user: { current: user },
     } = store.getState();
 
-    const normalizedData = {
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      phone: data.phone,
-    };
+    let normalizedData;
+    if (data.customerId) {
+      normalizedData = {
+        leadId: data.customerId,
+      };
+    } else {
+      normalizedData = {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+      };
+    }
 
-    API.post(`coach/${authUser._id}/customers`, normalizedData)
+    API.post(`coach/${user._id}/customers`, normalizedData)
       // .then(response => {
       //   const customerId = response.data.lead;
 

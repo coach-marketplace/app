@@ -1,13 +1,14 @@
-import {
-    FETCH_USER_PROFILE_INFOS_PENDING,
-} from "./constants"
+import { INITIAL_ACTION_STATE } from "../../../helper/constants";
 
 export default {
-    profileData : {
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        status: FETCH_USER_PROFILE_INFOS_PENDING,
-    }
-}
+  current: null,
+  physicalMetrics: [],
+  actions: {
+    fetchAuthUser: { ...INITIAL_ACTION_STATE },
+    fetchUserProfile: { status: "", error: "" },
+    updateUserProfile: { status: "", error: "" },
+    updatePassword: { status: "", error: "" },
+    fetchPhysicalMetrics: { status: "", error: "" },
+    addPhysicalMetrics: { status: "", error: "" },
+  },
+};

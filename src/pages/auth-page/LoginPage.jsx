@@ -1,50 +1,66 @@
-import React, { Fragment } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
-import { Heading } from "evergreen-ui";
 
+import { Title, toaster } from "../../components/ui";
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import LoginForm from "../../components/auth/login-form/LoginForm";
 import * as actions from "../../store/modules/auth/actions";
 
-class LoginPage extends React.Component {
-  onSubmit = ({ email, password }) => {
-    this.props.login(email, password);
-  };
+const LoginPage = ({
+  isLoginError,
+  isLoginLoading,
+  isLoginSuccess,
+  user,
+  history,
+  login,
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
 
-  goToRegisterPage = () => {
-    const { history } = this.props;
-
-    history.push("/register");
-  };
-
-  render() {
-    if (this.props.authUser) {
-      return <Redirect to="/" />;
+  useEffect(() => {
+    if (!isLoginLoading && isLoginSuccess) {
+      window.location = "/";
+    } else if (!isLoginLoading && isLoginError) {
+      toaster.danger("Email or password incorrect");
     }
+  }, [isLoginError, isLoginLoading, isLoginSuccess]);
 
-    return (
-      <Layout
-        main={
-          <Fragment>
-            <Heading size={900}>Login</Heading>
-            <LoginForm
-              onSubmit={this.onSubmit}
-              onRegister={this.goToRegisterPage}
-            />
-          </Fragment>
-        }
-      />
-    );
+  const onSubmit = (data) => {
+    setIsLoading(true);
+    login(data);
+  };
+
+  const goToRegisterPage = () => history.push("/register");
+
+  if (user) {
+    return <Redirect to="/" />;
   }
-}
+
+  return (
+    <Layout
+      main={
+        <>
+          <Title>Login</Title>
+          <LoginForm
+            onSubmit={onSubmit}
+            onRegister={goToRegisterPage}
+            isLoading={isLoading}
+          />
+        </>
+      }
+    />
+  );
+};
 
 const mapStateToProps = (state) => ({
-  authUser: state.auth.authUser,
+  isLoginError: state.auth.actions.login.error,
+  isLoginLoading: state.auth.actions.login.loading,
+  isLoginSuccess: state.auth.actions.login.success,
+  user: state.user.current,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (email, password) => dispatch(actions.login(email, password)),
+  login: (data) => dispatch(actions.login(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

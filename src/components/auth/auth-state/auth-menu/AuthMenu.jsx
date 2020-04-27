@@ -1,13 +1,16 @@
 import React from "react";
 import { Menu } from "evergreen-ui";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-const AuthMenu = ({ logout }) => {
+const AuthMenu = ({ logout, user }) => {
   return (
     <Menu>
-      <Menu.Group>
-        <Menu.Item>Account</Menu.Item>
-        <Menu.Item>Setting</Menu.Item>
+      <Menu.Group title={user.email}>
+        <Link to="/account/profile">
+          <Menu.Item>Account</Menu.Item>
+        </Link>
       </Menu.Group>
       <Menu.Divider />
       <Menu.Group>
@@ -19,10 +22,12 @@ const AuthMenu = ({ logout }) => {
   );
 };
 
-AuthMenu.displayName = "AuthMenu";
-
 AuthMenu.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
 };
 
-export default AuthMenu;
+const mapStateToProps = (state) => ({
+  user: state.user.current,
+});
+
+export default connect(mapStateToProps)(AuthMenu);

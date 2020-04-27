@@ -1,48 +1,51 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Label } from "evergreen-ui";
-import { useField } from "formik";
-import styled from "styled-components";
 
+import Label from "../label/Label";
 import Input from "../input/Input";
 import Text from "../../text/Text";
+import Pane from "../../pane/Pane";
+import { SYSTEM_COLOR } from "../../../../helper/constants";
+import { getMarginProps } from "../../../../helper/utils";
 
-const StyledWrapper = styled.div`
-  display: inline-flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-`;
-
-const Field = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-
+const Field = ({ errorMessage, label, description, isRequired, ...props }) => {
   return (
-    <StyledWrapper>
+    <Pane
+      display="inline-flex"
+      flexDirection="column"
+      marginBottom={20}
+      width="100%"
+      {...getMarginProps(props)}
+    >
       {label && (
-        <Label
-          htmlFor={props.id || props.name}
-          marginBottom={4}
-          display="block"
-        >
-          {label}
-        </Label>
+        <Pane display="flex">
+          <Label htmlFor={props.id || props.name} marginBottom={4}>
+            {label}
+          </Label>
+          {isRequired && <Text color={SYSTEM_COLOR.INFO}>*</Text>}
+        </Pane>
       )}
 
-      <Input {...field} {...props} />
+      {description && <Text>{description}</Text>}
 
-      {meta.touched && meta.error && (
+      <Input {...props} width="100%" />
+
+      {errorMessage && (
         <Text color="danger" size={300}>
-          {meta.error}
+          {errorMessage}
         </Text>
       )}
-    </StyledWrapper>
+    </Pane>
   );
 };
 
-export default Field;
-
-Field.displayName = "Field";
-
 Field.propTypes = {
-  label: PropTypes.string
+  label: PropTypes.string,
+  isRequired: PropTypes.bool,
 };
+
+Field.defaultProps = {
+  isRequired: false,
+};
+
+export default Field;
