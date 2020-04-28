@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import WorkoutCard from "../workout-card/WorkoutCard";
+import AddWorkoutModal from "../add-workout-modal/AddWorkoutModal";
 import { Button, Pane } from "../../ui";
 // import {
 //   retrieveAll as retrieveAllWorkouts,
@@ -14,11 +15,11 @@ const WorkoutsContainer = () => {
 
   return (
     <>
-      {/* <AddWorkoutModal
-          onToggle={() => setIsAddWorkoutModalOpen(!isAddWorkoutModalOpen)}
-          isOpen={isAddWorkoutModalOpen}
-          isLoading={isCreateWorkoutLoading}
-        /> */}
+      <AddWorkoutModal
+        onToggle={() => setIsAddWorkoutModalOpen(!isAddWorkoutModalOpen)}
+        isOpen={isAddWorkoutModalOpen}
+        // isLoading={isCreateWorkoutLoading}
+      />
 
       <Button
         label="New"

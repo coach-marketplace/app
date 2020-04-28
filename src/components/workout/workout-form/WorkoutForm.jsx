@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
 
 // import validationSchema from "./validation";
-import { Form, Field, Button, Pane } from "../../ui";
+import { Form, Field, Button, Pane, EditorInput, Text } from "../../ui";
 
 const WorkoutForm = ({ initialValues, onRegister, onSubmit, isLoading }) => {
+  const [content, setContent] = useState("");
   const {
     handleSubmit,
     handleBlur,
@@ -16,11 +17,10 @@ const WorkoutForm = ({ initialValues, onRegister, onSubmit, isLoading }) => {
   } = useFormik({
     initialValues: {
       title: initialValues.title || "",
-      content: initialValues.content || "",
     },
     // validationSchema: validationSchema,
     onSubmit: (values) => {
-      onSubmit(values);
+      onSubmit({ ...values, content });
     },
   });
 
@@ -38,7 +38,10 @@ const WorkoutForm = ({ initialValues, onRegister, onSubmit, isLoading }) => {
         marginRight={20}
         disabled={isLoading}
       />
-     
+
+      <Text>Description</Text>
+      <EditorInput onChange={(value) => setContent(value)} />
+
       <Pane display="flex">
         <Button type="submit" isLoading={isLoading}>
           Create

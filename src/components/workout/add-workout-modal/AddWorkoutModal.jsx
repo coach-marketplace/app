@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-// import ExerciseForm from "../exercise-form/ExerciseForm";
+import WorkoutForm from "../workout-form/WorkoutForm";
 import { SideModal, Title, toaster } from "../../ui";
 // import { create as createExercise } from "../../../store/modules/exercise/actions";
 
@@ -25,13 +25,14 @@ const AddWorkoutModal = ({ isOpen, onToggle, createWorkout }) => {
   // }
 
   const onWorkoutSubmitted = (data) => {
+    console.log("data", data);
     // createWorkout(data);
   };
 
   return (
     <SideModal isShown={isOpen} onCloseComplete={onToggle}>
       <Title>Add an exercise</Title>
-      {/* <WorkoutForm onSubmit={onWorkoutSubmitted} /> */}
+      <WorkoutForm onSubmit={onWorkoutSubmitted} />
     </SideModal>
   );
 };
