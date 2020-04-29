@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 
-import { Title, toaster } from "../../components/ui";
+import { Title, toaster, Button } from "../../components/ui";
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import LoginForm from "../../components/auth/login-form/LoginForm";
 import * as actions from "../../store/modules/auth/actions";
@@ -30,6 +30,11 @@ const LoginPage = ({
     login(data);
   };
 
+  const onLoginWithGoogle = () => {
+    console.log("google");
+    window.location = `${process.env.REACT_APP_API_URL}v1/auth/login-google`;
+  };
+
   const goToRegisterPage = () => history.push("/register");
 
   if (user) {
@@ -41,6 +46,7 @@ const LoginPage = ({
       main={
         <>
           <Title>Login</Title>
+          <Button onClick={onLoginWithGoogle}>Login google</Button>
           <LoginForm
             onSubmit={onSubmit}
             onRegister={goToRegisterPage}

@@ -6,7 +6,7 @@ import {
   register as registerUser,
   login as loginUser,
 } from "../../store/modules/auth/actions";
-import { Title, toaster } from "../../components/ui";
+import { Title, toaster, Button } from "../../components/ui";
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import RegisterForm from "../../components/auth/register-form/RegisterForm";
 
@@ -47,6 +47,10 @@ const RegisterPage = ({
     register(data);
   };
 
+  const onRegisterWithGoogle = () => {
+    console.log("google");
+  };
+
   const goToLoginPage = () => {
     history.push("/login");
   };
@@ -58,6 +62,7 @@ const RegisterPage = ({
       main={
         <>
           <Title>Register</Title>
+          <Button onClick={onRegisterWithGoogle}>Register google</Button>
           <RegisterForm
             onLogin={goToLoginPage}
             onSubmit={onSubmit}
