@@ -1,24 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import WorkoutCard from "../workout-card/WorkoutCard";
 import AddWorkoutModal from "../add-workout-modal/AddWorkoutModal";
 import { Button, Pane } from "../../ui";
-// import {
-//   retrieveAll as retrieveAllWorkouts,
-//   create as createWorkout,
-// } from "../../../store/modules/workout/actions";
+import { retrieveAll as retrieveAllWorkouts } from "../../../store/modules/workout/actions";
 
-const WorkoutsContainer = () => {
+const WorkoutsContainer = ({
+  isFetchWorkoutsLoading,
+  isFetchWorkoutsSuccess,
+  workouts,
+  fetchWorkouts,
+}) => {
   const [isAddWorkoutModalOpen, setIsAddWorkoutModalOpen] = useState(false);
+
+  useEffect(() => {
+    !isFetchWorkoutsLoading && !isFetchWorkoutsSuccess && fetchWorkouts();
+  }, [fetchWorkouts, isFetchWorkoutsLoading, isFetchWorkoutsSuccess]);
 
   return (
     <>
       <AddWorkoutModal
         onToggle={() => setIsAddWorkoutModalOpen(!isAddWorkoutModalOpen)}
         isOpen={isAddWorkoutModalOpen}
-        // isLoading={isCreateWorkoutLoading}
       />
 
       <Button
@@ -29,11 +34,9 @@ const WorkoutsContainer = () => {
       />
 
       <Pane>
-        {
-          /*workouts*/ [].map((workout) => (
-            <WorkoutCard key={workout._id} workout={workout} />
-          ))
-        }
+        {workouts.map((workout) => (
+          <WorkoutCard key={workout._id} workout={workout} />
+        ))}
       </Pane>
     </>
   );
@@ -46,15 +49,14 @@ WorkoutsContainer.propTypes = {
 WorkoutsContainer.defaultProps = {};
 
 const mapStateToProps = (state) => ({
-  // workouts: state.workout.list,
-  // isCreateWorkoutLoading: state.workout.actions.create.loading,
-  // isCreateWorkoutSuccess: state.workout.actions.create.success,
-  // isCreateWorkoutError: state.workout.actions.create.error,
+  workouts: state.workout.list,
+  isFetchWorkoutsLoading: state.workout.actions.getAll.loading,
+  isFetchWorkoutsSuccess: state.workout.actions.getAll.success,
+  isFetchWorkoutsError: state.workout.actions.getAll.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // createWorkout: (data) => dispatch(createWorkout(data)),
-  // fetchWorkouts: () => dispatch(retrieveAllWorkouts()),
+  fetchWorkouts: () => dispatch(retrieveAllWorkouts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsContainer);
