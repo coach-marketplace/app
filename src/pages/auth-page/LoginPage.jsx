@@ -44,7 +44,7 @@ const LoginPage = ({
           <LoginForm
             onSubmit={onSubmit}
             onRegister={goToRegisterPage}
-            isLoading={isLoading}
+            isLoading={isLoginLoading}
           />
         </>
       }
