@@ -21,7 +21,7 @@ const LoginPage = ({
     if (!isLoginLoading && isLoginSuccess) {
       window.location = "/";
     } else if (!isLoginLoading && isLoginError) {
-      toaster.danger("Email or password incorrect");
+      toaster.danger(isLoginError);
     }
   }, [isLoginError, isLoginLoading, isLoginSuccess]);
 

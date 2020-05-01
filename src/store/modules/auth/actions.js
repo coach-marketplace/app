@@ -55,7 +55,8 @@ export const login = (data) => {
         dispatch(loginSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(loginFailed(error.message));
+        console.log(error)
+        dispatch(loginFailed(error.response.data.message));
       });
   };
 };
