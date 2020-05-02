@@ -53,7 +53,7 @@ const LoginForm = ({ initialValues, onRegister, onSubmit, isLoading }) => {
         disabled={isLoading}
       />
       <Pane display="flex">
-        <Button type="submit" isLoading={isLoading}>
+        <Button type="submit" isLoading={isLoading} appearance="primary">
           Login
         </Button>
         {onRegister && (

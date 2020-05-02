@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 
-import { Title, toaster } from "../../components/ui";
+import { Container } from "./styled";
+import { Title, toaster, Text } from "../../components/ui";
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
+import OAuthForm from "../../components/auth/o-auth-form/OAuthForm";
 import LoginForm from "../../components/auth/login-form/LoginForm";
 import * as actions from "../../store/modules/auth/actions";
 
@@ -14,6 +16,7 @@ const LoginPage = ({
   user,
   history,
   login,
+  cleanLoginStore,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,8 +25,10 @@ const LoginPage = ({
       window.location = "/";
     } else if (!isLoginLoading && isLoginError) {
       toaster.danger("Email or password incorrect");
+      setIsLoading(false);
+      cleanLoginStore();
     }
-  }, [isLoginError, isLoginLoading, isLoginSuccess]);
+  }, [cleanLoginStore, isLoginError, isLoginLoading, isLoginSuccess]);
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -39,14 +44,18 @@ const LoginPage = ({
   return (
     <Layout
       main={
-        <>
+        <Container>
           <Title>Login</Title>
+          <OAuthForm title="Connect with:" />
+          <Text marginTop={30} marginBottom={30}>
+            — or —
+          </Text>
           <LoginForm
             onSubmit={onSubmit}
             onRegister={goToRegisterPage}
             isLoading={isLoading}
           />
-        </>
+        </Container>
       }
     />
   );
@@ -61,6 +70,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   login: (data) => dispatch(actions.login(data)),
+  cleanLoginStore: () => dispatch(actions.cleanLogin()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import queryString from "query-string";
 
 import Socket from "./services/socket";
 import Router from "./router";
@@ -26,8 +27,16 @@ class App extends Component {
 
   componentDidMount() {
     const { autoLogin } = this.props;
-
-    autoLogin();
+    const hasUrlQuery = window.location.href.includes("?");
+    const query = hasUrlQuery
+      ? queryString.parse(window.location.href.split("?")[1])
+      : null;
+    const token = query && query.token ? query.token : null;
+    /**
+     * For any reason a '#' is added at the end of the token, which broke
+     * the call
+     */
+    autoLogin(token && token.replace("#", ""));
   }
 
   componentDidUpdate() {
@@ -54,7 +63,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  autoLogin: () => dispatch(fetchAuthUser()),
+  autoLogin: (token) => dispatch(fetchAuthUser(token)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

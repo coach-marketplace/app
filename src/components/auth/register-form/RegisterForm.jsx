@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useFormik } from "formik";
 
 import validationSchema from "./validation";
-import { Form, Field, Button } from "../../ui";
+import { Form, Field, Button, Pane } from "../../ui";
 
 const RegisterForm = ({ initialValues, onLogin, isLoading, onSubmit }) => {
   const {
@@ -15,10 +15,12 @@ const RegisterForm = ({ initialValues, onLogin, isLoading, onSubmit }) => {
     errors,
   } = useFormik({
     initialValues: {
+      firstName: initialValues.firstName || "",
+      lastName: initialValues.lastName || "",
       email: initialValues.email || "",
       password: initialValues.password || "",
     },
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit: (values) => {
       onSubmit(values);
     },
@@ -26,6 +28,33 @@ const RegisterForm = ({ initialValues, onLogin, isLoading, onSubmit }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
+      <Pane display="flex" width="100%">
+        <Field
+          label="First name"
+          name="firstName"
+          type="text"
+          placeholder="John"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.firstName}
+          errorMessage={touched.firstName && errors.firstName}
+          isRequired
+          marginRight={20}
+          disabled={isLoading}
+        />
+        <Field
+          label="Last name"
+          name="lastName"
+          type="text"
+          placeholder="Doe"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.lastName}
+          errorMessage={touched.lastName && errors.lastName}
+          isRequired
+          disabled={isLoading}
+        />
+      </Pane>
       <Field
         label="Email"
         name="email"
@@ -55,7 +84,12 @@ const RegisterForm = ({ initialValues, onLogin, isLoading, onSubmit }) => {
       />
 
       <div>
-        <Button label="Register" type="submit" isLoading={isLoading} />
+        <Button
+          label="Register"
+          type="submit"
+          isLoading={isLoading}
+          appearance="primary"
+        />
         {onLogin && (
           <Button
             label="Already an account? Log in"
