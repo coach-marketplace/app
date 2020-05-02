@@ -5,10 +5,18 @@ import Label from "../label/Label";
 import Input from "../input/Input";
 import Text from "../../text/Text";
 import Pane from "../../pane/Pane";
-import { SYSTEM_COLOR } from "../../../../helper/constants";
+import Switch from "../../switch/Switch";
+import { SYSTEM_COLOR, SIZE } from "../../../../helper/constants";
 import { getMarginProps } from "../../../../helper/utils";
 
-const Field = ({ errorMessage, label, description, isRequired, ...props }) => {
+const Field = ({
+  errorMessage,
+  label,
+  description,
+  isRequired,
+  type,
+  ...props
+}) => {
   return (
     <Pane
       display="inline-flex"
@@ -26,9 +34,17 @@ const Field = ({ errorMessage, label, description, isRequired, ...props }) => {
         </Pane>
       )}
 
-      {description && <Text>{description}</Text>}
+      {description && (
+        <Text size={300} marginBottom={10}>
+          {description}
+        </Text>
+      )}
 
-      <Input {...props} width="100%" />
+      {type === "switch" ? (
+        <Switch {...props} />
+      ) : (
+        <Input {...props} type={type} width="100%" />
+      )}
 
       {errorMessage && (
         <Text color="danger" size={300}>

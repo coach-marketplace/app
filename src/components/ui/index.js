@@ -13,6 +13,7 @@ import LabelUI from "./form/label/Label";
 import FlexUI from "./layout/Flex";
 import EditorInputUI from "./form/editor-input/EditorInput";
 import ImageUI from "./image/Image";
+import SwitchUI from "./switch/Switch";
 
 export const Alert = AlertUI;
 export const Button = ButtonUI;
@@ -29,3 +30,4 @@ export const toaster = toasterUI;
 export const Flex = FlexUI;
 export const EditorInput = EditorInputUI;
 export const Image = ImageUI;
+export const Switch = SwitchUI;
