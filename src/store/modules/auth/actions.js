@@ -4,19 +4,23 @@ import {
   LOGIN_FAILED,
   LOGIN_LOADING,
   LOGIN_SUCCESS,
+  LOGIN_CLEAN,
   REGISTER_FAILED,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
+  REGISTER_CLEAN,
   LOGOUT,
 } from "./constants";
 
 const loginLoading = () => ({ type: LOGIN_LOADING });
 const loginSuccess = (payload) => ({ type: LOGIN_SUCCESS, payload });
 const loginFailed = (error) => ({ type: LOGIN_FAILED, error });
+const loginClean = () => ({ type: LOGIN_CLEAN });
 
 const registerLoading = () => ({ type: REGISTER_LOADING });
 const registerSuccess = (payload) => ({ type: REGISTER_SUCCESS, payload });
 const registerFailed = (error) => ({ type: REGISTER_FAILED, error });
+const registerClean = () => ({ type: REGISTER_CLEAN });
 
 export const logout = () => ({ type: LOGOUT });
 
@@ -59,3 +63,6 @@ export const login = (data) => {
       });
   };
 };
+
+export const cleanLogin = () => (dispatch) => dispatch(loginClean());
+export const cleanRegister = () => (dispatch) => dispatch(registerClean());

@@ -84,7 +84,12 @@ const RegisterForm = ({ initialValues, onLogin, isLoading, onSubmit }) => {
       />
 
       <div>
-        <Button label="Register" type="submit" isLoading={isLoading} />
+        <Button
+          label="Register"
+          type="submit"
+          isLoading={isLoading}
+          appearance="primary"
+        />
         {onLogin && (
           <Button
             label="Already an account? Log in"
