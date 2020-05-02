@@ -18,6 +18,7 @@ import AccountPage from "../pages/user-page/AccountPage";
 import LibraryPage from "../pages/library-page/LibraryPage";
 import ConversationsPage from "../pages/conversations-page/ConversationsPage";
 import ConversationPage from "../pages/conversations-page/ConversationPage";
+import AccountValidationPage from "../pages/auth-page/AccountValidationPage";
 
 class Router extends Component {
   render() {
@@ -26,6 +27,7 @@ class Router extends Component {
         <Switch>
           <Route path="/login" exact component={LoginPage} />
           <Route path="/register" exact component={RegisterPage} />
+          <Route path="/account-validation/:userId-:token" exact component={AccountValidationPage}/>
 
           {/* <Route path="/password" exact component={ChangePasswordPage} /> */}
 

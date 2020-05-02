@@ -8,6 +8,9 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAILED,
   LOGOUT,
+  ACCOUNT_VALIDATION_LOADING,
+  ACCOUNT_VALIDATION_SUCCESS,
+  ACCOUNT_VALIDATION_FAILED,
 } from "./constants";
 import initialState from "./state";
 import {
@@ -78,6 +81,33 @@ const registerSuccess = (state, action) => {
   return newState;
 };
 
+const accountValidationLoading = (state) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.accountValidation.state = ACCOUNT_VALIDATION_LOADING;
+  newState.actions.accountValidation.error = null;
+
+  return newState;
+};
+
+const accountValidationFailed = (state, action) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.accountValidation.state = ACCOUNT_VALIDATION_FAILED;
+  newState.actions.accountValidation.error = action.error;
+
+  return newState;
+};
+
+const accountValidationSuccess = (state, action) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.accountValidation.state = ACCOUNT_VALIDATION_SUCCESS;
+  newState.actions.accountValidation.error = null;
+
+  return newState;
+};
+
 const logout = (state) => {
   removeTokenFromLocalStorage();
   window.location = "/login";
@@ -101,6 +131,12 @@ const reducer = (state = initialState, action) => {
       return registerSuccess(state, action);
     case LOGOUT:
       return logout(initialState);
+    case ACCOUNT_VALIDATION_LOADING:
+      return accountValidationLoading(state);
+    case ACCOUNT_VALIDATION_FAILED:
+      return accountValidationFailed(state, action);
+    case ACCOUNT_VALIDATION_SUCCESS:
+      return accountValidationSuccess(state, action);
     default:
       return state;
   }

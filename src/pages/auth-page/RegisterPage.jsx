@@ -30,7 +30,8 @@ const RegisterPage = ({
       toaster.danger("Error during registration");
       setIsLoading(false);
     } else if (!isRegisterLoading && isRegisterSuccess) {
-      login(loginData);
+      toaster.success("You've been successfuly registered! Check your emails to activate your account!")
+      //login(loginData);
     }
   }, [isRegisterError, isRegisterLoading, isRegisterSuccess, login, loginData]);
 
@@ -43,6 +44,7 @@ const RegisterPage = ({
   }, [isLoginError, isLoginLoading, isLoginSuccess]);
 
   const onSubmit = (data) => {
+    setIsLoading(true)
     setLoginData({ email: data.email, password: data.password });
     register(data);
   };
@@ -69,6 +71,7 @@ const RegisterPage = ({
   );
 };
 
+//TODO: change using getters
 const mapStateToProps = (state) => ({
   isRegisterLoading: state.auth.actions.register.loading,
   isRegisterError: state.auth.actions.register.error,

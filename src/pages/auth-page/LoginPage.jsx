@@ -15,7 +15,7 @@ const LoginPage = ({
   history,
   login,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); //TODO: needed ?
 
   useEffect(() => {
     if (!isLoginLoading && isLoginSuccess) {

@@ -8,6 +8,9 @@ import {
   REGISTER_LOADING,
   REGISTER_SUCCESS,
   LOGOUT,
+  ACCOUNT_VALIDATION_FAILED,
+  ACCOUNT_VALIDATION_LOADING,
+  ACCOUNT_VALIDATION_SUCCESS,
 } from "./constants";
 
 const loginLoading = () => ({ type: LOGIN_LOADING });
@@ -17,6 +20,10 @@ const loginFailed = (error) => ({ type: LOGIN_FAILED, error });
 const registerLoading = () => ({ type: REGISTER_LOADING });
 const registerSuccess = (payload) => ({ type: REGISTER_SUCCESS, payload });
 const registerFailed = (error) => ({ type: REGISTER_FAILED, error });
+
+export const accountValidationLoading = () => ({ type: ACCOUNT_VALIDATION_LOADING });
+export const accountValidationSuccess = (payload) => ({ type: ACCOUNT_VALIDATION_SUCCESS, payload });
+export const accountValidationFailed = (error) => ({ type: ACCOUNT_VALIDATION_FAILED, error: error });
 
 export const logout = () => ({ type: LOGOUT });
 
@@ -35,7 +42,7 @@ export const register = (data) => {
         dispatch(registerSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(registerFailed(error.message));
+        dispatch(registerFailed(error.response.data.message));
       });
   };
 };
@@ -55,7 +62,6 @@ export const login = (data) => {
         dispatch(loginSuccess(response.data));
       })
       .catch((error) => {
-        console.log(error)
         dispatch(loginFailed(error.response.data.message));
       });
   };
