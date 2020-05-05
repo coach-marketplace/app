@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -8,6 +8,7 @@ import AuthMenu from "./auth-menu/AuthMenu";
 import Avatar from "../../ui/avatar/Avatar";
 import Button from "../../ui/button/Button";
 import * as actions from "../../../store/modules/auth/actions";
+import { User } from "../../../services/domains/User";
 
 // TODO: refactor Popover as a UI component
 
@@ -25,20 +26,20 @@ const AuthState = ({ user, logout }) => {
         content={() => <AuthMenu logout={logout} />}
       >
         <Button appearance="minimal" height={48} iconAfter="caret-down">
-          <Avatar name={`${user.firstName} ${user.lastName}`} />
+          <Avatar name={user.fullName} src={user.avatar} size={40} />
         </Button>
       </Popover>
     );
   } else {
     content = (
-      <Fragment>
+      <>
         <Link to="/login">
           <Button label="Login" appearance="minimal" />
         </Link>
         <Link to="/register">
           <Button label="Register" appearance="minimal" />
         </Link>
-      </Fragment>
+      </>
     );
   }
 
@@ -47,7 +48,7 @@ const AuthState = ({ user, logout }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user.current,
+    user: new User(state.user.current),
   };
 };
 
