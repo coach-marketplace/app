@@ -57,6 +57,7 @@ export const fetchAuthUser = (token) => {
   };
 };
 
+// TODO: see if these comments are still relevant
 /***
  * Fetch profile infos
  */

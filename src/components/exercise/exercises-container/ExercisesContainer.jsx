@@ -1,68 +1,86 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import ExerciseCard from "../exercise-card/ExerciseCard";
 import AddExerciseFormModal from "../add-exercise-form-modal/AddExerciseFormModal";
-import Button from "../../ui/button/Button";
+import UpdateExerciseFormModal from "../update-exercise-form-modal/UpdateExerciseFormModal";
+import { Button, toaster } from "../../ui";
 import {
   retrieveAll as retrieveAllExercises,
   create as createExercise,
 } from "../../../store/modules/exercise/actions";
+import { ACTION_TYPE } from "../../../helper/constants";
 
-class ExercisesContainer extends Component {
-  state = { isAddExerciseModalOpen: false };
+const ExercisesContainer = ({
+  fetchExercises,
+  exercises,
+  createExerciseStatus,
+  fetchExerciseStatus,
+}) => {
+  const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
+  const [exerciseIdSelected, setExerciseIdSelected] = useState(null);
 
-  componentDidMount() {
-    const { exercises, getExercises } = this.props;
+  useEffect(() => {
+    fetchExerciseStatus !== ACTION_TYPE.SUCCESS && fetchExercises();
+  }, [fetchExerciseStatus, fetchExercises]);
 
-    !exercises.length && getExercises();
-  }
+  // useEffect(() => {
+  //   !isFetchProgramsLoading && !isFetchProgramsSuccess && fetchPrograms();
+  // }, [fetchPrograms, isFetchProgramsLoading, isFetchProgramsSuccess]);
 
-  toggleAddExerciseModal = () => {
-    const { isAddExerciseModalOpen } = this.state;
+  useEffect(() => {
+    switch (fetchExerciseStatus) {
+      case ACTION_TYPE.FAILED:
+        toaster.danger("Error to retrieve exercises");
+        break;
+      case ACTION_TYPE.SUCCESS:
+      default:
+        break;
+    }
+  }, [fetchExerciseStatus]);
 
-    this.setState({ isAddExerciseModalOpen: !isAddExerciseModalOpen });
-  };
+  // useEffect(() => {}, []);
 
-  render() {
-    const { exercises, isCreateExerciseLoading } = this.props;
-    const { isAddExerciseModalOpen } = this.state;
+  return (
+    <div>
+      <AddExerciseFormModal
+        onToggle={() => setIsAddExerciseModalOpen(!isAddExerciseModalOpen)}
+        isOpen={isAddExerciseModalOpen}
+        isLoading={createExerciseStatus === ACTION_TYPE.LOADING}
+      />
+      <UpdateExerciseFormModal
+        onClose={() => setExerciseIdSelected(null)}
+        exerciseId={exerciseIdSelected}
+      />
 
-    return (
+      <Button
+        label="New"
+        iconBefore="plus"
+        appearance="minimal"
+        onClick={() => setIsAddExerciseModalOpen(!isAddExerciseModalOpen)}
+      />
+
       <div>
-        <AddExerciseFormModal
-          onToggle={this.toggleAddExerciseModal}
-          isOpen={isAddExerciseModalOpen}
-          isLoading={isCreateExerciseLoading}
-        />
-
-        <Button
-          label="New"
-          iconBefore="plus"
-          appearance="minimal"
-          onClick={this.toggleAddExerciseModal}
-        />
-
-        <div>
-          {exercises.map((exercise) => (
-            <ExerciseCard key={exercise._id} title={exercise.content[0].name} />
-          ))}
-        </div>
+        {exercises.map((exercise) => (
+          <ExerciseCard
+            key={exercise._id}
+            title={exercise.content[0].name}
+            onClick={() => setExerciseIdSelected(exercise._id)}
+          />
+        ))}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
   exercises: state.exercise.list,
-  isCreateExerciseLoading: state.exercise.actions.create.loading,
-  isCreateExerciseSuccess: state.exercise.actions.create.success,
-  isCreateExerciseError: state.exercise.actions.create.error,
+  fetchExerciseStatus: state.exercise.actions.getAll.status,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   createExercise: (data) => dispatch(createExercise(data)),
-  getExercises: () => dispatch(retrieveAllExercises()),
+  fetchExercises: () => dispatch(retrieveAllExercises()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExercisesContainer);

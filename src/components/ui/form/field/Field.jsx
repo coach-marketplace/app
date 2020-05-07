@@ -6,7 +6,9 @@ import Input from "../input/Input";
 import Text from "../../text/Text";
 import Pane from "../../pane/Pane";
 import Switch from "../../switch/Switch";
-import { SYSTEM_COLOR, SIZE } from "../../../../helper/constants";
+import RadioButton from "../radio-button/RadioButton";
+import Select from "../select/Select";
+import { SYSTEM_COLOR } from "../../../../helper/constants";
 import { getMarginProps } from "../../../../helper/utils";
 
 const Field = ({
@@ -15,8 +17,29 @@ const Field = ({
   description,
   isRequired,
   type,
+  children,
   ...props
 }) => {
+  let input;
+  switch (type) {
+    case "select":
+      input = (
+        <Select {...props} width="100%">
+          {children}
+        </Select>
+      );
+      break;
+    case "switch":
+      input = <Switch {...props} />;
+      break;
+    case "radio-button":
+      input = <RadioButton {...props} />;
+      break;
+    default:
+      input = <Input {...props} type={type} width="100%" />;
+      break;
+  }
+
   return (
     <Pane
       display="inline-flex"
@@ -40,11 +63,7 @@ const Field = ({
         </Text>
       )}
 
-      {type === "switch" ? (
-        <Switch {...props} />
-      ) : (
-        <Input {...props} type={type} width="100%" />
-      )}
+      {input}
 
       {errorMessage && (
         <Text color="danger" size={300}>

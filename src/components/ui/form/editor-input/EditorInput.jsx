@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { Editor } from "react-draft-wysiwyg";
 
 import "../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-import Input from "../input/Input";
+// import Input from "../input/Input";
 
 const EditorInput = ({ onChange }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());

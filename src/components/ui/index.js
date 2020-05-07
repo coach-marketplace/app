@@ -14,6 +14,8 @@ import FlexUI from "./layout/Flex";
 import EditorInputUI from "./form/editor-input/EditorInput";
 import ImageUI from "./image/Image";
 import SwitchUI from "./switch/Switch";
+import RadioButtonUI from "./form/radio-button/RadioButton";
+import SelectUI from "./form/select/Select";
 
 export const Alert = AlertUI;
 export const Button = ButtonUI;
@@ -31,3 +33,5 @@ export const Flex = FlexUI;
 export const EditorInput = EditorInputUI;
 export const Image = ImageUI;
 export const Switch = SwitchUI;
+export const RadioButton = RadioButtonUI;
+export const Select = SelectUI;
