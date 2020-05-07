@@ -6,6 +6,7 @@ import Socket from "./services/socket";
 import Router from "./router";
 import { fetchAuthUser } from "./store/modules/user/actions";
 import Spinner from "./components/ui/loader/Spinner";
+import { addTokenToLocalStorage } from "./services/local-storage";
 
 import "./style/main.css";
 
@@ -36,7 +37,8 @@ class App extends Component {
      * For any reason a '#' is added at the end of the token, which broke
      * the call
      */
-    autoLogin(token && token.replace("#", ""));
+    token && addTokenToLocalStorage(token.replace("#", ""));
+    autoLogin();
   }
 
   componentDidUpdate() {

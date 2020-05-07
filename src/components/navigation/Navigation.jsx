@@ -1,41 +1,47 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { connect } from "react-redux";
 
-import Button from "../ui/button/Button";
+import { ListItem, List } from "./styled";
+import { Button } from "../ui";
 
-const List = styled.ul`
-  display: flex;
-  height: 40px;
-`;
-const ListItem = styled.li`
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-`;
+class Navigation extends PureComponent {
+  state = {
+    navItems: [
+      // { label: "Services", path: "/services", onlyCoach: true},
+      { label: "Customers", path: "/customers", onlyCoach: true },
+      // { label: "Calendar", path: "/schedule", onlyCoach: true},
+      { label: "Library", path: "/library/exercises", onlyCoach: true },
+      { label: "Messages", path: "/inbox", onlyCoach: false },
+    ],
+  };
 
-const Navigation = () => {
-  return (
-    <List className="navigation">
-      <ListItem>
-        <Link to="/services">
-          <Button label="Services" appearance="minimal" />
-        </Link>
-        <Link to="/customers">
-          <Button label="Customers" appearance="minimal" />
-        </Link>
-        <Link to="/schedule">
-          <Button label="Agenda" appearance="minimal" />
-        </Link>
-        <Link to="/library/exercises">
-          <Button label="Library" appearance="minimal" />
-        </Link>
-        <Link to="/inbox">
-          <Button label="Messages" appearance="minimal" />
-        </Link>
-      </ListItem>
-    </List>
-  );
-};
+  render() {
+    const { navItems } = this.state;
+    const { user } = this.props;
 
-export default Navigation;
+    return (
+      <List className="navigation">
+        <ListItem>
+          {navItems.map((navItem, index) => (
+            <Link
+              key={index}
+              to={navItem.path}
+              style={{
+                display: navItem.onlyCoach && !user.isCoach ? "none" : "block",
+              }}
+            >
+              <Button label={navItem.label} appearance="minimal" />
+            </Link>
+          ))}
+        </ListItem>
+      </List>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  user: state.user.current,
+});
+
+export default connect(mapStateToProps)(Navigation);

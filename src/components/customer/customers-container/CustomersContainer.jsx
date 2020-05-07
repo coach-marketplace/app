@@ -77,12 +77,8 @@ const CustomersContainer = ({
         {customers.map((customer) => (
           <UserCard
             key={customer._id}
-            email={customer.lead.email}
-            firstName={customer.lead.firstName}
-            lastName={customer.lead.lastName}
-            onMessageClick={() => {
-              createConversation(customer.lead._id);
-            }}
+            userData={customer.lead}
+            onMessageClick={() => createConversation(customer.lead._id)}
           />
         ))}
       </StyledCustomerContainer>
