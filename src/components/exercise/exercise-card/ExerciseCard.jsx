@@ -8,12 +8,14 @@ const ExerciseCard = ({ title, onClick }) => {
   return (
     <Pane
       elevation={1}
+      hoverElevation={2}
       display="flex"
       justifyContent="flexStart"
       alignItems="center"
       padding={20}
       marginTop={10}
       onClick={onClick}
+      background="white"
     >
       <Text>{title}</Text>
     </Pane>

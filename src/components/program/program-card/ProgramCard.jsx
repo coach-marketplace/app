@@ -23,11 +23,13 @@ const ProgramCard = ({ program, onClick }) => {
   return (
     <Pane
       elevation={1}
+      hoverElevation={2}
       display="flex"
       alignItems="center"
       padding={20}
       margin={10}
       onClick={onClick}
+      background="white"
     >
       <Pane display="flex" flexDirection="column">
         <Text size={500} marginBottom={5}>

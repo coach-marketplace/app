@@ -13,12 +13,13 @@ class MainPageLayout extends Component {
       <Container>
         {header && (
           <Pane
+            elevation={1}
             is="header"
             display="flex"
             padding={16}
-            background="tint2"
             borderRadius={3}
             alignItems="center"
+            background="white"
           >
             {header}
           </Pane>

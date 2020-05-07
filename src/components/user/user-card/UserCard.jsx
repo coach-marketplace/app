@@ -11,19 +11,20 @@ const UserCard = ({ userData, onClick, onMessageClick }) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    // console.log("useEffect", userData);
     userData && setUser(new User(userData));
   }, [userData]);
 
   return (
     <Pane
       elevation={1}
+      hoverElevation={2}
       width="100%"
       display="flex"
       alignContent="center"
       padding={20}
       margin={10}
       onClick={onClick}
+      background="white"
     >
       <Avatar name={user.fullName} src={user.avatar} />
       <Pane display="flex" flexDirection="column" flexGrow="1" paddingLeft={20}>

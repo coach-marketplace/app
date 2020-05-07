@@ -8,7 +8,7 @@ import Pane from "../../pane/Pane";
 import Switch from "../../switch/Switch";
 import RadioButton from "../radio-button/RadioButton";
 import Select from "../select/Select";
-import { SYSTEM_COLOR } from "../../../../helper/constants";
+import { COLOR } from "../../../../helper/constants";
 import { getMarginProps } from "../../../../helper/utils";
 
 const Field = ({
@@ -53,7 +53,7 @@ const Field = ({
           <Label htmlFor={props.id || props.name} marginBottom={4}>
             {label}
           </Label>
-          {isRequired && <Text color={SYSTEM_COLOR.INFO}>*</Text>}
+          {isRequired && <Text color={COLOR.INFO}>*</Text>}
         </Pane>
       )}
 

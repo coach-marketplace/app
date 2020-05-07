@@ -22,7 +22,6 @@ export class User {
    * @param {object} data User data object from database
    */
   constructor(data) {
-    console.log("constructor", data._id);
     this._id = data._id;
     this.firstName = data.firstName;
     this.lastName = data.lastName;

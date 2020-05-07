@@ -7,6 +7,7 @@ const WorkoutCard = ({ workout, onClick }) => {
   return (
     <Pane
       elevation={1}
+      hoverElevation={2}
       width={200}
       display="flex"
       alignItems="center"
@@ -14,6 +15,7 @@ const WorkoutCard = ({ workout, onClick }) => {
       padding={20}
       margin={10}
       onClick={onClick}
+      background="white"
     >
       <Text>{workout.content[0].title}</Text>
     </Pane>

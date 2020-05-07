@@ -15,23 +15,26 @@ export const Z_INDEX = {
   DROPDOWN: 10000,
 };
 
-export const COLOR = {
-  CORNFLOWER_BLUE: "#425A70",
-  SUN: "#F9A409",
-  WHITE_LILAC: "#EDEAF7",
-  CINNABAR: "#EC4C47",
-  OCEAN_GREEN: "#47B881",
+export const SYSTEM_COLOR = {
+  AQUA_HAZE: "#F1F5F7",
   BRANDY_PUNCH: "#D9822B",
+  CINNABAR: "#EC4C47",
+  // CORNFLOWER_BLUE: "#425A70",
   DENIM: "#1070CA",
+  OCEAN_GREEN: "#47B881",
+  // SILVER: "#BCBBBB",
+  SUN: "#F9A409",
 };
 
-export const SYSTEM_COLOR = {
-  PRIMARY: COLOR.SUN,
-  BACKGROUND_LIGHT: COLOR.WHITE_LILAC,
-  DANGER: COLOR.CINNABAR,
-  SUCCESS: COLOR.OCEAN_GREEN,
-  WARNING: COLOR.BRANDY_PUNCH,
-  INFO: COLOR.DENIM,
+export const COLOR = {
+  PRIMARY: SYSTEM_COLOR.SUN,
+
+  BACKGROUND_LIGHT: SYSTEM_COLOR.AQUA_HAZE,
+
+  DANGER: SYSTEM_COLOR.CINNABAR,
+  SUCCESS: SYSTEM_COLOR.OCEAN_GREEN,
+  WARNING: SYSTEM_COLOR.BRANDY_PUNCH,
+  INFO: SYSTEM_COLOR.DENIM,
 };
 
 export const BREAKPOINT = {
@@ -43,17 +46,17 @@ export const BREAKPOINT = {
 };
 
 export const MEDIA_QUERY = {
-  XS_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.XS}px)`,
-  S_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.S}px)`,
-  M_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.M}px)`,
-  L_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.L}px)`,
-  XL_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.XL}px)`,
+  XS_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.XS})`,
+  S_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.S})`,
+  M_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.M})`,
+  L_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.L})`,
+  XL_AND_DOWN: `@media screen and (max-width: ${BREAKPOINT.XL})`,
 
-  XS_AND_UP: `@media screen and (min-width: ${BREAKPOINT.XS}px)`,
-  S_AND_UP: `@media screen and (min-width: ${BREAKPOINT.S}px)`,
-  M_AND_UP: `@media screen and (min-width: ${BREAKPOINT.M}px)`,
-  L_AND_UP: `@media screen and (min-width: ${BREAKPOINT.L}px)`,
-  XL_AND_UP: `@media screen and (min-width: ${BREAKPOINT.XL}px)`,
+  XS_AND_UP: `@media screen and (min-width: ${BREAKPOINT.XS})`,
+  S_AND_UP: `@media screen and (min-width: ${BREAKPOINT.S})`,
+  M_AND_UP: `@media screen and (min-width: ${BREAKPOINT.M})`,
+  L_AND_UP: `@media screen and (min-width: ${BREAKPOINT.L})`,
+  XL_AND_UP: `@media screen and (min-width: ${BREAKPOINT.XL})`,
 };
 
 export const SPACER = {

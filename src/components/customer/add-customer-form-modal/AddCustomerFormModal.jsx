@@ -16,7 +16,7 @@ import {
 } from "../../ui";
 import CustomerDataPreview from "../customer-data-preview/CustomerDataPreview";
 import API from "../../../services/api";
-import { SYSTEM_COLOR } from "../../../helper/constants";
+import { COLOR } from "../../../helper/constants";
 import { create as createCustomer } from "../../../store/modules/customer/actions";
 
 const AddCustomerFormModal = ({
@@ -93,7 +93,7 @@ const AddCustomerFormModal = ({
         />
 
         {emailErrorMessage && (
-          <Text color={SYSTEM_COLOR.DANGER} display="block" size={300}>
+          <Text color={COLOR.DANGER} display="block" size={300}>
             {emailErrorMessage}
           </Text>
         )}
