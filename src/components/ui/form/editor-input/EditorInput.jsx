@@ -50,6 +50,8 @@ class EditorInput extends Component {
   };
 
   render() {
+    const { editorState } = this.state;
+
     return (
       <EditorContainer>
         <Editor
@@ -69,6 +71,7 @@ class EditorInput extends Component {
           }}
           onChange={this.onEditorChange}
           onEditorStateChange={(data) => this.setState({ editorState: data })}
+          editorState={editorState}
         />
       </EditorContainer>
     );
