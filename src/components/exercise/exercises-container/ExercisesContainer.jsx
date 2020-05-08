@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import ExerciseCard from "../exercise-card/ExerciseCard";
-import AddExerciseFormModal from "../add-exercise-form-modal/AddExerciseFormModal";
-import UpdateExerciseFormModal from "../update-exercise-form-modal/UpdateExerciseFormModal";
+import AddExerciseModal from "../add-exercise-modal/AddExerciseModal";
+import UpdateExerciseModal from "../update-exercise-modal/UpdateExerciseModal";
 import { Button, toaster } from "../../ui";
 import {
   retrieveAll as retrieveAllExercises,
@@ -43,12 +43,12 @@ const ExercisesContainer = ({
 
   return (
     <div>
-      <AddExerciseFormModal
+      <AddExerciseModal
         onToggle={() => setIsAddExerciseModalOpen(!isAddExerciseModalOpen)}
         isOpen={isAddExerciseModalOpen}
         isLoading={createExerciseStatus === ACTION_TYPE.LOADING}
       />
-      <UpdateExerciseFormModal
+      <UpdateExerciseModal
         onClose={() => setExerciseIdSelected(null)}
         exerciseId={exerciseIdSelected}
       />

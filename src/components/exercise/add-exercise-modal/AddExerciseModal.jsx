@@ -12,7 +12,7 @@ import {
 } from "../../../store/modules/exercise/actions";
 import { ACTION_TYPE } from "../../../helper/constants";
 
-const AddExerciseFormModal = ({
+const AddExerciseModal = ({
   createExercise,
   createExerciseStatus,
   onToggle,
@@ -41,7 +41,7 @@ const AddExerciseFormModal = ({
   );
 };
 
-AddExerciseFormModal.propTypes = {
+AddExerciseModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired,
 };
@@ -55,7 +55,4 @@ const mapDispatchToProps = (dispatch) => ({
   cleanCreateActionStore: () => dispatch(cleanCreate()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AddExerciseFormModal);
+export default connect(mapStateToProps, mapDispatchToProps)(AddExerciseModal);

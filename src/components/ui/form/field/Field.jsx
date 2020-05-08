@@ -8,6 +8,7 @@ import Pane from "../../pane/Pane";
 import Switch from "../../switch/Switch";
 import RadioButton from "../radio-button/RadioButton";
 import Select from "../select/Select";
+import EditorInput from "../editor-input/EditorInput";
 import { COLOR } from "../../../../helper/constants";
 import { getMarginProps } from "../../../../helper/utils";
 
@@ -34,6 +35,9 @@ const Field = ({
       break;
     case "radio-button":
       input = <RadioButton {...props} />;
+      break;
+    case "editor-input":
+      input = <EditorInput {...props} />;
       break;
     default:
       input = <Input {...props} type={type} width="100%" />;

@@ -89,11 +89,11 @@ const updateFailed = (state, action) => {
 const updateSuccess = (state, action) => {
   const newState = cloneDeep(state);
   const newExercise = action.payload;
-  const updateExerciseIndex = newState.exercise.list.findIndex(
+  const updateExerciseIndex = newState.list.findIndex(
     (exercise) => exercise._id === newExercise._id
   );
 
-  newState.exercise.list[updateExerciseIndex] = newExercise;
+  newState.list[updateExerciseIndex] = newExercise;
   newState.actions.update = { status: ACTION_TYPE.SUCCESS, error: null };
 
   return newState;

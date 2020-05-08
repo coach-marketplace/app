@@ -5,11 +5,7 @@ import { useFormik } from "formik";
 // import validationSchema from "./validation";
 import { Form, Field, Button, Pane } from "../../ui";
 import { LOCALE } from "../../../helper/constants";
-
-const localesOptionsForm = [
-  { label: "English", value: "en-US" },
-  { label: "French", value: "fr-FR" },
-];
+import { localesOptionsForm } from "../../../helper/utils";
 
 const ExerciseForm = ({
   initialValues,
