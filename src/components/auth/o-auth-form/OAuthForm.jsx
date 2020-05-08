@@ -46,7 +46,13 @@ const OAuthForm = ({ location, title }) => {
     <Pane display="flex" flexDirection="column" alignItems="center">
       <Text marginBottom={20}>{title}</Text>
       <Button onClick={onLoginWithGoogle} appearance="minimal">
-        <Image src={googleIcon} alt="Google icon" width="20px" />
+        <Image
+          src={googleIcon}
+          alt="Google icon"
+          width="20px"
+          style={{ marginRight: "5px" }}
+        />
+        Google
       </Button>
     </Pane>
   );
