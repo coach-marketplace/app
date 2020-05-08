@@ -3,26 +3,33 @@ import { connect } from "react-redux";
 
 import WorkoutCard from "../workout-card/WorkoutCard";
 import AddWorkoutModal from "../add-workout-modal/AddWorkoutModal";
+import UpdateWorkoutModal from "../update-workout-modal/UpdateWorkoutModal";
 import { Button, Pane } from "../../ui";
 import { retrieveAll as retrieveAllWorkouts } from "../../../store/modules/workout/actions";
+import { ACTION_TYPE } from "../../../helper/constants";
 
 const WorkoutsContainer = ({
-  isFetchWorkoutsLoading,
-  isFetchWorkoutsSuccess,
+  fetchWorkoutsStatus,
   workouts,
   fetchWorkouts,
 }) => {
   const [isAddWorkoutModalOpen, setIsAddWorkoutModalOpen] = useState(false);
+  const [workoutIdSelected, setWorkoutIdSelected] = useState(null);
 
   useEffect(() => {
-    !isFetchWorkoutsLoading && !isFetchWorkoutsSuccess && fetchWorkouts();
-  }, [fetchWorkouts, isFetchWorkoutsLoading, isFetchWorkoutsSuccess]);
+    ![ACTION_TYPE.LOADING, ACTION_TYPE.SUCCESS].includes(fetchWorkoutsStatus) &&
+      fetchWorkouts();
+  }, [fetchWorkouts, fetchWorkoutsStatus]);
 
   return (
     <>
       <AddWorkoutModal
         onToggle={() => setIsAddWorkoutModalOpen(!isAddWorkoutModalOpen)}
         isOpen={isAddWorkoutModalOpen}
+      />
+      <UpdateWorkoutModal
+        onClose={() => setWorkoutIdSelected(null)}
+        workoutId={workoutIdSelected}
       />
 
       <Button
@@ -34,7 +41,11 @@ const WorkoutsContainer = ({
 
       <Pane>
         {workouts.map((workout) => (
-          <WorkoutCard key={workout._id} workout={workout} />
+          <WorkoutCard
+            key={workout._id}
+            workout={workout}
+            onClick={() => setWorkoutIdSelected(workout._id)}
+          />
         ))}
       </Pane>
     </>
@@ -49,9 +60,7 @@ WorkoutsContainer.defaultProps = {};
 
 const mapStateToProps = (state) => ({
   workouts: state.workout.list,
-  isFetchWorkoutsLoading: state.workout.actions.getAll.loading,
-  isFetchWorkoutsSuccess: state.workout.actions.getAll.success,
-  isFetchWorkoutsError: state.workout.actions.getAll.error,
+  fetchWorkoutsStatus: state.workout.actions.getAll.status,
 });
 
 const mapDispatchToProps = (dispatch) => ({

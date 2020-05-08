@@ -4,23 +4,32 @@ import { connect } from "react-redux";
 
 import WorkoutForm from "../workout-form/WorkoutForm";
 import { SideModal, Title, toaster } from "../../ui";
-import { create as createWorkout } from "../../../store/modules/workout/actions";
+import {
+  create as createWorkout,
+  cleanCreate,
+} from "../../../store/modules/workout/actions";
+import { ACTION_TYPE } from "../../../helper/constants";
 
 const AddWorkoutModal = ({
   isOpen,
   onToggle,
   createWorkout,
-  isCreateWorkoutLoading,
-  isCreateWorkoutSuccess,
-  isCreateWorkoutError,
+  createWorkoutStatus,
+  cleanCreateActionStore,
 }) => {
   useEffect(() => {
-    if (!isCreateWorkoutLoading && isCreateWorkoutSuccess) {
-      toaster.success("Workout successfully created");
-    } else if (!isCreateWorkoutLoading && isCreateWorkoutError) {
-      toaster.danger("Impossible to create the workout");
+    switch (createWorkoutStatus) {
+      case ACTION_TYPE.FAILED:
+        toaster.danger("Impossible to create the workout");
+        break;
+      case ACTION_TYPE.SUCCESS:
+        toaster.success("Workout successfully created");
+        cleanCreateActionStore();
+        break;
+      default:
+        return;
     }
-  });
+  }, [cleanCreateActionStore, createWorkoutStatus]);
 
   const onWorkoutSubmitted = (data) => {
     createWorkout(data);
@@ -31,7 +40,7 @@ const AddWorkoutModal = ({
       <Title>Add a workout</Title>
       <WorkoutForm
         onSubmit={onWorkoutSubmitted}
-        isLoading={isCreateWorkoutLoading}
+        isLoading={createWorkoutStatus === ACTION_TYPE.LOADING}
       />
     </SideModal>
   );
@@ -43,13 +52,12 @@ AddWorkoutModal.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isCreateWorkoutLoading: state.workout.actions.create.loading,
-  isCreateWorkoutSuccess: state.workout.actions.create.success,
-  isCreateWorkoutError: state.workout.actions.create.error,
+  createWorkoutStatus: state.workout.actions.create.status,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   createWorkout: (data) => dispatch(createWorkout(data)),
+  cleanCreateActionStore: () => dispatch(cleanCreate()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddWorkoutModal);

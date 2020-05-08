@@ -25,7 +25,7 @@ const WorkoutForm = ({
   } = useFormik({
     initialValues: {
       title: initialValues.title || "",
-      content: initialValues.content || "",
+      instructions: initialValues.instructions || "",
       lang: initialValues.lang || LOCALE.EN_US,
     },
     // validationSchema: validationSchema,
@@ -69,12 +69,12 @@ const WorkoutForm = ({
       />
 
       <Field
-        label="Description"
-        name="description"
+        label="Instructions"
+        name="instructions"
         type="editor-input"
-        onChange={(value) => setFieldValue("content", value)}
-        value={values.description}
-        errorMessage={touched.description && errors.description}
+        onChange={(value) => setFieldValue("instructions", value)}
+        value={values.instructions}
+        errorMessage={touched.instructions && errors.instructions}
         disabled={isLoading}
       />
 
