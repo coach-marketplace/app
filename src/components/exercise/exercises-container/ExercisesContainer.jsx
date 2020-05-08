@@ -24,10 +24,6 @@ const ExercisesContainer = ({
     fetchExerciseStatus !== ACTION_TYPE.SUCCESS && fetchExercises();
   }, [fetchExerciseStatus, fetchExercises]);
 
-  // useEffect(() => {
-  //   !isFetchProgramsLoading && !isFetchProgramsSuccess && fetchPrograms();
-  // }, [fetchPrograms, isFetchProgramsLoading, isFetchProgramsSuccess]);
-
   useEffect(() => {
     switch (fetchExerciseStatus) {
       case ACTION_TYPE.FAILED:
@@ -38,8 +34,6 @@ const ExercisesContainer = ({
         break;
     }
   }, [fetchExerciseStatus]);
-
-  // useEffect(() => {}, []);
 
   return (
     <div>
@@ -65,7 +59,7 @@ const ExercisesContainer = ({
           <ExerciseCard
             key={exercise._id}
             title={exercise.content[0].name}
-            onClick={() => setExerciseIdSelected(exercise._id)}
+            onEdit={() => setExerciseIdSelected(exercise._id)}
           />
         ))}
       </div>

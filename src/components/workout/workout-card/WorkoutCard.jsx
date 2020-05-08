@@ -1,30 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Pane, Text } from "../../ui";
+import { Pane, Text, Button } from "../../ui";
 
-const WorkoutCard = ({ workout, onClick }) => {
+const WorkoutCard = ({ workout, onEdit }) => {
   return (
     <Pane
       elevation={1}
-      hoverElevation={2}
-      width={200}
+      width="100%"
       display="flex"
       alignItems="center"
-      flexDirection="column"
+      justifyContent="space-between"
       padding={20}
       margin={10}
-      onClick={onClick}
       background="white"
     >
       <Text>{workout.content[0].title}</Text>
+      <Button iconBefore="edit" appearance="minimal" onClick={onEdit} />
     </Pane>
   );
 };
 
 WorkoutCard.propTypes = {
   workout: PropTypes.shape({}).isRequired,
-  onClick: PropTypes.func,
+  onEdit: PropTypes.func,
 };
 
 export default WorkoutCard;

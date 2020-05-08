@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import WorkoutCard from "../workout-card/WorkoutCard";
 import AddWorkoutModal from "../add-workout-modal/AddWorkoutModal";
 import UpdateWorkoutModal from "../update-workout-modal/UpdateWorkoutModal";
-import { Button, Pane } from "../../ui";
+import { Button } from "../../ui";
 import { retrieveAll as retrieveAllWorkouts } from "../../../store/modules/workout/actions";
 import { ACTION_TYPE } from "../../../helper/constants";
 
@@ -39,21 +40,23 @@ const WorkoutsContainer = ({
         onClick={() => setIsAddWorkoutModalOpen(true)}
       />
 
-      <Pane>
+      <div>
         {workouts.map((workout) => (
           <WorkoutCard
             key={workout._id}
             workout={workout}
-            onClick={() => setWorkoutIdSelected(workout._id)}
+            onEdit={() => setWorkoutIdSelected(workout._id)}
           />
         ))}
-      </Pane>
+      </div>
     </>
   );
 };
 
 WorkoutsContainer.propTypes = {
-  // onAdWorkoutClicked: PropTypes.func
+  workouts: PropTypes.arrayOf(PropTypes.shape({})),
+  fetchWorkoutsStatus: PropTypes.string,
+  fetchWorkouts: PropTypes.func,
 };
 
 WorkoutsContainer.defaultProps = {};
