@@ -77,23 +77,4 @@ export const LAYOUT = {
     height: 100%;
     ${getFixedSize("100%")}
   `,
-  LARGE_AND_FULL_ON_MEDIUM_AND_DOWN: `
-    margin: 0 auto;
-    height: auto;
-    width: 90%;
-    min-width: ${BREAKPOINT.L};
-    ${MEDIA_QUERY.L_AND_DOWN} { // Large
-      min-width: ${BREAKPOINT.M};
-      max-width: ${BREAKPOINT.L};
-    }
-    ${MEDIA_QUERY.M_AND_DOWN} { // Medium
-      min-width: ${BREAKPOINT.S};
-      max-width: ${BREAKPOINT.M};
-      width: 100%;
-    }
-    ${MEDIA_QUERY.S_AND_DOWN} { // Small
-      min-width: 0;
-      max-width: ${BREAKPOINT.S};
-    }
-  `,
 };

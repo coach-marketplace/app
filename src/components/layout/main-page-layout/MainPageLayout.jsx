@@ -1,13 +1,20 @@
 import React, { Component } from "react";
-import { Pane } from "evergreen-ui";
+import PropTypes from "prop-types";
 
 import { Container, Main, Footer } from "./styled";
+import { Pane } from "../../ui";
 
 class MainPageLayout extends Component {
-  static displayName = "MainPageLayout";
+  static propTypes = {
+    isMainFull: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    isMainFull: false,
+  };
 
   render() {
-    const { header, main, footer } = this.props;
+    const { header, main, footer, isMainFull } = this.props;
 
     return (
       <Container>
@@ -16,7 +23,10 @@ class MainPageLayout extends Component {
             elevation={1}
             is="header"
             display="flex"
-            padding={16}
+            paddingLeft={10}
+            paddingRight={10}
+            paddingTop={5}
+            paddingBottom={5}
             borderRadius={3}
             alignItems="center"
             background="white"
@@ -24,7 +34,7 @@ class MainPageLayout extends Component {
             {header}
           </Pane>
         )}
-        <Main>{main}</Main>
+        <Main isFull={isMainFull}>{main}</Main>
         {footer && <Footer>{footer}</Footer>}
       </Container>
     );

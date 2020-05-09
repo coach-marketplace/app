@@ -14,18 +14,18 @@ export const Main = styled.main`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  width: 60%;
+  width: ${({ isFull }) => (isFull ? "calc(100% - 20px)" : "60%")};
   margin: 0 auto;
   padding: 50px 0;
 
   ${MEDIA_QUERY.L_AND_DOWN} {
-    width: 75%;
+    width: ${({ isFull }) => (isFull ? "calc(100% - 20px)" : "75%")};
   }
   ${MEDIA_QUERY.M_AND_DOWN} {
-    width: 80%;
+    width: ${({ isFull }) => (isFull ? "calc(100% - 20px)" : "80%")};
   }
   ${MEDIA_QUERY.S_AND_DOWN} {
-    width: 90%;
+    width: calc(100% - 20px);
   }
 `;
 
