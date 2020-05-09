@@ -12,7 +12,7 @@ const WorkoutCard = ({ workout, onEdit }) => {
       alignItems="center"
       justifyContent="space-between"
       padding={20}
-      margin={10}
+      marginTop={10}
       background="white"
     >
       <Text>{workout.content[0].title}</Text>

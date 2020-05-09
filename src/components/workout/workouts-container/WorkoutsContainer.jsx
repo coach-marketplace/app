@@ -23,7 +23,7 @@ const WorkoutsContainer = ({
   }, [fetchWorkouts, fetchWorkoutsStatus]);
 
   return (
-    <>
+    <div>
       <AddWorkoutModal
         onToggle={() => setIsAddWorkoutModalOpen(!isAddWorkoutModalOpen)}
         isOpen={isAddWorkoutModalOpen}
@@ -49,7 +49,7 @@ const WorkoutsContainer = ({
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

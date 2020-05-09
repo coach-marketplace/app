@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import ProgramCard from "../program-card/ProgramCard";
 import AddProgramModal from "../add-program-modal/AddProgramModal";
-import { Button, Pane } from "../../ui";
+import { Button } from "../../ui";
 import { retrieveAll as retrieveAllPrograms } from "../../../store/modules/program/actions";
 
 const ProgramsContainer = ({
@@ -20,7 +20,7 @@ const ProgramsContainer = ({
   }, [fetchPrograms, isFetchProgramsLoading, isFetchProgramsSuccess]);
 
   return (
-    <>
+    <div>
       <AddProgramModal
         onToggle={() => setIsAddProgramModalOpen(!isAddProgramModalOpen)}
         isOpen={isAddProgramModalOpen}
@@ -33,12 +33,12 @@ const ProgramsContainer = ({
         onClick={() => setIsAddProgramModalOpen(true)}
       />
 
-      <Pane>
+      <div>
         {programs.map((program) => (
           <ProgramCard key={program._id} program={program} />
         ))}
-      </Pane>
-    </>
+      </div>
+    </div>
   );
 };
 
