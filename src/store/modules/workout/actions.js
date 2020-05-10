@@ -5,6 +5,10 @@ import {
   GET_WORKOUTS_LOADING,
   GET_WORKOUTS_SUCCESS,
   CLEAN_GET_WORKOUTS,
+  FETCH_WORKOUT_FAILED,
+  FETCH_WORKOUT_LOADING,
+  FETCH_WORKOUT_SUCCESS,
+  CLEAN_FETCH_WORKOUT,
   CREATE_WORKOUT_LOADING,
   CREATE_WORKOUT_FAILED,
   CREATE_WORKOUT_SUCCESS,
@@ -24,6 +28,11 @@ const getAllLoading = () => ({ type: GET_WORKOUTS_LOADING });
 const getAllSuccess = (payload) => ({ type: GET_WORKOUTS_SUCCESS, payload });
 const getAllFailed = (error) => ({ type: GET_WORKOUTS_FAILED, error });
 const getAllClean = () => ({ type: CLEAN_GET_WORKOUTS });
+
+const fetchLoading = () => ({ type: FETCH_WORKOUT_LOADING });
+const fetchSuccess = (payload) => ({ type: FETCH_WORKOUT_SUCCESS, payload });
+const fetchFailed = (error) => ({ type: FETCH_WORKOUT_FAILED, error });
+const fetchClean = () => ({ type: CLEAN_FETCH_WORKOUT });
 
 const createLoading = () => ({ type: CREATE_WORKOUT_LOADING });
 const createSuccess = (payload) => ({ type: CREATE_WORKOUT_SUCCESS, payload });
@@ -58,7 +67,26 @@ export const retrieveAll = () => {
 };
 export const cleanGetAll = () => (dispatch) => dispatch(getAllClean());
 
-export const create = (data) => {
+export const fetch = (workoutId, callback) => {
+  return (dispatch) => {
+    dispatch(fetchLoading());
+    const {
+      user: { current: user },
+    } = store.getState();
+
+    API.get(`coach/${user._id}/workouts/${workoutId}`)
+      .then((response) => {
+        dispatch(fetchSuccess(response.data));
+        callback(response.data);
+      })
+      .catch((error) => {
+        dispatch(fetchFailed(error.message));
+      });
+  };
+};
+export const cleanFetchOne = () => (dispatch) => dispatch(fetchClean());
+
+export const create = (data, callback) => {
   return (dispatch) => {
     dispatch(createLoading());
     const {
@@ -75,8 +103,8 @@ export const create = (data) => {
 
     API.post(`coach/${user._id}/workouts`, normalizedData)
       .then((response) => {
-        console.log("response", response);
         dispatch(createSuccess(response.data));
+        callback(response.data._id);
       })
       .catch((error) => {
         dispatch(createFailed(error.message));

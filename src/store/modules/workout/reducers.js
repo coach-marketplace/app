@@ -5,6 +5,10 @@ import {
   GET_WORKOUTS_LOADING,
   GET_WORKOUTS_SUCCESS,
   CLEAN_GET_WORKOUTS,
+  FETCH_WORKOUT_FAILED,
+  FETCH_WORKOUT_LOADING,
+  FETCH_WORKOUT_SUCCESS,
+  CLEAN_FETCH_WORKOUT,
   CREATE_WORKOUT_LOADING,
   CREATE_WORKOUT_FAILED,
   CREATE_WORKOUT_SUCCESS,
@@ -52,6 +56,37 @@ const getAllClean = (state) => {
   return newState;
 };
 
+const fetchFailed = (state, action) => {
+  const newState = cloneDeep(state);
+  newState.actions.fetch = { status: ACTION_TYPE.FAILED, error: action.error };
+
+  return newState;
+};
+const fetchSuccess = (state, action) => {
+  const newState = cloneDeep(state);
+  const fetchedWorkout = action.payload;
+  const workoutIndex = newState.list.findIndex(
+    (workout) => workout._id === fetchedWorkout._id
+  );
+
+  newState.list[workoutIndex] = fetchedWorkout;
+  newState.actions.fetch = { status: ACTION_TYPE.SUCCESS, error: null };
+
+  return newState;
+};
+const fetchLoading = (state) => {
+  const newState = cloneDeep(state);
+  newState.actions.fetch = { status: ACTION_TYPE.LOADING, error: null };
+
+  return newState;
+};
+const fetchClean = (state) => {
+  const newState = cloneDeep(state);
+  newState.actions.fetch = { ...INITIAL_ACTION_STATE_NEW };
+
+  return newState;
+};
+
 const createFailed = (state, action) => {
   const newState = cloneDeep(state);
   newState.actions.create = { status: ACTION_TYPE.FAILED, error: action.error };
@@ -89,11 +124,10 @@ const updateFailed = (state, action) => {
 const updateSuccess = (state, action) => {
   const newState = cloneDeep(state);
   const newWorkout = action.payload;
-  console.log("newWorkout", newWorkout);
   const updateWorkoutIndex = newState.list.findIndex(
     (workout) => workout._id === newWorkout._id
   );
-  console.log("updateWorkoutIndex", updateWorkoutIndex);
+
   newState.list[updateWorkoutIndex] = newWorkout;
   newState.actions.update = { status: ACTION_TYPE.SUCCESS, error: null };
 
@@ -154,6 +188,15 @@ const reducer = (state = initialState, action) => {
       return getAllSuccess(state, action);
     case CLEAN_GET_WORKOUTS:
       return getAllClean(state);
+
+    case FETCH_WORKOUT_FAILED:
+      return fetchFailed(state, action);
+    case FETCH_WORKOUT_LOADING:
+      return fetchLoading(state);
+    case FETCH_WORKOUT_SUCCESS:
+      return fetchSuccess(state, action);
+    case CLEAN_FETCH_WORKOUT:
+      return fetchClean(state);
 
     case CREATE_WORKOUT_FAILED:
       return createFailed(state, action);
