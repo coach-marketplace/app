@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { MessageContainer, MessageWrapper } from "./style";
-import Text from "../../ui/text/Text";
+import { Text } from "../../ui";
 
 const MessageCard = ({ messageText, date, isReceiver }) => {
   /**

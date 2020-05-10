@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import Pane from "../../ui/pane/Pane";
-import Text from "../../ui/text/Text";
+import { Pane, Text } from "../../ui";
 
 class ServiceCard extends Component {
   static propTypes = {

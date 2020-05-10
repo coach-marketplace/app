@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import Label from "../label/Label";
 import Input from "../input/Input";
-import Text from "../../text/Text";
+import Text from "../../typography/Text";
 import Pane from "../../pane/Pane";
 import Switch from "../../switch/Switch";
 import RadioButton from "../radio-button/RadioButton";

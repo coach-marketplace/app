@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-import Pane from "../../ui/pane/Pane";
-import Text from "../../ui/text/Text";
-import Avatar from "../../ui/avatar/Avatar";
-import Button from "../../ui/button/Button";
+import { Pane, Text, Avatar, Button } from "../../ui";
 import { User } from "../../../services/domains/User";
 
 const UserCard = ({ userData, onClick, onMessageClick }) => {

@@ -4,10 +4,7 @@ import { connect } from "react-redux";
 
 import { ChatContainer, ChatHeader, ChatForm } from "./style.js";
 import MessagesContainer from "./messages-container/MessageContainer";
-import Text from "../ui/text/Text";
-import Spinner from "../ui/loader/Spinner";
-import Input from "../ui/form/input/Input";
-import Button from "../ui/button/Button";
+import { Text, Spinner, Input, Button } from "../ui";
 import { postMessage } from "../../store/modules/message/actions";
 import Conversation from "../../services/domains/Conversation";
 
