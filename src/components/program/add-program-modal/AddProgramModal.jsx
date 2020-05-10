@@ -1,37 +1,52 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import ProgramForm from "../program-form/ProgramForm";
 import { SideModal, Title, toaster } from "../../ui";
-import { create as createProgram } from "../../../store/modules/program/actions";
+import {
+  create as createProgram,
+  cleanCreate,
+} from "../../../store/modules/program/actions";
+import { ACTION_TYPE } from "../../../helper/constants";
 
 const AddProgramModal = ({
   isOpen,
-  onToggle,
+  onClose,
   createProgram,
-  isCreateProgramLoading,
-  isCreateProgramSuccess,
-  isCreateProgramError,
+  createProgramStatus,
+  cleanCreateActionStore,
 }) => {
+  const history = useHistory();
+
   useEffect(() => {
-    if (!isCreateProgramLoading && isCreateProgramSuccess) {
-      toaster.success("Program successfully created");
-    } else if (!isCreateProgramLoading && isCreateProgramError) {
-      toaster.danger("Impossible to create the program");
+    console.log("program status", createProgramStatus);
+    switch (createProgramStatus) {
+      case ACTION_TYPE.FAILED:
+        toaster.danger("Error in creation, retry later");
+        break;
+      case ACTION_TYPE.SUCCESS:
+        toaster.success("Program successfully created");
+        cleanCreateActionStore();
+        break;
+      default:
+        return;
     }
-  });
+  }, [cleanCreateActionStore, createProgramStatus]);
 
   const onProgramSubmitted = (data) => {
-    createProgram(data);
+    createProgram(data, (newProgramId) => {
+      history.push(`/coach/programs/${newProgramId}/edit`);
+    });
   };
 
   return (
-    <SideModal isShown={isOpen} onCloseComplete={onToggle}>
+    <SideModal isShown={isOpen} onCloseComplete={onClose}>
       <Title>Create a program</Title>
       <ProgramForm
         onSubmit={onProgramSubmitted}
-        isLoading={isCreateProgramLoading}
+        isLoading={createProgramStatus === ACTION_TYPE.LOADING}
       />
     </SideModal>
   );
@@ -39,17 +54,20 @@ const AddProgramModal = ({
 
 AddProgramModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onToggle: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  isCreateProgramLoading: state.program.actions.create.loading,
-  isCreateProgramSuccess: state.program.actions.create.success,
-  isCreateProgramError: state.program.actions.create.error,
+  createProgramStatus: state.program.actions.create.status,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createProgram: (data) => dispatch(createProgram(data)),
+  /**
+   * @param {object} data
+   * @param {function} callback Callback function who will be trigger on success
+   */
+  createProgram: (data, callback) => dispatch(createProgram(data, callback)),
+  cleanCreateActionStore: () => dispatch(cleanCreate()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddProgramModal);

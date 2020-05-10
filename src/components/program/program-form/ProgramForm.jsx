@@ -4,6 +4,8 @@ import { useFormik } from "formik";
 
 // import validationSchema from "./validation";
 import { Form, Field, Button, Pane } from "../../ui";
+import { localesOptionsForm } from "../../../helper/utils";
+import { LOCALE } from "../../../helper/constants";
 
 const ProgramForm = ({ initialValues, onSubmit, isLoading }) => {
   const {
@@ -18,6 +20,7 @@ const ProgramForm = ({ initialValues, onSubmit, isLoading }) => {
       title: initialValues.title || "",
       description: initialValues.description || "",
       days: initialValues.days || 1,
+      lang: initialValues.lang || LOCALE.EN_US,
       isPrivate: initialValues.isPrivate || false,
     },
     // validationSchema: validationSchema,
@@ -26,6 +29,28 @@ const ProgramForm = ({ initialValues, onSubmit, isLoading }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
+      <Field
+        label="Language"
+        name="lang"
+        type="select"
+        width={150}
+        onChange={handleChange}
+        options={localesOptionsForm}
+        onBlur={handleBlur}
+        value={values.lang}
+        disabled={true}
+      >
+        {localesOptionsForm.map((locale) => (
+          <option
+            key={locale.value}
+            value={locale.value}
+            selected={locale.selected}
+          >
+            {locale.label}
+          </option>
+        ))}
+      </Field>
+
       <Field
         label="Title"
         name="title"
@@ -62,14 +87,14 @@ const ProgramForm = ({ initialValues, onSubmit, isLoading }) => {
         isRequired
       />
 
-      <Field
+      {/* <Field
         label="Is Private?"
         name="isPrivate"
         type="switch"
         onChange={handleChange}
         checked={values.isPrivate}
         disabled={isLoading}
-      />
+      /> */}
 
       <Pane display="flex">
         <Button type="submit" isLoading={isLoading} appearance="primary">

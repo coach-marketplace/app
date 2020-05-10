@@ -10,7 +10,7 @@ import {
 } from "../../../store/modules/workout/actions";
 import { ACTION_TYPE } from "../../../helper/constants";
 
-const AddWorkoutModal = ({
+const CreateWorkoutModal = ({
   isOpen,
   onToggle,
   createWorkout,
@@ -46,7 +46,7 @@ const AddWorkoutModal = ({
   );
 };
 
-AddWorkoutModal.propTypes = {
+CreateWorkoutModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired,
 };
@@ -60,4 +60,4 @@ const mapDispatchToProps = (dispatch) => ({
   cleanCreateActionStore: () => dispatch(cleanCreate()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddWorkoutModal);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateWorkoutModal);

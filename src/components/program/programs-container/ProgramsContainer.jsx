@@ -1,28 +1,41 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import ProgramCard from "../program-card/ProgramCard";
 import AddProgramModal from "../add-program-modal/AddProgramModal";
-import { Button } from "../../ui";
+import { Button, toaster } from "../../ui";
 import { retrieveAll as retrieveAllPrograms } from "../../../store/modules/program/actions";
+import { ACTION_TYPE } from "../../../helper/constants";
 
-const ProgramsContainer = ({
-  isFetchProgramsLoading,
-  isFetchProgramsSuccess,
-  programs,
-  fetchPrograms,
-}) => {
+const ProgramsContainer = ({ fetchProgramStatus, programs, fetchPrograms }) => {
+  const history = useHistory();
   const [isAddProgramModalOpen, setIsAddProgramModalOpen] = useState(false);
 
   useEffect(() => {
-    !isFetchProgramsLoading && !isFetchProgramsSuccess && fetchPrograms();
-  }, [fetchPrograms, isFetchProgramsLoading, isFetchProgramsSuccess]);
+    fetchProgramStatus !== ACTION_TYPE.SUCCESS && fetchPrograms();
+  }, [fetchProgramStatus, fetchPrograms]);
+
+  useEffect(() => {
+    switch (fetchProgramStatus) {
+      case ACTION_TYPE.FAILED:
+        toaster.danger("Error to retrieve exercises");
+        break;
+      case ACTION_TYPE.SUCCESS:
+      default:
+        break;
+    }
+  }, [fetchProgramStatus]);
+
+  const goToEditProgram = (programId) => {
+    history.push(`/coach/programs/${programId}/edit`);
+  };
 
   return (
     <div>
       <AddProgramModal
-        onToggle={() => setIsAddProgramModalOpen(!isAddProgramModalOpen)}
+        onClose={() => setIsAddProgramModalOpen(!isAddProgramModalOpen)}
         isOpen={isAddProgramModalOpen}
       />
 
@@ -35,7 +48,11 @@ const ProgramsContainer = ({
 
       <div>
         {programs.map((program) => (
-          <ProgramCard key={program._id} program={program} />
+          <ProgramCard
+            key={program._id}
+            program={program}
+            onEdit={() => goToEditProgram(program._id)}
+          />
         ))}
       </div>
     </div>
@@ -44,15 +61,13 @@ const ProgramsContainer = ({
 
 ProgramsContainer.propTypes = {
   onAdProgramClicked: PropTypes.func,
+  programs: PropTypes.arrayOf(PropTypes.shape({})),
+  fetchProgramStatus: PropTypes.string,
 };
-
-ProgramsContainer.defaultProps = {};
 
 const mapStateToProps = (state) => ({
   programs: state.program.list,
-  isFetchProgramsLoading: state.program.actions.getAll.loading,
-  isFetchProgramsSuccess: state.program.actions.getAll.success,
-  isFetchProgramsError: state.program.actions.getAll.error,
+  fetchProgramStatus: state.program.actions.getAll.status,
 });
 
 const mapDispatchToProps = (dispatch) => ({

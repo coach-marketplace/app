@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Pane, Text } from "../../ui";
+import { Pane, Text, Button } from "../../ui";
 
 const getDescriptionCard = (program) => {
   let content = `${program.days} days`;
@@ -19,26 +19,32 @@ const getDescriptionCard = (program) => {
   return content;
 };
 
-const ProgramCard = ({ program, onClick }) => {
+const ProgramCard = ({ program, onEdit }) => {
   return (
     <Pane
       elevation={1}
-      hoverElevation={2}
       display="flex"
-      alignItems="center"
-      padding={20}
-      margin={10}
-      onClick={onClick}
+      alignItems="flex-start"
+      padding={10}
+      marginTop={10}
       background="white"
     >
-      <Pane display="flex" flexDirection="column">
+      <Pane
+        display="flex"
+        flexDirection="column"
+        justifyContent="flex-start"
+        flexGrow="1"
+        height="100%"
+      >
         <Text size={500} marginBottom={5}>
           {program.content[0].title}
         </Text>
         <Text size={300}>{getDescriptionCard(program)}</Text>
       </Pane>
-      <Pane display="flex" flexGrow="1" justifyContent="flex-end" height="100%">
-        <Text>0 Clients</Text>
+      <Pane display="flex" alignItems="center">
+        <Button appearance="minimal" onClick={onEdit} size={300}>
+          manage
+        </Button>
       </Pane>
     </Pane>
   );
@@ -46,7 +52,7 @@ const ProgramCard = ({ program, onClick }) => {
 
 ProgramCard.propTypes = {
   program: PropTypes.shape({}).isRequired,
-  onClick: PropTypes.func,
+  onEdit: PropTypes.func,
 };
 
 export default ProgramCard;

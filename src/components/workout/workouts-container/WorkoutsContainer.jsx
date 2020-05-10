@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import WorkoutCard from "../workout-card/WorkoutCard";
-import AddWorkoutModal from "../add-workout-modal/AddWorkoutModal";
+import CreateWorkoutModal from "../create-workout-modal/CreateWorkoutModal";
 import UpdateWorkoutModal from "../update-workout-modal/UpdateWorkoutModal";
 import { Button } from "../../ui";
 import { retrieveAll as retrieveAllWorkouts } from "../../../store/modules/workout/actions";
@@ -14,7 +14,9 @@ const WorkoutsContainer = ({
   workouts,
   fetchWorkouts,
 }) => {
-  const [isAddWorkoutModalOpen, setIsAddWorkoutModalOpen] = useState(false);
+  const [isCreateWorkoutModalOpen, setIsCreateWorkoutModalOpen] = useState(
+    false
+  );
   const [workoutIdSelected, setWorkoutIdSelected] = useState(null);
 
   useEffect(() => {
@@ -24,9 +26,9 @@ const WorkoutsContainer = ({
 
   return (
     <div>
-      <AddWorkoutModal
-        onToggle={() => setIsAddWorkoutModalOpen(!isAddWorkoutModalOpen)}
-        isOpen={isAddWorkoutModalOpen}
+      <CreateWorkoutModal
+        onToggle={() => setIsCreateWorkoutModalOpen(!isCreateWorkoutModalOpen)}
+        isOpen={isCreateWorkoutModalOpen}
       />
       <UpdateWorkoutModal
         onClose={() => setWorkoutIdSelected(null)}
@@ -37,7 +39,7 @@ const WorkoutsContainer = ({
         label="New"
         iconBefore="plus"
         appearance="minimal"
-        onClick={() => setIsAddWorkoutModalOpen(true)}
+        onClick={() => setIsCreateWorkoutModalOpen(true)}
       />
 
       <div>

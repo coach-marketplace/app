@@ -18,6 +18,7 @@ import AccountPage from "../pages/user-page/AccountPage";
 import LibraryPage from "../pages/library-page/LibraryPage";
 import ConversationsPage from "../pages/conversations-page/ConversationsPage";
 import ConversationPage from "../pages/conversations-page/ConversationPage";
+import EditProgramPage from "../pages/library-page/EditProgramPage";
 
 // TODO: Clean up routes, add new service into a modal to remove the page
 
@@ -84,6 +85,13 @@ const routes = [
     isProtected: true,
     isOnlyCoach: false,
     component: ConversationPage,
+  },
+  {
+    path: "/coach/programs/:id/edit",
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: true,
+    component: EditProgramPage,
   },
 ];
 
