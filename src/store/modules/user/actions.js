@@ -2,12 +2,12 @@ import {
   FETCH_AUTH_USER_FAILED,
   FETCH_AUTH_USER_LOADING,
   FETCH_AUTH_USER_SUCCESS,
-  //   FETCH_USER_PROFILE_INFOS_FAILED,
-  //   FETCH_USER_PROFILE_INFOS_LOADING,
-  //   FETCH_USER_PROFILE_INFOS_SUCCESS,
-  //   UPDATE_USER_PROFILE_INFOS_FAILED,
-  //   UPDATE_USER_PROFILE_INFOS_LOADING,
-  //   UPDATE_USER_PROFILE_INFOS_SUCCESS,
+    FETCH_USER_PROFILE_INFOS_FAILED,
+    FETCH_USER_PROFILE_INFOS_LOADING,
+    FETCH_USER_PROFILE_INFOS_SUCCESS,
+    UPDATE_USER_PROFILE_INFOS_FAILED,
+    UPDATE_USER_PROFILE_INFOS_LOADING,
+    UPDATE_USER_PROFILE_INFOS_SUCCESS,
   FETCH_USER_PROFILE_PENDING,
   FETCH_USER_PROFILE_SUCCESS,
   FETCH_USER_PROFILE_ERROR,
@@ -23,6 +23,7 @@ import {
   ADD_USER_PHYSICAL_METRICS_PENDING,
   ADD_USER_PHYSICAL_METRICS_SUCCESS,
   ADD_USER_PHYSICAL_METRICS_ERROR,
+  RESET_PROFILE_UPDATE_VALUE,
 } from "./constants";
 
 import API from "../../../services/api";
@@ -60,20 +61,20 @@ export const fetchAuthUser = (token) => {
 /***
  * Fetch profile infos
  */
-// export const fetchUserProfileInfosPending = () => {
-//   return { type: FETCH_USER_PROFILE_INFOS_LOADING };
-// };
+export const fetchUserProfileInfosPending = () => {
+  return { type: FETCH_USER_PROFILE_INFOS_LOADING };
+};
 
-// export const fetchUserProfileInfosSuccess = (payload) => {
-//   return {
-//     type: FETCH_USER_PROFILE_INFOS_SUCCESS,
-//     data: payload,
-//   };
-// };
+export const fetchUserProfileInfosSuccess = (payload) => {
+  return {
+    type: FETCH_USER_PROFILE_INFOS_SUCCESS,
+    data: payload,
+  };
+};
 
-// export const fetchUserProfileInfosFailed = () => {
-//   return { type: FETCH_USER_PROFILE_INFOS_FAILED };
-// };
+export const fetchUserProfileInfosFailed = () => {
+  return { type: FETCH_USER_PROFILE_INFOS_FAILED };
+};
 export const fetchUserProfilePending = () => ({
   type: FETCH_USER_PROFILE_PENDING,
 });
@@ -101,20 +102,20 @@ export const updateUserProfileFailed = (payload) => ({
   data: payload,
 });
 
-// export const updateUserProfileInfosPending = () => {
-//   return { type: UPDATE_USER_PROFILE_INFOS_LOADING };
-// };
+export const updateUserProfileInfosPending = () => {
+  return { type: UPDATE_USER_PROFILE_INFOS_LOADING };
+};
 
-// export const updateUserProfileInfosSuccess = (payload) => {
-//   return {
-//     type: UPDATE_USER_PROFILE_INFOS_SUCCESS,
-//     data: payload,
-//   };
-// };
+export const updateUserProfileInfosSuccess = (payload) => {
+  return {
+    type: UPDATE_USER_PROFILE_INFOS_SUCCESS,
+    data: payload,
+  };
+};
 
-// export const updateUserProfileInfosFailed = () => {
-//   return { type: UPDATE_USER_PROFILE_INFOS_FAILED };
-// };
+export const updateUserProfileInfosFailed = () => {
+  return { type: UPDATE_USER_PROFILE_INFOS_FAILED };
+};
 /**
  * Update user password
  */
@@ -159,3 +160,10 @@ export const addUserPhysicalMetricsFailed = (payload) => ({
   type: ADD_USER_PHYSICAL_METRICS_ERROR,
   data: payload,
 });
+
+/**
+ * reset status
+ */
+export const resetProfileUpdateValues = () => ({
+  type: RESET_PROFILE_UPDATE_VALUE,
+})

@@ -5,8 +5,8 @@ export default {
   physicalMetrics: [],
   actions: {
     fetchAuthUser: { ...INITIAL_ACTION_STATE },
-    fetchUserProfile: { status: "", error: "" },
-    updateUserProfile: { status: "", error: "" },
+    fetchUserProfile: { status: "", error: "", data: {} },
+    updateUserProfile: { ...INITIAL_ACTION_STATE },
     updatePassword: { status: "", error: "" },
     fetchPhysicalMetrics: { status: "", error: "" },
     addPhysicalMetrics: { status: "", error: "" },

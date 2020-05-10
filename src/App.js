@@ -18,6 +18,8 @@ class App extends Component {
   static getDerivedStateFromProps(props, state) {
     const { isAutoLoginLoading } = props;
 
+    console.log(state)
+
     return {
       ...state,
       previousIsAutoLoginLoading: isAutoLoginLoading,
@@ -43,6 +45,8 @@ class App extends Component {
     const { user } = this.props;
     const { isAutoLoginDone } = this.state;
 
+    console.log(user)
+
     isAutoLoginDone && user && Socket.init({ userId: user._id });
   }
 
@@ -59,7 +63,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user.current,
-  isAutoLoginLoading: state.user.actions.fetchAuthUser.loading,
+  isAutoLoginLoading: state.user.actions.fetchAuthUser.loading 
+                      || state.user.actions.updateUserProfile.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

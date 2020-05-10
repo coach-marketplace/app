@@ -39,6 +39,15 @@ class API {
       data,
     });
   }
+
+  static put(endPoint, data = {}) {
+    return axios({
+      method: "put",
+      url: `${this.baseUrl}${endPoint}`,
+      headers: this.headers,
+      data,
+    });
+  }
 }
 
 API.init();

@@ -20,6 +20,7 @@ import {
   ADD_USER_PHYSICAL_METRICS_PENDING,
   ADD_USER_PHYSICAL_METRICS_SUCCESS,
   ADD_USER_PHYSICAL_METRICS_ERROR,
+  RESET_PROFILE_UPDATE_VALUE
 } from "./constants";
 
 const fetchAuthUserFailed = (state, action) => {
@@ -42,10 +43,24 @@ const fetchAuthUserLoading = (state) => {
   return newState;
 };
 
+const fetchAuthUserSuccess = (state, action) => {
+  const newState = cloneDeep(state);
+
+  newState.current = action.payload;
+  newState.actions.fetchAuthUser.loading = false;
+  newState.actions.fetchAuthUser.error = null;
+  newState.actions.fetchAuthUser.success = true;
+
+  console.log(newState)
+
+  return newState;
+};
+
 /**
  * Fetch user profile
  */
 const userProfileLoading = (state) => {
+  console.log("reducer loading")
   const newState = cloneDeep(state);
 
   newState.actions.fetchUserProfile.status = FETCH_USER_PROFILE_PENDING;
@@ -68,6 +83,8 @@ const userProfileSuccess = (state, payload) => {
   newState.actions.fetchUserProfile.status = FETCH_USER_PROFILE_SUCCESS;
   newState.actions.fetchUserProfile.error = "";
 
+  console.log(newState)
+
   return newState;
 };
 
@@ -80,70 +97,47 @@ const userProfileFailed = (state, payload) => {
   return newState;
 };
 
-const fetchAuthUserSuccess = (state, action) => {
-  const newState = cloneDeep(state);
 
-  newState.current = action.payload;
-  newState.actions.fetchAuthUser.loading = false;
-  newState.actions.fetchAuthUser.error = null;
-  newState.actions.fetchAuthUser.success = true;
-  return newState;
-};
 /**
  * Update user profile
  */
 const userProfileUpdateLoading = (state) => {
   const newState = cloneDeep(state);
 
-  newState.actions.updateUserProfile.status = UPDATE_USER_PROFILE_PENDING;
-  newState.actions.updateUserProfile.error = "";
+  newState.actions.updateUserProfile.loading = true;
+  newState.actions.updateUserProfile.success = false;
+  newState.actions.updateUserProfile.error = null;
 
   return newState;
 };
 
-// FETCH USER INFOS
-
-// const userProfileDataLoading = state => {
-//   const newState = cloneDeep(state);
-//   newState.profileData.status = FETCH_USER_PROFILE_INFOS_PENDING;
-//   return newState;
-// };
-
-// const userProfileDataSuccess = (state, payload) => {
-//   const newState = cloneDeep(state);
-//   newState.profileData.status = FETCH_USER_PROFILE_INFOS_SUCCESS;
-//   newState.profileData.firstName = payload.firstName !== undefined ? payload.firstName : "";
-//   newState.profileData.lastName = payload.lastName !== undefined ? payload.lastName : "";
-//   newState.profileData.email = payload.email !== undefined ? payload.email : "";
-//   newState.profileData.phone = payload.phone !== undefined ? payload.phone : "";
-//   return newState;
-// };
-
-// const userProfileDataFailed = state => {
-//   const newState = cloneDeep(state);
-//   newState.profileData.status = FETCH_USER_PROFILE_INFOS_ERROR;
-
-//   return newState;
-// };
-
-//UPDATE USER INFOS
-
-// const userProfileDataUpdateLoading = state => {
-//   const newState = cloneDeep(state);
-//   newState.profileData.status = UPDATE_USER_PROFILE_INFOS_PENDING;
 const userProfileUpdateSuccess = (state, payload) => {
   const newState = cloneDeep(state);
-  const { firstName, lastName, email, phone, dateOfBirth, gender } = payload;
+  const profile = (({ 
+    firstName, 
+    lastName, 
+    email, 
+    phone, 
+    gender, 
+    dateOfBirth 
+  }) => ({ 
+    firstName, 
+    lastName, 
+    email, 
+    phone, 
+    gender, 
+    dateOfBirth 
+   }))(payload);
 
-  firstName && (newState.firstName = firstName);
-  lastName && (newState.lastName = lastName);
-  email && (newState.email = email);
-  phone && (newState.phone = phone);
-  dateOfBirth && (newState.dateOfBirth = dateOfBirth);
-  gender && (newState.gender = gender);
+   console.log(profile)
 
-  newState.actions.updateUserProfile.status = UPDATE_USER_PROFILE_SUCCESS;
-  newState.actions.updateUserProfile.error = "";
+  newState.actions.updateUserProfile.loading = false;
+  newState.actions.updateUserProfile.success = true;
+  newState.actions.updateUserProfile.error = null;
+  //newState.current = {...newState.current, profile}
+  //newState.current.firstName = "Jean"
+
+
 
   return newState;
 };
@@ -151,8 +145,9 @@ const userProfileUpdateSuccess = (state, payload) => {
 const userProfileUpdateFailed = (state, payload) => {
   const newState = cloneDeep(state);
 
-  newState.actions.updateUserProfile.status = UPDATE_USER_PROFILE_ERROR;
-  newState.actions.updateUserProfile.error = payload.message;
+  newState.actions.updateUserProfile.loading = false;
+  newState.actions.updateUserProfile.success = false;
+  newState.actions.updateUserProfile.error = payload.error;
 
   return newState;
 };
@@ -261,6 +256,16 @@ const userPhysicalMetricsAddFailed = (state, payload) => {
   return newState;
 };
 
+const resetProfileUpdateSuccess = (state) => {
+  const newState = cloneDeep(state);
+
+  newState.actions.updateUserProfile.loading = false;
+  newState.actions.updateUserProfile.success = false;
+  newState.actions.updateUserProfile.error = null;
+
+  return newState;
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_AUTH_USER_FAILED:
@@ -277,13 +282,7 @@ const reducer = (state = initialState, action) => {
     // case FETCH_USER_PROFILE_INFOS_ERROR:
     //   return userProfileDataFailed(state);
 
-    // //UPDATE USER PROFILE INFOS
-    // case UPDATE_USER_PROFILE_INFOS_PENDING:
-    //   return userProfileDataUpdateLoading(state);
-    // case UPDATE_USER_PROFILE_INFOS_SUCCESS:
-    //   return userProfileDataUpdateSuccess(state, action.data);
-    // case UPDATE_USER_PROFILE_INFOS_ERROR:
-    //   return userProfileDataUpdateFailed(state);
+   
     //FETCH USER PROFILE INFOS
     case FETCH_USER_PROFILE_PENDING:
       return userProfileLoading(state);
@@ -323,6 +322,8 @@ const reducer = (state = initialState, action) => {
       return userPhysicalMetricsAddSuccess(state, action.data);
     case ADD_USER_PHYSICAL_METRICS_ERROR:
       return userPhysicalMetricsAddFailed(state, action.data);
+    case RESET_PROFILE_UPDATE_VALUE:
+      return resetProfileUpdateSuccess(state);
 
     default:
       return state;

@@ -1,65 +1,88 @@
-import React from "react";
-import { TextInputField } from "evergreen-ui";
-import { connect } from "react-redux";
+import React, { useEffect } from "react"
+import { useFormik } from "formik"
+import { useDispatch, useSelector } from 'react-redux'
+import { getProfileInfos } from "../../store/modules/user/selectors"
+import { Form, Field, Button, toaster } from "../../components/ui";
+import { updateUserProfile, resetProfileUpdateStatus } from "../../store/modules/user/user";
 
-import Button from "../ui/button/Button";
+const ProfileForm = () => {
+    const dispatch = useDispatch();
+    let profileData = useSelector(state => getProfileInfos(state));
+    const { 
+        handleSubmit, 
+        handleChange,
+        values,
+        errors,
+        touched,
+    } = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            firstName: profileData.data.firstName,
+            lastName: profileData.data.lastName,
+            email: profileData.data.email,
+            phone: "",
+            gender: "",
+            birthDate: "",
+        },
+        onSubmit: values => {
+            dispatch(updateUserProfile(values))
+        }
+    })
 
-// TODO: make this page functional
-class ProfileForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      firstName: props.user.firstName,
-      lastName: props.user.lastName,
-      phone: props.user.phone,
-    };
-  }
-
-  onProfileChangeSubmitted = (event) => {
-    event.preventDefault();
-    // this.props.updateUserProfileInfos(this.state);
-    console.log(this.state);
-  };
-
-  render() {
-    const { firstName, lastName, phone } = this.state;
+    useEffect(() => {
+        //console.log(profileData.updateUserProfile.status)
+        if(profileData.updateUserProfile.status.success) {
+            toaster.success("Your changes have been saved");
+            //TODO: dispatch(resetProfileUpdateStatus())
+        }
+        else if(profileData.updateUserProfile.status.error
+            || profileData.getAuthUser.status.error) {
+                toaster.danger("An error occured, please try again later")
+                //TODO: dispatch(resetProfileUpdateStatus());
+        }
+    })
 
     return (
-      <form key={1} onSubmit={this.onProfileChangeSubmitted}>
-        <TextInputField
-          label="First name"
-          placeholder="First name"
-          value={firstName}
-          onChange={(event) => this.setState({ firstName: event.target.value })}
+        <Form onSubmit={handleSubmit} isLoading={profileData.updateUserProfile.status.isLoading}>
+            <Field
+            label="First name"
+            name="firstName"
+            type="text"
+            placeholder="First name"
+            onChange={handleChange}
+            value={values.firstName || ""}
+            errorMessage={touched.firstName && errors.firstName}
+            marginRight={20}
+            disabled={profileData.updateUserProfile.status.isLoading}
         />
-
-        <TextInputField
-          label="Last name"
-          placeholder="Last name"
-          value={lastName}
-          onChange={(event) => this.setState({ lastName: event.target.value })}
+        <Field
+            label="Last name"
+            name="lastName"
+            type="text"
+            placeholder="Last name"
+            onChange={handleChange}
+            value={values.lastName || ""}
+            errorMessage={touched.lastName && errors.lastName}
+            marginRight={20}
+            disabled={profileData.updateUserProfile.status.isLoading}
         />
-
-        <TextInputField
-          label="Phone"
-          placeholder="Phone number"
-          value={phone}
-          onChange={(event) => this.setState({ phone: event.target.value })}
+        <Field
+            label="Email"
+            name="email"
+            type="text"
+            placeholder="Email"
+            onChange={handleChange}
+            value={values.email || ""}
+            errorMessage={touched.email && errors.email}
+            marginRight={20}
+            disabled={profileData.updateUserProfile.status.isLoading}
         />
-        <Button type="submit" label="Save" />
-      </form>
-    );
-  }
+        <Button type="submit" isLoading={profileData.updateUserProfile.status.isLoading} appearance="primary">
+        Save
+      </Button>
+        </Form>
+        
+    )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.user.current,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  // updateUserProfileInfos: (profileData) =>
-  //   dispatch(updateUserProfileInfos(profileData)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileForm);
+export default ProfileForm
