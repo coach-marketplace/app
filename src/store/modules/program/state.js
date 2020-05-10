@@ -1,9 +1,12 @@
-import { INITIAL_ACTION_STATE } from "../../../helper/constants";
+import { INITIAL_ACTION_STATE_NEW } from "../../../helper/constants";
 
 export default {
   list: [],
   actions: {
-    getAll: { ...INITIAL_ACTION_STATE },
-    create: { ...INITIAL_ACTION_STATE },
+    getAll: { ...INITIAL_ACTION_STATE_NEW },
+    getOne: { ...INITIAL_ACTION_STATE_NEW },
+    create: { ...INITIAL_ACTION_STATE_NEW },
+    update: { ...INITIAL_ACTION_STATE_NEW },
+    delete: { ...INITIAL_ACTION_STATE_NEW },
   },
 };
