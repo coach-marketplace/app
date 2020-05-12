@@ -1,17 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Draggable } from "react-beautiful-dnd";
 
 import { Container } from "./styled";
 import { Button, Text } from "../../../ui";
-import {
-  fetch as fetchWorkout,
-  // cleanFetch,
-} from "../../../../store/modules/workout/actions";
-// import { ACTION_TYPE } from "../../../../helper/constants";
+import { fetch as fetchWorkout } from "../../../../store/modules/workout/actions";
 
-const ProgramDayContainer = ({ programWorkout, index, onRemove }) => {
+const ProgramDayContainer = ({
+  programWorkout,
+  index,
+  onRemove,
+  getWorkout,
+  fetchWorkout,
+}) => {
+  useEffect(() => {
+    const workout = getWorkout(programWorkout.workout);
+    !workout && fetchWorkout(programWorkout.workout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const renderContent = () => {
+    const workout = getWorkout(programWorkout.workout);
+    if (!workout) {
+      return <Text>Loading...</Text>;
+    }
+
+    const title = workout.content[0].title;
+
+    return <Text size={300}>{title}</Text>;
+  };
+
   return (
     <Draggable draggableId={programWorkout._id} index={index}>
       {(provided) => (
@@ -20,7 +39,7 @@ const ProgramDayContainer = ({ programWorkout, index, onRemove }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <Text size={300}>{programWorkout.workout}</Text>
+          {renderContent()}
           <Button
             iconBefore="cross"
             onClick={() => onRemove(programWorkout._id)}

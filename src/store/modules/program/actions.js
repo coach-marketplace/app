@@ -121,6 +121,14 @@ export const update = (programId, data) => {
       user: { current: user },
     } = store.getState();
 
+    /**
+     * We need to delete all _id in case if there are no-mongo id for new
+     * program workout freshly created. Then the backend will re-create new ids
+     */
+    data.workouts.forEach((pw) => {
+      delete pw._id;
+    });
+
     API.put(`coach/${user._id}/programs/${programId}`, data)
       .then((response) => {
         dispatch(updateSuccess(response.data));

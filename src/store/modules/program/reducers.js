@@ -127,12 +127,17 @@ const updateFailed = (state, action) => {
 };
 const updateSuccess = (state, action) => {
   const newState = cloneDeep(state);
-  const newProgram = action.payload;
+  const updatedProgram = action.payload;
+  console.log("updatedProgram", updatedProgram.workouts);
   const updateProgramIndex = newState.list.findIndex(
-    (program) => program._id === newProgram._id
+    (program) => program._id === updatedProgram._id
   );
 
-  newState.list[updateProgramIndex] = newProgram;
+  if (updateProgramIndex !== -1) {
+    newState.list[updateProgramIndex] = updatedProgram;
+  } else {
+    newState.list = [...newState.list, updatedProgram];
+  }
   newState.actions.update = { status: ACTION_TYPE.SUCCESS, error: null };
 
   return newState;

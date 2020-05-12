@@ -1,6 +1,5 @@
-import React, { PureComponent } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router";
 
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/layout/header/Header";
@@ -8,61 +7,66 @@ import ProgramContainer from "../../components/program/program-container/Program
 import {
   retrieveOne as retrieveProgram,
   cleanGetOne as cleanGetProgram,
+  cleanUpdate as cleanUpdateProgram,
 } from "../../store/modules/program/actions";
 import { ACTION_TYPE } from "../../helper/constants";
-import { Spinner } from "../../components/ui";
+import { Spinner, toaster } from "../../components/ui";
 
-class EditProgramPage extends PureComponent {
-  constructor(props) {
-    super(props);
+const EditProgramPage = React.memo(
+  ({
+    match,
+    getProgram,
+    fetchProgramStatus,
+    fetchProgram,
+    updateProgramStatus,
+    history,
+    cleanFetchProgramActionStore,
+  }) => {
+    const programId = match.params.id;
 
-    // console.log("prop", props);
-    const programId = props.match.params.id;
-    // console.log("programId", programId);
+    useEffect(() => {
+      !getProgram(programId) && fetchProgram(programId);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    // console.log("++", props.getProgram(programId));
-    const isProgramFetched = !!props.getProgram(programId);
-    // console.log("isProgramFetched", isProgramFetched, props.fetchProgram);
-    !isProgramFetched && props.fetchProgram(programId);
+    useEffect(() => {
+      if (updateProgramStatus === ACTION_TYPE.SUCCESS) {
+        toaster.success("Program successfully updated");
+        // history.push("/library/programs");
+        cleanUpdateProgram();
+      }
+    }, [history, updateProgramStatus]);
 
-    this.state = {
-      isProgramFetched,
-      programId,
-    };
-  }
+    useEffect(() => {
+      if (fetchProgramStatus === ACTION_TYPE.FAILED) {
+        toaster.danger("Program not found");
+        history.push("/library/programs");
+        cleanFetchProgramActionStore();
+      }
+    }, [history, fetchProgramStatus, cleanFetchProgramActionStore]);
 
-  renderContent = () => {
-    const { fetchProgramStatus, getProgram } = this.props;
-    const { programId } = this.state;
-
-    if (fetchProgramStatus === ACTION_TYPE.LOADING) {
-      return <Spinner />;
-    }
-
-    return <ProgramContainer program={getProgram(programId)} />;
-  };
-
-  render() {
-    const { fetchProgramStatus } = this.props;
-
-    if (fetchProgramStatus === ACTION_TYPE.FAILED) {
-      return <Redirect to="/library/programs" />;
-    }
+    const program = getProgram(programId);
 
     return (
-      <Layout header={<Header />} main={this.renderContent()} isMainFull />
+      <Layout
+        header={<Header />}
+        main={!program ? <Spinner /> : <ProgramContainer program={program} />}
+        isMainFull
+      />
     );
   }
-}
+);
 
 const mapStateToProps = (state) => ({
   getProgram: (id) => state.program.list.find((p) => p._id === id),
   fetchProgramStatus: state.program.actions.getOne.status,
+  updateProgramStatus: state.program.actions.update.status,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchProgram: (programId) => dispatch(retrieveProgram(programId)),
   cleanFetchProgramActionStore: () => dispatch(cleanGetProgram()),
+  cleanUpdateProgramActionStore: () => dispatch(cleanUpdateProgram()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProgramPage);

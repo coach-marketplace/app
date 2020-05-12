@@ -69,7 +69,11 @@ const fetchSuccess = (state, action) => {
     (workout) => workout._id === fetchedWorkout._id
   );
 
-  newState.list[workoutIndex] = fetchedWorkout;
+  if (workoutIndex === -1) {
+    newState.list.push(fetchedWorkout);
+  } else {
+    newState.list[workoutIndex] = fetchedWorkout;
+  }
   newState.actions.fetch = { status: ACTION_TYPE.SUCCESS, error: null };
 
   return newState;

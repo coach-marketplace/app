@@ -52,6 +52,10 @@ const DayContainer = ({
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {sortedProgramWorkouts.map((programWorkout, index) => {
+              if (!programWorkout._id) {
+                return null;
+              }
+
               return (
                 <ProgramWorkoutContainer
                   key={programWorkout._id}
