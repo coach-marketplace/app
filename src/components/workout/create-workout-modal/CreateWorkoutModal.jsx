@@ -12,7 +12,7 @@ import { ACTION_TYPE } from "../../../helper/constants";
 
 const CreateWorkoutModal = ({
   isOpen,
-  onToggle,
+  onClose,
   createWorkout,
   createWorkoutStatus,
   cleanCreateActionStore,
@@ -21,22 +21,22 @@ const CreateWorkoutModal = ({
     switch (createWorkoutStatus) {
       case ACTION_TYPE.FAILED:
         toaster.danger("Impossible to create the workout");
+        cleanCreateActionStore();
         break;
       case ACTION_TYPE.SUCCESS:
         toaster.success("Workout successfully created");
         cleanCreateActionStore();
+        onClose();
         break;
       default:
         return;
     }
-  }, [cleanCreateActionStore, createWorkoutStatus]);
+  }, [cleanCreateActionStore, createWorkoutStatus, onClose]);
 
-  const onWorkoutSubmitted = (data) => {
-    createWorkout(data);
-  };
+  const onWorkoutSubmitted = (data) => createWorkout(data);
 
   return (
-    <SideModal isShown={isOpen} onCloseComplete={onToggle}>
+    <SideModal isShown={isOpen} onCloseComplete={onClose}>
       <Title>Add a workout</Title>
       <WorkoutForm
         onSubmit={onWorkoutSubmitted}
@@ -48,7 +48,7 @@ const CreateWorkoutModal = ({
 
 CreateWorkoutModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onToggle: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

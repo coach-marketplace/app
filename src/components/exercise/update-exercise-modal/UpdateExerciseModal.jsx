@@ -10,32 +10,52 @@ import {
   update as updateExercise,
   cleanUpdate,
   del as deleteExercise,
+  cleanDelete,
 } from "../../../store/modules/exercise/actions";
 import { ACTION_TYPE } from "../../../helper/constants";
 
 const UpdateExerciseModal = ({
+  cleanDeleteActionStore,
+  cleanUpdateActionStore,
+  deleteExercise,
+  exerciseId,
+  exercises,
+  onClose,
   updateExercise,
   updateExerciseStatus,
-  onClose,
-  exerciseId,
-  cleanUpdateActionStore,
-  exercises,
-  deleteExercise,
+  deleteExerciseStatus,
 }) => {
   useEffect(() => {
-    console.log("updateExerciseStatus", updateExerciseStatus);
     switch (updateExerciseStatus) {
       case ACTION_TYPE.FAILED:
         toaster.danger("Error in edition, retry later");
+        cleanUpdateActionStore();
         break;
       case ACTION_TYPE.SUCCESS:
         toaster.success("Exercise successfully updated");
         cleanUpdateActionStore();
+        onClose();
         break;
       default:
         return;
     }
-  }, [cleanUpdateActionStore, updateExerciseStatus]);
+  }, [cleanUpdateActionStore, onClose, updateExerciseStatus]);
+
+  useEffect(() => {
+    switch (deleteExerciseStatus) {
+      case ACTION_TYPE.FAILED:
+        toaster.danger("Error in deletion, retry later");
+        cleanDeleteActionStore();
+        break;
+      case ACTION_TYPE.SUCCESS:
+        toaster.success("Exercise successfully deleted");
+        cleanDeleteActionStore();
+        onClose();
+        break;
+      default:
+        return;
+    }
+  }, [cleanDeleteActionStore, onClose, deleteExerciseStatus]);
 
   const exerciseToUpdate = exercises.find(
     (exercise) => exercise._id === exerciseId
@@ -96,6 +116,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(updateExercise(exerciseId, data)),
   cleanUpdateActionStore: () => dispatch(cleanUpdate()),
   deleteExercise: (exerciseId) => dispatch(deleteExercise(exerciseId)),
+  cleanDeleteActionStore: () => dispatch(cleanDelete()),
 });
 
 export default connect(

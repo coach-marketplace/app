@@ -21,10 +21,10 @@ const AddProgramModal = ({
   const history = useHistory();
 
   useEffect(() => {
-    console.log("program status", createProgramStatus);
     switch (createProgramStatus) {
       case ACTION_TYPE.FAILED:
         toaster.danger("Error in creation, retry later");
+        cleanCreateActionStore();
         break;
       case ACTION_TYPE.SUCCESS:
         toaster.success("Program successfully created");

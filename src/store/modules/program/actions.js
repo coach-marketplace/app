@@ -140,7 +140,7 @@ export const update = (programId, data) => {
 };
 export const cleanUpdate = () => (dispatch) => dispatch(updateClean());
 
-export const del = (programId) => {
+export const del = (programId, callback) => {
   return (dispatch) => {
     dispatch(deleteLoading());
     const {
@@ -150,6 +150,7 @@ export const del = (programId) => {
     API.delete(`coach/${user._id}/programs/${programId}`)
       .then(() => {
         dispatch(deleteSuccess(programId));
+        callback && callback(programId);
       })
       .catch((error) => {
         dispatch(deleteFailed(error.message));

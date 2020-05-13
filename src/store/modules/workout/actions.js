@@ -95,7 +95,7 @@ export const create = (data, callback) => {
 
     const normalizedData = {
       title: data.title,
-      content: data.content,
+      instructions: data.instructions,
       lang: data.lang || user.lang || "en",
       isPrivate: data.isPrivate,
       userOwnerId: user._id,
@@ -104,7 +104,7 @@ export const create = (data, callback) => {
     API.post(`coach/${user._id}/workouts`, normalizedData)
       .then((response) => {
         dispatch(createSuccess(response.data));
-        callback(response.data._id);
+        callback && callback(response.data._id);
       })
       .catch((error) => {
         dispatch(createFailed(error.message));

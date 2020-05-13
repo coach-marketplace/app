@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import ExerciseCard from "../exercise-card/ExerciseCard";
-import AddExerciseModal from "../add-exercise-modal/AddExerciseModal";
+import CreateExerciseModal from "../create-exercise-modal/CreateExerciseModal";
 import UpdateExerciseModal from "../update-exercise-modal/UpdateExerciseModal";
 import { Button, toaster } from "../../ui";
 import {
@@ -17,7 +17,9 @@ const ExercisesContainer = ({
   createExerciseStatus,
   fetchExerciseStatus,
 }) => {
-  const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
+  const [isCreateExerciseModalOpen, setIsCreateExerciseModalOpen] = useState(
+    false
+  );
   const [exerciseIdSelected, setExerciseIdSelected] = useState(null);
 
   useEffect(() => {
@@ -37,9 +39,9 @@ const ExercisesContainer = ({
 
   return (
     <div>
-      <AddExerciseModal
-        onToggle={() => setIsAddExerciseModalOpen(!isAddExerciseModalOpen)}
-        isOpen={isAddExerciseModalOpen}
+      <CreateExerciseModal
+        onClose={() => setIsCreateExerciseModalOpen(false)}
+        isOpen={isCreateExerciseModalOpen}
         isLoading={createExerciseStatus === ACTION_TYPE.LOADING}
       />
       <UpdateExerciseModal
@@ -51,7 +53,7 @@ const ExercisesContainer = ({
         label="New"
         iconBefore="plus"
         appearance="minimal"
-        onClick={() => setIsAddExerciseModalOpen(!isAddExerciseModalOpen)}
+        onClick={() => setIsCreateExerciseModalOpen(true)}
       />
 
       <div>

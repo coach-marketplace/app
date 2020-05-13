@@ -12,10 +12,10 @@ import {
 } from "../../../store/modules/exercise/actions";
 import { ACTION_TYPE } from "../../../helper/constants";
 
-const AddExerciseModal = ({
+const CreateExerciseModal = ({
   createExercise,
   createExerciseStatus,
-  onToggle,
+  onClose,
   isOpen,
   cleanCreateActionStore,
 }) => {
@@ -23,10 +23,12 @@ const AddExerciseModal = ({
     switch (createExerciseStatus) {
       case ACTION_TYPE.FAILED:
         toaster.danger("Error in creation, retry later");
+        cleanCreateActionStore();
         break;
       case ACTION_TYPE.SUCCESS:
         toaster.success("Exercise successfully created");
         cleanCreateActionStore();
+        onClose();
         break;
       default:
         return;
@@ -34,16 +36,16 @@ const AddExerciseModal = ({
   });
 
   return (
-    <SideModal isShown={isOpen} onCloseComplete={onToggle}>
+    <SideModal isShown={isOpen} onCloseComplete={onClose}>
       <Title>Add an exercise</Title>
       <ExerciseForm onSubmit={createExercise} />
     </SideModal>
   );
 };
 
-AddExerciseModal.propTypes = {
+CreateExerciseModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onToggle: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -55,4 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
   cleanCreateActionStore: () => dispatch(cleanCreate()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddExerciseModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateExerciseModal);

@@ -30,12 +30,17 @@ const AddProgramModal = ({
       case ACTION_TYPE.SUCCESS:
         toaster.success("Program successfully deleted");
         cleanDeleteActionStore();
-        history.push("/library/programs");
         break;
       default:
         return;
     }
   }, [cleanDeleteActionStore, deleteProgramStatus, history]);
+
+  const deleteProgramHandler = (programId) => {
+    deleteProgram(programId, () => {
+      history.push("/library/programs");
+    });
+  };
 
   return (
     <Dialog
@@ -45,7 +50,7 @@ const AddProgramModal = ({
       hasHeader={false}
       intent="danger"
       confirmLabel="I understand the consequences, delete this program"
-      onConfirm={() => deleteProgram(programId)}
+      onConfirm={() => deleteProgramHandler(programId)}
       isConfirmLoading={deleteProgramStatus === ACTION_TYPE.LOADING}
       isConfirmDisabled={inputValue !== programTitle}
     >
@@ -81,8 +86,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteProgram: (programId, callback) =>
-    dispatch(deleteProgram(programId, callback)),
+  deleteProgram: (id, cb) => dispatch(deleteProgram(id, cb)),
   cleanDeleteActionStore: () => dispatch(cleanDelete()),
 });
 

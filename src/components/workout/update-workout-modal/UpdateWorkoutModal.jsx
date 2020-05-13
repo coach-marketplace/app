@@ -8,31 +8,52 @@ import {
   update as updateWorkout,
   cleanUpdate,
   del as deleteWorkout,
+  cleanDelete,
 } from "../../../store/modules/workout/actions";
 import { ACTION_TYPE } from "../../../helper/constants";
 
 const UpdateWorkoutModal = ({
   updateWorkout,
   updateWorkoutStatus,
+  deleteWorkoutStatus,
   onClose,
   workoutId,
   cleanUpdateActionStore,
   workouts,
   deleteWorkout,
+  cleanDeleteActionStore,
 }) => {
   useEffect(() => {
     switch (updateWorkoutStatus) {
       case ACTION_TYPE.FAILED:
         toaster.danger("Error in edition, retry later");
+        cleanUpdateActionStore();
         break;
       case ACTION_TYPE.SUCCESS:
         toaster.success("Workout successfully updated");
         cleanUpdateActionStore();
+        onClose();
         break;
       default:
         return;
     }
-  }, [cleanUpdateActionStore, updateWorkoutStatus]);
+  }, [cleanUpdateActionStore, onClose, updateWorkoutStatus]);
+
+  useEffect(() => {
+    switch (deleteWorkoutStatus) {
+      case ACTION_TYPE.FAILED:
+        toaster.danger("Error in deletion, retry later");
+        cleanDeleteActionStore();
+        break;
+      case ACTION_TYPE.SUCCESS:
+        toaster.success("Workout successfully deleted");
+        cleanDeleteActionStore();
+        onClose();
+        break;
+      default:
+        return;
+    }
+  }, [cleanDeleteActionStore, deleteWorkoutStatus, onClose]);
 
   const workoutToUpdate = workouts.find((workout) => workout._id === workoutId);
 
@@ -89,6 +110,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateWorkout: (workoutId, data) => dispatch(updateWorkout(workoutId, data)),
   cleanUpdateActionStore: () => dispatch(cleanUpdate()),
   deleteWorkout: (workoutId) => dispatch(deleteWorkout(workoutId)),
+  cleanDeleteActionStore: () => dispatch(cleanDelete()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateWorkoutModal);

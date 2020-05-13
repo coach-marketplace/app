@@ -10,7 +10,10 @@ const ExerciseCard = ({ title, onEdit }) => {
       display="flex"
       justifyContent="space-between"
       alignItems="center"
-      padding={20}
+      paddingTop={5}
+      paddingBottom={5}
+      paddingLeft={10}
+      paddingRight={10}
       marginTop={10}
       background="white"
     >

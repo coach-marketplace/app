@@ -27,7 +27,7 @@ const WorkoutsContainer = ({
   return (
     <div>
       <CreateWorkoutModal
-        onToggle={() => setIsCreateWorkoutModalOpen(!isCreateWorkoutModalOpen)}
+        onClose={() => setIsCreateWorkoutModalOpen(false)}
         isOpen={isCreateWorkoutModalOpen}
       />
       <UpdateWorkoutModal
