@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Droppable } from "react-beautiful-dnd";
 
-import { Container } from "./styled";
+import { Container, TitleWrapper, DroppableContainer } from "./styled";
 import ProgramWorkoutContainer from "../program-workout-container/ProgramWorkoutContainer";
 import AddWorkoutModal from "../add-workout-modal/AddWorkoutModal";
 import { Button } from "../../../ui";
@@ -46,11 +45,16 @@ const DayContainer = ({
         onClose={() => setIsAddWorkoutModalOpen(false)}
         onWorkoutChoose={onWorkoutChoose}
       />
+      <TitleWrapper>
+        <h4>{title}</h4>
+      </TitleWrapper>
 
-      <h4>{title}</h4>
       <Droppable droppableId={String(day)}>
         {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
+          <DroppableContainer
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
             {sortedProgramWorkouts.map((programWorkout, index) => {
               if (!programWorkout._id) {
                 return null;
@@ -66,7 +70,7 @@ const DayContainer = ({
               );
             })}
             {provided.placeholder}
-          </div>
+          </DroppableContainer>
         )}
       </Droppable>
       <div>
@@ -89,15 +93,4 @@ DayContainer.propTypes = {
   onWorkoutRemove: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  // programs: state.program.list,
-  // isFetchProgramsLoading: state.program.actions.getAll.loading,
-  // isFetchProgramsSuccess: state.program.actions.getAll.success,
-  // isFetchProgramsError: state.program.actions.getAll.error,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  // fetchPrograms: () => dispatch(retrieveAllPrograms()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DayContainer);
+export default DayContainer;

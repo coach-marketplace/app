@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Draggable } from "react-beautiful-dnd";
 
-import { Container } from "./styled";
+import { Container } from "./styled.js";
 import { Button, Text } from "../../../ui";
 import { fetch as fetchWorkout } from "../../../../store/modules/workout/actions";
 
@@ -42,6 +42,8 @@ const ProgramDayContainer = ({
           {renderContent()}
           <Button
             iconBefore="cross"
+            appearance="minimal"
+            height={24}
             onClick={() => onRemove(programWorkout._id)}
           />
         </Container>

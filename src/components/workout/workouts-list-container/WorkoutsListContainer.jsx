@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-// import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { Container } from "./styled";
 import { Pane, Text } from "../../ui";
 import { retrieveAll as retrieveAllWorkouts } from "../../../store/modules/workout/actions";
 import { ACTION_TYPE } from "../../../helper/constants";
@@ -13,8 +13,6 @@ const WorkoutsListComponent = ({
   fetchWorkouts,
   onWorkoutClicked,
 }) => {
-  // const [workoutIdSelected, setWorkoutIdSelected] = useState(null);
-
   useEffect(() => {
     ![ACTION_TYPE.LOADING, ACTION_TYPE.SUCCESS].includes(fetchWorkoutsStatus) &&
       fetchWorkouts();
@@ -28,20 +26,21 @@ const WorkoutsListComponent = ({
     <Pane>
       {workouts.map((workout) => {
         return (
-          <Pane key={workout._id}>
+          <Container
+            key={workout._id}
+            elevation={1}
+            marginBottom={5}
+            padding={5}
+          >
             <Text onClick={() => onWorkoutClicked(workout._id)}>
               {workout.getTitle()}
             </Text>
-          </Pane>
+          </Container>
         );
       })}
     </Pane>
   );
 };
-
-WorkoutsListComponent.propTypes = {};
-
-WorkoutsListComponent.defaultProps = {};
 
 const mapStateToProps = (state) => ({
   workouts: state.workout.list.map((w) => new Workout(w)),
