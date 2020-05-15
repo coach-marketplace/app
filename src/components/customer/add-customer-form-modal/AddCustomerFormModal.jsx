@@ -54,21 +54,27 @@ const AddCustomerFormModal = ({
       return;
     }
 
-    const fetchedCustomer = await API.get(
-      `coach/${user._id}/search-users`,
-      {},
-      { email: customerEmail }
-    );
-
-    if (!fetchedCustomer.data) {
+    try {
+      const fetchedCustomer = await API.get(
+        `coach/${user._id}/search-users`,
+        {},
+        { email: customerEmail }
+      );
+      if (!fetchedCustomer.data) {
+        setCustomerErrorMessage(
+          "This email is not in the database, you have to create it manually."
+        );
+      } else {
+        setCustomerErrorMessage("");
+        setFetchedCustomer(fetchedCustomer.data);
+      }
+    } catch (error) {
       setCustomerErrorMessage(
         "This email is not in the database, you have to create it manually."
       );
-    } else {
-      setCustomerErrorMessage("");
+      setIsEmailButtonLoading(false);
     }
 
-    setFetchedCustomer(fetchedCustomer.data);
     setIsCustomerFetched(true);
     setIsEmailButtonLoading(false);
   };
