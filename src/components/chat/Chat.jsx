@@ -44,9 +44,13 @@ const Chat = ({ conversation, messages, user, postMessage }) => {
       <ChatForm
         onSubmit={(event) => {
           event.preventDefault();
-          postMessage(channel.getId(), {
-            text: message,
-          });
+          postMessage(
+            channel._id,
+            {
+              text: message,
+            },
+            () => setMessage("")
+          );
         }}
       >
         <InputWrapper>
@@ -73,8 +77,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  postMessage: (conversationId, data) =>
-    dispatch(postMessage(conversationId, data)),
+  postMessage: (conversationId, data, callback) =>
+    dispatch(postMessage(conversationId, data, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);
