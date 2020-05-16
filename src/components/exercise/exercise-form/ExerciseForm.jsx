@@ -1,114 +1,131 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Label } from "evergreen-ui";
+import { useFormik } from "formik";
 
-import Input from "../../ui/form/input/Input";
-import Button from "../../ui/button/Button";
-import Pane from "../../ui/pane/Pane";
+// import validationSchema from "./validation";
+import { Form, Field, Button, Pane } from "../../ui";
+import { LOCALE } from "../../../helper/constants";
+import { localesOptionsForm } from "../../../helper/utils";
 
-class ExerciseForm extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func,
-    isLoading: PropTypes.bool,
-    initialValues: PropTypes.shape({
-      name: PropTypes.string,
-      instructions: PropTypes.string,
-      lang: PropTypes.string,
-      isPrivate: PropTypes.bool,
-      videoUrl: PropTypes.string,
-    }),
-  };
+const ExerciseForm = ({
+  initialValues,
+  onSubmit,
+  isLoading,
+  submitText,
+  onDelete,
+}) => {
+  const {
+    handleSubmit,
+    handleBlur,
+    handleChange,
+    touched,
+    values,
+    errors,
+  } = useFormik({
+    initialValues: {
+      name: initialValues.name || "",
+      instructions: initialValues.instructions || "",
+      videoUrl: initialValues.videoUrl || "",
+      lang: initialValues.lang || LOCALE.EN_US,
+      isPrivate: initialValues.isPrivate || false,
+    },
+    // validationSchema: validationSchema,
+    onSubmit: (values) => onSubmit(values),
+  });
 
-  constructor(props) {
-    super(props);
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Field
+        label="Language"
+        name="lang"
+        type="select"
+        width={150}
+        onChange={handleChange}
+        options={localesOptionsForm}
+        onBlur={handleBlur}
+        value={values.lang}
+        disabled={true}
+      >
+        {localesOptionsForm.map((locale) => (
+          <option
+            key={locale.value}
+            value={locale.value}
+            selected={locale.selected}
+          >
+            {locale.label}
+          </option>
+        ))}
+      </Field>
 
-    this.state = {
-      formData: {
-        name: "",
-        instructions: "",
-        lang: "en",
-        isPrivate: false,
-        videoUrl: "",
-        ...props.initialValues,
-      },
-    };
-  }
+      <Field
+        label="Name"
+        name="name"
+        type="text"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.name}
+        errorMessage={touched.name && errors.name}
+        disabled={isLoading}
+        isRequired
+      />
 
-  onExerciseSubmitted = (event) => {
-    const { onSubmit } = this.props;
-    event.preventDefault();
-    onSubmit(this.state.formData);
-  };
+      <Field
+        label="Instructions"
+        name="instructions"
+        type="textarea"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.instructions}
+        errorMessage={touched.instructions && errors.instructions}
+        disabled={isLoading}
+      />
 
-  onFieldChange = (value, field) => {
-    const { formData } = this.state;
-    this.setState({ formData: { ...formData, [field]: value } });
-  };
+      <Field
+        label="Video URL"
+        name="videoUrl"
+        type="text"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.videoUrl}
+        errorMessage={touched.videoUrl && errors.videoUrl}
+        disabled={isLoading}
+      />
 
-  isFormValid = () => {
-    // TODO: form validation
+      {/* <Field
+        label="Is Private?"
+        name="isPrivate"
+        type="switch"
+        onChange={handleChange}
+        checked={values.isPrivate}
+        disabled={isLoading}
+      /> */}
 
-    return true;
-  };
+      <Pane display="flex">
+        <Button type="submit" isLoading={isLoading} appearance="primary">
+          {submitText || "Create"}
+        </Button>
+        {onDelete && (
+          <Button
+            type="button"
+            isLoading={isLoading}
+            appearance="minimal"
+            intent="danger"
+            onClick={onDelete}
+          >
+            {"Delete"}
+          </Button>
+        )}
+      </Pane>
+    </Form>
+  );
+};
 
-  render() {
-    const { onCancel } = this.props;
-    const { formData } = this.state;
+ExerciseForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
-    return (
-      <form onSubmit={this.onExerciseSubmitted}>
-        <Label htmlFor="name" marginTop={30} display="block">
-          Exercise Name
-        </Label>
-
-        <Input
-          id="name"
-          marginTop={10}
-          placeholder="Squat"
-          value={formData.name}
-          onChange={(e) => this.onFieldChange(e.target.value, "name")}
-        />
-
-        <Label htmlFor="instructions" marginTop={30} display="block">
-          Instruction
-        </Label>
-
-        <Input
-          type="textarea"
-          id="instructions"
-          marginTop={10}
-          placeholder="Textarea placeholder..."
-          value={formData.instructions}
-          onChange={(e) => this.onFieldChange(e.target.value, "instructions")}
-        />
-
-        <Label htmlFor="video-url" marginTop={30} display="block">
-          Video URL
-        </Label>
-
-        <Input
-          id="video-url"
-          placeholder="http://..."
-          marginTop={10}
-          value={formData.videoUrl}
-          onChange={(e) => this.onFieldChange(e.target.value, "videoUrl")}
-        />
-
-        <Pane marginTop={30}>
-          <Button type="submit" label="Create" disabled={!this.isFormValid()} />
-          {onCancel && (
-            <Button
-              type="text"
-              label="Cancel"
-              onClick={onCancel}
-              appearance="minimal"
-            />
-          )}
-        </Pane>
-      </form>
-    );
-  }
-}
+ExerciseForm.defaultProps = {
+  initialValues: {},
+};
 
 export default ExerciseForm;

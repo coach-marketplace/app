@@ -31,7 +31,7 @@ class Navigation extends PureComponent {
                 display: navItem.onlyCoach && !user.isCoach ? "none" : "block",
               }}
             >
-              <Button label={navItem.label} appearance="minimal" />
+              <Button is="div" label={navItem.label} appearance="minimal" />
             </Link>
           ))}
         </ListItem>

@@ -78,3 +78,25 @@ export const getFixedSize = (width = null, height = null) => {
     ${heightRules}
   `;
 };
+
+/**
+ * Locales options form
+ *
+ * This contain the options data for a html select > option form element for
+ * locales.
+ * @constant localesOptionsForm
+ */
+export const localesOptionsForm = [
+  { label: "English", value: "en-US" },
+  { label: "French", value: "fr-FR" },
+];
+
+/**
+ * Get random string
+ *
+ * This function return a random string, this one should be unique.
+ * Bese on this: https://gist.github.com/gordonbrander/2230317
+ *
+ * @return {string} Random string
+ */
+export const getRandomString = () => Math.random().toString(36).substr(2, 9);

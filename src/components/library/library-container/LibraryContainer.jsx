@@ -5,6 +5,7 @@ import LibraryNavigation from "../library-navigation/LibraryNavigation";
 import { Title } from "../../ui";
 import ExercisesContainer from "../../exercise/exercises-container/ExercisesContainer";
 import WorkoutsContainer from "../../workout/workouts-container/WorkoutsContainer";
+import ProgramsContainer from "../../program/programs-container/ProgramsContainer";
 
 class LibraryContainer extends Component {
   static propTypes = {
@@ -19,6 +20,8 @@ class LibraryContainer extends Component {
         return <ExercisesContainer />;
       case "workouts":
         return <WorkoutsContainer />;
+      case "programs":
+        return <ProgramsContainer />;
       default:
         return <ExercisesContainer />;
     }

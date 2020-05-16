@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { SYSTEM_COLOR } from "../../../helper/constants";
+import { COLOR } from "../../../helper/constants";
 
 export const MessageContainer = styled.div`
   display: flex;
@@ -17,6 +17,6 @@ export const MessageWrapper = styled.div`
   border-bottom-left-radius: ${({ isLeft }) => (isLeft ? "0" : "10px")};
   border-bottom-right-radius: ${({ isLeft }) => (isLeft ? "10px" : "0")};
   background-color: ${({ isLeft }) =>
-    isLeft ? SYSTEM_COLOR.BACKGROUND_LIGHT : SYSTEM_COLOR.PRIMARY};
+    isLeft ? COLOR.BACKGROUND_LIGHT : COLOR.PRIMARY};
   color: ${({ isLeft }) => (isLeft ? "inherit" : "white")};
 `;
