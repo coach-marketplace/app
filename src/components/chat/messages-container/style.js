@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { COLOR } from "../../../helper/constants";
+import { COLOR, SPACER } from "../../../helper/constants";
 
 export const Container = styled.div`
   display: flex;
@@ -8,4 +8,6 @@ export const Container = styled.div`
   width: 100%;
   flex-grow: 1;
   border: 1px solid ${COLOR.BACKGROUND_LIGHT};
+  overflow-y: auto;
+  padding: ${SPACER.M};
 `;
