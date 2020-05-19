@@ -2,22 +2,6 @@ import React, { Component } from "react";
 // import PropTypes from "prop-types";
 import styled from "styled-components";
 
-// const DAYS = [
-//   "Monday",
-//   "Tuesday",
-//   "Wednesday",
-//   "Thursday",
-//   "Friday",
-//   "Saturday",
-//   "Sunday",
-// ];
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid black;
-`;
-
 class Day extends Component {
   static propTypes = {};
 
@@ -31,15 +15,18 @@ class Day extends Component {
 
   render() {
     const { date } = this.props;
-    // console.log("a", day);
     return (
-      <StyledContainer>
-        <p>{date.getDate()}</p>
-        {/* <div>{DAYS[day.getDay() - 1]}</div>
-        <div>{day.getDate()}</div>
-        <div>{day.getWeek()}</div> */}
-      </StyledContainer>
-    );
+      <div style={
+        {
+          float: 'left',
+          width: '14%',
+          height: '250px',
+          border: "1px solid grey",
+        }
+      }>
+        <p>{date.date()}</p>
+      </div>
+    )
   }
 }
 
