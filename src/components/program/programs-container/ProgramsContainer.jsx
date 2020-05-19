@@ -14,13 +14,15 @@ const ProgramsContainer = ({ fetchProgramStatus, programs, fetchPrograms }) => {
   const [isAddProgramModalOpen, setIsAddProgramModalOpen] = useState(false);
 
   useEffect(() => {
-    fetchProgramStatus !== ACTION_TYPE.SUCCESS && fetchPrograms();
+    fetchProgramStatus !== ACTION_TYPE.SUCCESS &&
+      fetchProgramStatus !== ACTION_TYPE.FAILED &&
+      fetchPrograms();
   }, [fetchProgramStatus, fetchPrograms]);
 
   useEffect(() => {
     switch (fetchProgramStatus) {
       case ACTION_TYPE.FAILED:
-        toaster.danger("Error to retrieve exercises");
+        toaster.danger("Error to retrieve programs");
         break;
       case ACTION_TYPE.SUCCESS:
       default:
