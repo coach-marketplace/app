@@ -23,6 +23,8 @@ const AddWorkoutModal = ({
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
   useEffect(() => {
+    if (!isOpen) return;
+
     switch (createWorkoutStatus) {
       case ACTION_TYPE.FAILED:
         toaster.danger("Impossible to create the workout");
@@ -36,7 +38,7 @@ const AddWorkoutModal = ({
       default:
         return;
     }
-  }, [cleanCreateActionStore, createWorkoutStatus, onClose]);
+  }, [cleanCreateActionStore, createWorkoutStatus, isOpen, onClose]);
 
   const onWorkoutSubmitted = (data) => {
     createWorkout(data, (newWorkoutId) => {
