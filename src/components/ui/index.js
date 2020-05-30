@@ -1,6 +1,8 @@
 import AlertUI from "./alert/Alert";
 import AvatarUI from "./avatar/Avatar";
 import ButtonUI from "./button/Button";
+import CheckboxUI from "./form/checkbox/Checkbox";
+import DayPickerUI from "./form/date-picker/DayPicker";
 import DialogUI from "./modal/Dialog";
 import EditorInputUI from "./form/editor-input/EditorInput";
 import FieldUI from "./form/field/Field";
@@ -24,7 +26,9 @@ import toasterUI from "./toaster/toaster";
 export const Alert = AlertUI;
 export const Avatar = AvatarUI;
 export const Button = ButtonUI;
+export const Checkbox = CheckboxUI;
 export const Dialog = DialogUI;
+export const DayPicker = DayPickerUI;
 export const EditorInput = EditorInputUI;
 export const Field = FieldUI;
 export const Flex = FlexUI;

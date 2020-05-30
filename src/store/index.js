@@ -10,6 +10,7 @@ import conversationReducer from "./modules/conversation/reducers";
 import messageReducer from "./modules/message/reducers";
 import workoutReducer from "./modules/workout/reducers";
 import programReducer from "./modules/program/reducers";
+import assignmentReducer from "./modules/assignment/reducers";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   message: messageReducer,
   workout: workoutReducer,
   program: programReducer,
+  assignment: assignmentReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

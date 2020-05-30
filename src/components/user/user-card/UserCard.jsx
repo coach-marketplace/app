@@ -14,7 +14,6 @@ const UserCard = ({ userData, onClick, onMessageClick }) => {
   return (
     <Pane
       elevation={1}
-      hoverElevation={2}
       width="100%"
       display="flex"
       alignContent="center"
@@ -28,9 +27,11 @@ const UserCard = ({ userData, onClick, onMessageClick }) => {
         <Text>{user.fullName}</Text>
         <Text size={300}>{user.email}</Text>
       </Pane>
-      <Button onClick={onMessageClick} appearance="minimal">
-        Message
-      </Button>
+      {onMessageClick && (
+        <Button onClick={onMessageClick} appearance="minimal">
+          Message
+        </Button>
+      )}
     </Pane>
   );
 };

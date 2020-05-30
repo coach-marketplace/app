@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Layout from "../../components/layout/main-page-layout/MainPageLayout";
 import Header from "../../components/layout/header/Header";
 import ProgramContainer from "../../components/program/program-container/ProgramContainer";
+import AssignedUsersContainer from "../../components/assignment/assigned-users-container/AssignedUsersContainer";
 import {
   retrieveOne as retrieveProgram,
   cleanGetOne as cleanGetProgram,
@@ -32,7 +33,6 @@ const EditProgramPage = React.memo(
     useEffect(() => {
       if (updateProgramStatus === ACTION_TYPE.SUCCESS) {
         toaster.success("Program successfully updated");
-        // history.push("/library/programs");
         cleanUpdateProgram();
       }
     }, [history, updateProgramStatus]);
@@ -50,7 +50,16 @@ const EditProgramPage = React.memo(
     return (
       <Layout
         header={<Header />}
-        main={!program ? <Spinner /> : <ProgramContainer program={program} />}
+        main={
+          !program ? (
+            <Spinner />
+          ) : (
+            <>
+              <AssignedUsersContainer programId={program._id} />
+              <ProgramContainer program={program} />
+            </>
+          )
+        }
         isMainFull
       />
     );
