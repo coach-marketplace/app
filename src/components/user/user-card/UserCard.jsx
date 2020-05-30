@@ -1,50 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-import Pane from "../../ui/pane/Pane";
-import Text from "../../ui/text/Text";
-import Avatar from "../../ui/avatar/Avatar";
-import Button from "../../ui/button/Button";
+import { Pane, Text, Avatar, Button } from "../../ui";
+import { User } from "../../../services/domains/User";
 
-const UserCard = ({
-  email,
-  onClick,
-  firstName,
-  lastName,
-  avatarUrl,
-  onMessageClick,
-}) => {
+const UserCard = ({ userData, onClick, onMessageClick }) => {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    userData && setUser(new User(userData));
+  }, [userData]);
+
   return (
     <Pane
       elevation={1}
-      width={200}
+      width="100%"
       display="flex"
-      alignItems="center"
-      flexDirection="column"
+      alignContent="center"
       padding={20}
       margin={10}
       onClick={onClick}
+      background="white"
     >
-      <Avatar name={`${firstName} ${lastName}`} src={avatarUrl} />
-      <Text marginTop={25}>{email}</Text>
-      <Button onClick={onMessageClick}>Message</Button>
+      <Avatar name={user.fullName} src={user.avatar} />
+      <Pane display="flex" flexDirection="column" flexGrow="1" paddingLeft={20}>
+        <Text>{user.fullName}</Text>
+        <Text size={300}>{user.email}</Text>
+      </Pane>
+      {onMessageClick && (
+        <Button onClick={onMessageClick} appearance="minimal">
+          Message
+        </Button>
+      )}
     </Pane>
   );
 };
 
 UserCard.propTypes = {
-  email: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string,
-  fistName: PropTypes.string,
-  lastName: PropTypes.string,
+  userData: PropTypes.object.isRequired,
   onClick: PropTypes.func,
   onMessageClick: PropTypes.func,
-};
-
-UserCard.defaultProps = {
-  firstName: "?",
-  lastName: "",
-  avatarUrl: "",
 };
 
 export default UserCard;

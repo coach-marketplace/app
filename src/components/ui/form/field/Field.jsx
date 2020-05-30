@@ -3,12 +3,47 @@ import PropTypes from "prop-types";
 
 import Label from "../label/Label";
 import Input from "../input/Input";
-import Text from "../../text/Text";
+import Text from "../../typography/Text";
 import Pane from "../../pane/Pane";
-import { SYSTEM_COLOR } from "../../../../helper/constants";
+import Switch from "../../switch/Switch";
+import RadioButton from "../radio-button/RadioButton";
+import Select from "../select/Select";
+import EditorInput from "../editor-input/EditorInput";
+import { COLOR } from "../../../../helper/constants";
 import { getMarginProps } from "../../../../helper/utils";
 
-const Field = ({ errorMessage, label, description, isRequired, ...props }) => {
+const Field = ({
+  errorMessage,
+  label,
+  description,
+  isRequired,
+  type,
+  children,
+  ...props
+}) => {
+  let input;
+  switch (type) {
+    case "select":
+      input = (
+        <Select {...props} width="100%">
+          {children}
+        </Select>
+      );
+      break;
+    case "switch":
+      input = <Switch {...props} />;
+      break;
+    case "radio-button":
+      input = <RadioButton {...props} />;
+      break;
+    case "editor-input":
+      input = <EditorInput {...props} />;
+      break;
+    default:
+      input = <Input {...props} type={type} width="100%" />;
+      break;
+  }
+
   return (
     <Pane
       display="inline-flex"
@@ -22,13 +57,17 @@ const Field = ({ errorMessage, label, description, isRequired, ...props }) => {
           <Label htmlFor={props.id || props.name} marginBottom={4}>
             {label}
           </Label>
-          {isRequired && <Text color={SYSTEM_COLOR.INFO}>*</Text>}
+          {isRequired && <Text color={COLOR.INFO}>*</Text>}
         </Pane>
       )}
 
-      {description && <Text>{description}</Text>}
+      {description && (
+        <Text size={300} marginBottom={10}>
+          {description}
+        </Text>
+      )}
 
-      <Input {...props} width="100%" />
+      {input}
 
       {errorMessage && (
         <Text color="danger" size={300}>

@@ -1,5 +1,3 @@
-import { capitalize } from "../../helper/utils";
-
 /**
  * Class representing a conversation
  */
@@ -8,25 +6,8 @@ export default class Conversation {
    * @param {object} conversation Conversation data object from database
    */
   constructor(conversation) {
-    Object.keys(conversation).forEach((key) => {
-      const formattedKey = capitalize(key.replace("_", ""));
-      const methodName = `set${formattedKey}`;
-      if (this[methodName]) {
-        this[methodName](conversation[key]);
-      }
-    });
-  }
-
-  setId(value) {
-    this._id = value;
-  }
-
-  getId() {
-    return this._id;
-  }
-
-  setParticipants(value) {
-    this.participants = value;
+    this._id = conversation._id;
+    this.participants = conversation.participants;
   }
 
   /**
@@ -58,5 +39,33 @@ export default class Conversation {
 
       return name ? name + `, ${fullName}` : fullName;
     }, "");
+  }
+
+  /**
+   * The function will return all the participants from the conversation
+   * except the current user base on the ID passed as argument as an array
+   *
+   * @param {string} currentUserId Id of the current user
+   * @return {array} An array containing all participant's names
+   */
+  getParticipantsNamesArray(currentUserId) {
+    if (!currentUserId) throw new Error("Current user ID is required");
+
+    const participants = this.participants.filter(
+      (participant) => participant.user._id !== currentUserId
+    );
+
+    return participants.map((participant) => {
+      let fullName = "";
+      if (participant.user.firstName) {
+        fullName += participant.user.firstName;
+      }
+      if (participant.user.lastName) {
+        fullName && (fullName += " ");
+        fullName += participant.user.lastName;
+      }
+
+      return fullName;
+    });
   }
 }

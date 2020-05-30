@@ -48,6 +48,15 @@ class API {
       data,
     });
   }
+
+  static delete(endPoint, data = {}) {
+    return axios({
+      method: "delete",
+      url: `${this.baseUrl}${endPoint}`,
+      headers: this.headers,
+      data,
+    });
+  }
 }
 
 API.init();

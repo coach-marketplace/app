@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { ContainerCard } from "./style";
-import Text from "../../ui/text/Text";
+import { Text, Pane } from "../../ui";
 import Conversation from "../../../services/domains/Conversation";
 
 const ConversationCard = ({ conversation, onClick, user }) => {
@@ -14,17 +13,19 @@ const ConversationCard = ({ conversation, onClick, user }) => {
   }, [conv, conversation]);
 
   return (
-    <ContainerCard
+    <Pane
       elevation={1}
+      hoverElevation={2}
       display="flex"
       justifyContent="flexStart"
       alignItems="center"
       padding={20}
       marginTop={10}
       onClick={onClick}
+      background="white"
     >
       <Text>{conv && conv.getParticipantsNames(user._id)}</Text>
-    </ContainerCard>
+    </Pane>
   );
 };
 

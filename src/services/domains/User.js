@@ -1,54 +1,60 @@
-const ACCEPTED_GENDER = ["male", "female", "other", "not-say"];
-
-// WIP
-// TODO: create and use that class if it's really needed
-
 /**
  * Class is representing a User
  */
-export default class User {
+export class User {
   _id = null;
+  avatar = "";
   createdAt = null;
-  email = null;
-  firstName = null;
-  lastName = null;
-  phone = null;
-  dateOfBirth = null;
-  gender = null;
+  email = "";
+  phone = "";
+  firstName = "";
+  lastName = "";
+  fullName = "";
+  gender = "";
+  dateOfBirth = "";
+  isAdmin = false;
   isArchived = false;
   isCoach = false;
-  isAdmin = false;
   isEmailVerified = false;
   isOnline = false;
 
   /**
-   * @param {object} messageData Message data object from database
+   * @param {object} data User data object from database
    */
-  constructor(userData) {
-    this.setId(userData._id);
+  constructor(data) {
+    this._id = data._id;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.email = data.email;
+    this.phone = data.phone;
+    this.dateOfBirth = data.dateOfBirth;
+    this.gender = data.gender;
+    this.isArchived = data.isArchived;
+    this.isCoach = data.isCoach;
+    this.isAdmin = data.isAdmin;
+    this.isOnline = data.isOnline;
+    this.isEmailVerified = data.isEmailVerified;
+    this.createdAt = data.createdAt;
+    this.setFullName(this.firstName, this.lastName);
+    this.setAvatar(data);
   }
 
-  setId(value) {
-    this._id = value;
+  setFullName(firstName, lastName) {
+    let fullName = "";
+    fullName += firstName ? `${firstName} ` : "? ";
+    fullName += lastName ? `${lastName} ` : "?";
+    this.fullName = fullName;
   }
 
-  getId() {
-    return this._id;
-  }
+  setAvatar(data) {
+    const { accounts } = data;
 
-  setIsArchived(value) {
-    this.isArchived = value;
-  }
+    if (!accounts || !accounts.length) return;
 
-  getIsArchived() {
-    return this.isArchived;
-  }
+    const SSOAccount = accounts.find((account) => account.type !== "local");
 
-  setCreatedAt(value) {
-    this.createdAt = value;
-  }
+    if (!SSOAccount) return;
 
-  getCreatedAt() {
-    return this.createdAt;
+    this.avatar = SSOAccount.avatar;
   }
 }

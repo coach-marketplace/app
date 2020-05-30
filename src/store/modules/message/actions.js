@@ -53,7 +53,7 @@ export const retrieveAllConversationMessages = (conversationId) => {
   };
 };
 
-export const postMessage = (conversationId, data) => {
+export const postMessage = (conversationId, data, callback) => {
   return (dispatch) => {
     dispatch(postMessageLoading());
     const {
@@ -65,6 +65,7 @@ export const postMessage = (conversationId, data) => {
         dispatch(
           postMessageSuccess({ conversationId, message: response.data })
         );
+        callback && callback();
       })
       .catch((error) => {
         dispatch(postMessageFailed(error.message));
