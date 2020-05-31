@@ -1,21 +1,14 @@
 export const getAuthUser = (store) => {
   return {
     status: store.user.actions.fetchAuthUser,
-    data: store.user.current
-  }
-}
-
-export const getProfileInfos = (store) => {
-  return {
-    updateUserProfile: {
-      status: store.user.actions.updateUserProfile,
-    },
-    getAuthUser: {
-      status: store.user.actions.fetchAuthUser,
-    },
-    data: store.user.current
-  }
+    data: store.user.current,
+  };
 };
+
+export const getUserData = (store) => store.user.current;
+
+export const getUpdateUserProfileStatus = (store) =>
+  store.user.actions.updateUserProfile;
 
 export const getChangePasswordInfos = (store) => {
   return store.user.actions.updatePassword;

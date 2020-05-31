@@ -1,14 +1,13 @@
-import { INITIAL_ACTION_STATE } from "../../../helper/constants";
+import { INITIAL_ACTION_STATE_NEW } from "../../../helper/constants";
 
 export default {
   current: null,
   physicalMetrics: [],
   actions: {
-    fetchAuthUser: { ...INITIAL_ACTION_STATE },
-    fetchUserProfile: { status: "", error: "", data: {} },
-    updateUserProfile: { ...INITIAL_ACTION_STATE },
-    updatePassword: { status: "", error: "" },
-    fetchPhysicalMetrics: { status: "", error: "" },
-    addPhysicalMetrics: { status: "", error: "" },
+    fetchAuthUser: { ...INITIAL_ACTION_STATE_NEW },
+    update: { ...INITIAL_ACTION_STATE_NEW },
+    changePassword: { ...INITIAL_ACTION_STATE_NEW },
+    fetchPhysicalMetrics: { ...INITIAL_ACTION_STATE_NEW },
+    addPhysicalMetrics: { ...INITIAL_ACTION_STATE_NEW },
   },
 };
