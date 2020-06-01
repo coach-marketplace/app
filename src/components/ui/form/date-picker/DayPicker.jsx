@@ -1,7 +1,7 @@
 /**
  * https://www.npmjs.com/package/react-dates#singledatepicker
  */
-
+// TODO: Redesign the input to make it fit with other inputs
 import React from "react";
 import { SingleDatePicker } from "react-dates";
 

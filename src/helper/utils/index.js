@@ -1,6 +1,7 @@
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
-import { SPACER, SPACERS } from "../constants";
+// TODO: issue to access constants
+// import { SPACER, SPACERS, GENDER, LOCALE } from "../constants";
 
 export const capitalize = (string) => {
   if (typeof string !== "string") return "";
@@ -8,19 +9,19 @@ export const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-export const getMarginDefaultProps = () => ({
-  marginBottom: SPACER.NONE,
-  marginLeft: SPACER.NONE,
-  marginRight: SPACER.NONE,
-  marginTop: SPACER.NONE,
-});
+// export const getMarginDefaultProps = () => ({
+//   marginBottom: SPACER.NONE,
+//   marginLeft: SPACER.NONE,
+//   marginRight: SPACER.NONE,
+//   marginTop: SPACER.NONE,
+// });
 
-export const getMarginPropTypes = () => ({
-  marginBottom: PropTypes.oneOf(SPACERS),
-  marginLeft: PropTypes.oneOf(SPACERS),
-  marginRight: PropTypes.oneOf(SPACERS),
-  marginTop: PropTypes.oneOf(SPACERS),
-});
+// export const getMarginPropTypes = () => ({
+//   marginBottom: PropTypes.oneOf(SPACERS),
+//   marginLeft: PropTypes.oneOf(SPACERS),
+//   marginRight: PropTypes.oneOf(SPACERS),
+//   marginTop: PropTypes.oneOf(SPACERS),
+// });
 
 export const getMarginProps = (props) => {
   const marginProps = {};
@@ -87,8 +88,19 @@ export const getFixedSize = (width = null, height = null) => {
  * @constant localesOptionsForm
  */
 export const localesOptionsForm = [
-  { label: "English", value: "en-US" },
-  { label: "French", value: "fr-FR" },
+  { label: "English", value: "en-EU" }, //LOCALE.EN_US },
+  { label: "French", value: "fr-FR" }, //LOCALE.FR_FR },
+];
+
+export const genderOptionsForm = [
+  { label: "Male", value: "male" },
+  { label: "Female", value: "female" },
+  { label: "Other", value: "other" },
+  { label: "Rather not to say", value: "not-say" },
+  // { label: "Male", value: GENDER.MALE },
+  // { label: "Female", value: GENDER.FEMALE },
+  // { label: "Other", value: GENDER.OTHER },
+  // { label: "Rather not to say", value: GENDER.NOT_SAY },
 ];
 
 /**

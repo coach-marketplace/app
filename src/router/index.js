@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Redirect } from "react-router";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -13,7 +14,6 @@ import ServicePage from "../pages/service-page/ServicePage";
 // import SchedulePage from "../pages/schedule-page/SchedulePage";
 // import ProfilePage from "../pages/profile-page/ProfilePage";
 import AccountPage from "../pages/user-page/AccountPage";
-// import ChangePasswordPage from "../components/account/security-section/SecuritySection";
 // import BodyPage from "../pages/profile-page/BodyPage";
 import LibraryPage from "../pages/library-page/LibraryPage";
 import ConversationsPage from "../pages/conversations-page/ConversationsPage";
@@ -113,6 +113,7 @@ class Router extends Component {
               />
             );
           })}
+          <Redirect from="*" to="/" />
           {/* 
           <ProtectedRoute
             path="/customers/new"

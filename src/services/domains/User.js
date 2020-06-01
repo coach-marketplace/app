@@ -3,6 +3,7 @@
  */
 export class User {
   _id = null;
+  accounts = [];
   avatar = "";
   createdAt = null;
   email = "";
@@ -35,6 +36,7 @@ export class User {
     this.isOnline = data.isOnline;
     this.isEmailVerified = data.isEmailVerified;
     this.createdAt = data.createdAt;
+    this.accounts = data.accounts;
     this.setFullName(this.firstName, this.lastName);
     this.setAvatar(data);
   }

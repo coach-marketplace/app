@@ -2,29 +2,22 @@ import {
   FETCH_AUTH_USER_FAILED,
   FETCH_AUTH_USER_LOADING,
   FETCH_AUTH_USER_SUCCESS,
-  FETCH_USER_PROFILE_INFOS_FAILED,
-  FETCH_USER_PROFILE_INFOS_LOADING,
-  FETCH_USER_PROFILE_INFOS_SUCCESS,
-  UPDATE_USER_PROFILE_INFOS_FAILED,
-  UPDATE_USER_PROFILE_INFOS_LOADING,
-  UPDATE_USER_PROFILE_INFOS_SUCCESS,
-  FETCH_USER_PROFILE_LOADING,
-  FETCH_USER_PROFILE_SUCCESS,
-  FETCH_USER_PROFILE_FAILED,
-  CLEAN_UPDATE_USER,
   UPDATE_USER_LOADING,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED,
-  UPDATE_USER_PASSWORD_LOADING,
-  UPDATE_USER_PASSWORD_SUCCESS,
-  UPDATE_USER_PASSWORD_FAILED,
+  CLEAN_UPDATE_USER,
   FETCH_USER_PHYSICAL_METRICS_LOADING,
   FETCH_USER_PHYSICAL_METRICS_SUCCESS,
   FETCH_USER_PHYSICAL_METRICS_FAILED,
+  CLEAN_FETCH_USER_PHYSICAL_METRICS,
   ADD_USER_PHYSICAL_METRICS_LOADING,
   ADD_USER_PHYSICAL_METRICS_SUCCESS,
   ADD_USER_PHYSICAL_METRICS_FAILED,
-  RESET_PROFILE_UPDATE_VALUE,
+  CLEAN_ADD_USER_PHYSICAL_METRICS,
+  UPDATE_PASSWORD_LOADING,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAILED,
+  CLEAN_UPDATE_PASSWORD,
 } from "./constants";
 import store from "../../index";
 import API from "../../../services/api";
@@ -46,10 +39,64 @@ const fetchAuthUserFailed = (error) => ({
 /**
  * Update user
  */
-const updateUserPending = () => ({ type: UPDATE_USER_LOADING });
+const updateUserLoading = () => ({ type: UPDATE_USER_LOADING });
 const updateUserSuccess = (payload) => ({ type: UPDATE_USER_SUCCESS, payload });
 const updateUserFailed = (error) => ({ type: UPDATE_USER_FAILED, error });
 const updateUserClean = () => ({ type: CLEAN_UPDATE_USER });
+
+/**
+ * Fetch user physical metrics
+ */
+const fetchPhysicalMetricsLoading = () => ({
+  type: FETCH_USER_PHYSICAL_METRICS_LOADING,
+});
+const fetchPhysicalMetricsSuccess = (payload) => ({
+  type: FETCH_USER_PHYSICAL_METRICS_SUCCESS,
+  payload,
+});
+const fetchPhysicalMetricsFailed = (error) => ({
+  type: FETCH_USER_PHYSICAL_METRICS_FAILED,
+  error,
+});
+const fetchPhysicalMetricsClean = () => ({
+  type: CLEAN_FETCH_USER_PHYSICAL_METRICS,
+});
+
+/**
+ * Add user physical metrics
+ */
+const addPhysicalMetricsLoading = () => ({
+  type: ADD_USER_PHYSICAL_METRICS_LOADING,
+});
+const addPhysicalMetricsSuccess = (payload) => ({
+  type: ADD_USER_PHYSICAL_METRICS_SUCCESS,
+  payload,
+});
+const addPhysicalMetricsFailed = (error) => ({
+  type: ADD_USER_PHYSICAL_METRICS_FAILED,
+  error,
+});
+const addPhysicalMetricsClean = () => ({
+  type: CLEAN_ADD_USER_PHYSICAL_METRICS,
+});
+
+/**
+ * Update user password
+ */
+const updatePasswordLoading = () => ({
+  type: UPDATE_PASSWORD_LOADING,
+});
+const updatePasswordSuccess = (payload) => ({
+  type: UPDATE_PASSWORD_SUCCESS,
+  payload,
+});
+const updatePasswordFailed = (error) => ({
+  type: UPDATE_PASSWORD_FAILED,
+  error,
+});
+const updatePasswordClean = () => ({
+  type: CLEAN_UPDATE_PASSWORD,
+});
 
 /**
  * Fetch auth user base on token in local storage
@@ -71,114 +118,83 @@ export const fetchAuthUser = (token) => {
 
 export const update = (data) => {
   return (dispatch) => {
-    dispatch(updateUserPending());
+    dispatch(updateUserLoading());
     const {
       user: { current: user },
     } = store.getState();
-    console.log("CB???");
+
     API.put(`user/${user._id}`, data)
       .then((response) => {
         dispatch(updateUserSuccess(response.data));
       })
       .catch((error) => {
-        console.log("error", error);
-        // dispatch(
-        //   updateUserFailed({
-        //     error: "We could not update your profile. Please try again later.",
-        //   })
-        // );
+        dispatch(
+          updateUserFailed({
+            error: "We could not update your profile. Please try again later.",
+          })
+        );
       });
   };
 };
 export const cleanUpdate = () => (dispatch) => dispatch(updateUserClean());
 
-// TODO: see if these comments are still relevant
-/***
- * Fetch profile infos
- */
-// export const fetchUserProfileInfosPending = () => ({
-//   type: FETCH_USER_PROFILE_INFOS_LOADING,
-// });
-// export const fetchUserProfileInfosSuccess = (payload) => ({
-//   type: FETCH_USER_PROFILE_INFOS_SUCCESS,
-//   data: payload,
-// });
-// export const fetchUserProfileInfosFailed = () => ({
-//   type: FETCH_USER_PROFILE_INFOS_FAILED,
-// });
+export const fetchPhysicalMetrics = () => {
+  return (dispatch) => {
+    dispatch(fetchPhysicalMetricsLoading());
+    const {
+      user: { current: user },
+    } = store.getState();
 
-// export const fetchUserProfilePending = () => ({
-//   type: FETCH_USER_PROFILE_LOADING,
-// });
-// export const fetchUserProfileSuccess = (payload) => ({
-//   type: FETCH_USER_PROFILE_SUCCESS,
-//   data: payload,
-// });
-// export const fetchUserProfileFailed = (payload) => ({
-//   type: FETCH_USER_PROFILE_FAILED,
-//   data: payload,
-// });
+    API.get(`user/${user._id}/physical-metrics`)
+      .then((response) => {
+        dispatch(fetchPhysicalMetricsSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(
+          fetchPhysicalMetricsFailed({
+            error: "Error during fetching.",
+          })
+        );
+      });
+  };
+};
+export const cleanFetchPhysicalMetrics = () => (dispatch) =>
+  dispatch(fetchPhysicalMetricsClean());
 
-// export const updateUserProfileInfosPending = () => {
-//   return { type: UPDATE_USER_PROFILE_INFOS_LOADING };
-// };
-// export const updateUserProfileInfosSuccess = (payload) => {
-//   return {
-//     type: UPDATE_USER_PROFILE_INFOS_SUCCESS,
-//     data: payload,
-//   };
-// };
-// export const updateUserProfileInfosFailed = () => {
-//   return { type: UPDATE_USER_PROFILE_INFOS_FAILED };
-// };
-/**
- * Update user password
- */
-export const updateUserPasswordLoading = () => ({
-  type: UPDATE_USER_PASSWORD_LOADING,
-});
-export const updateUserPasswordSuccess = (payload) => ({
-  type: UPDATE_USER_PASSWORD_SUCCESS,
-  data: payload,
-});
-export const updateUserPasswordFailed = (payload) => ({
-  type: UPDATE_USER_PASSWORD_FAILED,
-  error: payload,
-});
+export const addPhysicalMetrics = (data) => {
+  return (dispatch) => {
+    dispatch(addPhysicalMetricsLoading());
+    const {
+      user: { current: user },
+    } = store.getState();
 
-/***
- * Fetch physical metrics infos
- */
-export const fetchUserPhysicalMetricsPending = () => ({
-  type: FETCH_USER_PHYSICAL_METRICS_LOADING,
-});
-export const fetchUserPhysicalMetricsSuccess = (payload) => ({
-  type: FETCH_USER_PHYSICAL_METRICS_SUCCESS,
-  data: payload,
-});
-export const fetchUserPhysicalMetricsFailed = (payload) => ({
-  type: FETCH_USER_PHYSICAL_METRICS_FAILED,
-  data: payload,
-});
+    API.post(`user/${user._id}/physical-metrics`, data)
+      .then((response) => {
+        dispatch(addPhysicalMetricsSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(addPhysicalMetricsFailed("Error during adding."));
+      });
+  };
+};
+export const cleanAddPhysicalMetrics = () => (dispatch) =>
+  dispatch(addPhysicalMetricsClean());
 
-/**
- * Add physical metrics
- */
-export const addUserPhysicalMetricsPending = () => ({
-  type: ADD_USER_PHYSICAL_METRICS_LOADING,
-});
-export const addUserPhysicalMetricsSuccess = (payload) => ({
-  type: ADD_USER_PHYSICAL_METRICS_SUCCESS,
-  data: payload,
-});
-export const addUserPhysicalMetricsFailed = (payload) => ({
-  type: ADD_USER_PHYSICAL_METRICS_FAILED,
-  data: payload,
-});
+export const updatePassword = (data) => {
+  return (dispatch) => {
+    dispatch(updatePasswordLoading());
+    const {
+      user: { current: user },
+    } = store.getState();
 
-/**
- * reset status
- */
-export const resetProfileUpdateValues = () => ({
-  type: RESET_PROFILE_UPDATE_VALUE,
-});
+    API.post(`user/${user._id}/change-password`, data)
+      .then((response) => {
+        dispatch(updatePasswordSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(updatePasswordFailed("Error during adding."));
+      });
+  };
+};
+export const cleanUpdatePassword = () => (dispatch) =>
+  dispatch(updatePasswordClean());
