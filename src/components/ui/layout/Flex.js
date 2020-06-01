@@ -1,10 +1,11 @@
+// TODO: check if this component is really needed
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import { LAYOUT } from "../../../helper/constants";
 import {
-  getMarginDefaultProps,
-  getMarginPropTypes,
+  // getMarginDefaultProps,
+  // getMarginPropTypes,
   getStyledMarginRules,
 } from "../../../helper/utils";
 
@@ -78,7 +79,7 @@ StyledFlex.propTypes = {
   onClick: PropTypes.func,
   overflow: PropTypes.oneOf(["visible", "hidden", "scroll", "auto"]),
   wrap: PropTypes.oneOf(["wrap", "nowrap", "wrap-reverse"]),
-  ...getMarginPropTypes(),
+  // ...getMarginPropTypes(),
 };
 
 StyledFlex.defaultProps = {
@@ -88,7 +89,7 @@ StyledFlex.defaultProps = {
   justifyContent: "start",
   layout: "",
   wrap: "nowrap",
-  ...getMarginDefaultProps(),
+  // ...getMarginDefaultProps(),
 };
 
 export default StyledFlex;

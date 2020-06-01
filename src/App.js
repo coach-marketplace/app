@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
 
@@ -7,27 +7,15 @@ import Router from "./router";
 import { fetchAuthUser } from "./store/modules/user/actions";
 import Spinner from "./components/ui/loader/Spinner";
 import { addTokenToLocalStorage } from "./services/local-storage";
+import { ACTION_TYPE } from "./helper/constants";
 
 import "./style/main.css";
 
-class App extends Component {
-  state = {
-    previousIsAutoLoginLoading: false,
-    isAutoLoginDone: false,
-  };
+const App = ({ autoLoginStatus, autoLogin, user }) => {
+  const [isAutoLoginDone, setIsAutoLoginDone] = useState(false);
+  const [isSocketInit, setIsSocketInit] = useState(false);
 
-  static getDerivedStateFromProps(props, state) {
-    const { isAutoLoginLoading } = props;
-
-    return {
-      ...state,
-      previousIsAutoLoginLoading: isAutoLoginLoading,
-      isAutoLoginDone: state.previousIsAutoLoginLoading,
-    };
-  }
-
-  componentDidMount() {
-    const { autoLogin } = this.props;
+  useEffect(() => {
     const hasUrlQuery = window.location.href.includes("?");
     const query = hasUrlQuery
       ? queryString.parse(window.location.href.split("?")[1])
@@ -39,29 +27,34 @@ class App extends Component {
      */
     token && addTokenToLocalStorage(token.replace("#", ""));
     autoLogin();
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  componentDidUpdate() {
-    const { user } = this.props;
-    const { isAutoLoginDone } = this.state;
+  useEffect(() => {
+    if (!isAutoLoginDone || !user || isSocketInit) return;
+    Socket.init({ userId: user._id });
+    setIsSocketInit(true);
+  }, [isAutoLoginDone, isSocketInit, user]);
 
-    isAutoLoginDone && user && Socket.init({ userId: user._id });
-  }
-
-  render() {
-    const { isAutoLoginDone } = this.state;
-
-    if (!isAutoLoginDone) {
-      return <Spinner />;
+  useEffect(() => {
+    if (
+      autoLoginStatus === ACTION_TYPE.SUCCESS ||
+      autoLoginStatus === ACTION_TYPE.FAILED
+    ) {
+      setIsAutoLoginDone(true);
     }
+  }, [autoLoginStatus]);
 
-    return <Router />;
+  if (!isAutoLoginDone) {
+    return <Spinner />;
   }
-}
+
+  return <Router />;
+};
 
 const mapStateToProps = (state) => ({
   user: state.user.current,
-  isAutoLoginLoading: state.user.actions.fetchAuthUser.loading,
+  autoLoginStatus: state.user.actions.fetchAuthUser.status,
 });
 
 const mapDispatchToProps = (dispatch) => ({

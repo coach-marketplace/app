@@ -22,3 +22,18 @@ export const LOCALE = {
 };
 
 export const LOCALES = Object.values(LOCALE);
+
+export const GENDER = {
+  MALE: "male",
+  FEMALE: "female",
+  OTHER: "other",
+  NOT_SAY: "not-say",
+};
+
+export const GENDERS = Object.values(GENDER);
+
+export const USER_ACCOUNT_TYPE = {
+  LOCAL: "local",
+  GOOGLE: "google",
+  FACEBOOK: "facebook",
+};

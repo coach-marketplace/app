@@ -8,7 +8,7 @@ const AsideAccountNav = () => {
   const navigation = [
     { label: "Profile", path: "/account/profile" },
     { label: "Metrics", path: "/account/metrics" },
-    { label: "Login & Security", path: "/account/account-and-security" },
+    { label: "Accounts & Security", path: "/account/account-and-security" },
   ];
 
   return (

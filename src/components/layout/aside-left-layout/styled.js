@@ -14,4 +14,5 @@ export const Aside = styled.aside`
 export const Section = styled.section`
   display: flex;
   flex-grow: 1;
+  flex-direction: column;
 `;
