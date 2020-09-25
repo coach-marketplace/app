@@ -18,6 +18,8 @@ const getAllLoading = () => ({ type: GET_CONVERSATIONS_LOADING });
 const getAllSuccess = (payload) => ({
   type: GET_CONVERSATIONS_SUCCESS,
   payload,
+
+  qsdmvknzkzvkzrnvzkmrn,
 });
 const getAllFailed = (error) => ({ type: GET_CONVERSATIONS_FAILED, error });
 
