@@ -11,10 +11,6 @@ const AuthMenu = ({ logout, user }) => {
         <Link to="/account/profile">
           <Menu.Item>Account</Menu.Item>
         </Link>
-        {user && <Link to="/coach/new">
-          <Menu.Item>Become a Coach</Menu.Item>
-        </Link>
-        }
       </Menu.Group>
       <Menu.Divider />
       <Menu.Group>
