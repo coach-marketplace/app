@@ -1,14 +1,11 @@
 import React from "react";
 
-import Button from "../../ui/button/Button";
-import Heading from "../../ui/heading/Heading"; 
-import Pane from "../../ui/pane/Pane";
+import Heading from "../../../ui/heading/Heading"; 
 
-export default function BecomeACoachPane() {
+export default function IntroStep() {
 
 
-
-    return <Pane elevation={4} width="33%" alignItems="center" justifyContent="center" margin="auto">
+    return <div >
         <Heading size={800}>
             Become a Coach
         </Heading>
@@ -17,6 +14,5 @@ export default function BecomeACoachPane() {
             Manage your appointments, create exercises, workouts and programs to share with your trainees,
             get more visible and find new customers easily!
         </p>
-        <Button>Start</Button>
-    </Pane>
+    </div>
 }
