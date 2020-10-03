@@ -1,5 +1,9 @@
 import React, {useState} from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+    update as updateUser,
+    cleanUpdate as cleanUpdateUser,
+  } from "../../../../store/modules/user/actions";
 import Pane from "../../../ui/pane/Pane";
 import Button from "../../../ui/button/Button";
 
@@ -9,14 +13,18 @@ import FinalStep from "./FinalStep";
 
 export default function BecomeACoachPane() {
     const [step, setStep] = useState("intro")
-
-    console.log(step)
+    const user = useSelector(state => state.user.current)
+    const dispatch = useDispatch()
 
     let steps = ["intro", "final"]
 
     function goForward() {
-        console.log("coucou")
-        setStep(steps[steps.findIndex((elem) => elem===step)+1])
+        let nextStepIndex = steps.findIndex((elem) => elem===step)+1 
+        if(nextStepIndex === steps.length-1) {
+            dispatch(updateUser({isCoach: true}))
+            dispatch(cleanUpdateUser())
+        }
+        setStep(steps[nextStepIndex])
     }
     
 
