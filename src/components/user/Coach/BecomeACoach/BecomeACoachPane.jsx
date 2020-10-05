@@ -35,7 +35,8 @@ export default function BecomeACoachPane() {
         let nextStepIndex = steps.findIndex((elem) => elem===step)+1 
         if(nextStepIndex === steps.length-1) {
             dispatch(updateUser({isCoach: true}))
-            dispatch(cleanUpdateUser())
+            // dispatch(cleanUpdateUser())
+            // Il faut clean une fois que t'es en success et pas avant :-)
         }
         else {
             setStep(steps[nextStepIndex])
