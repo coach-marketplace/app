@@ -23,8 +23,12 @@ export default function BecomeACoachPane() {
     let steps = ["intro", "final"]
 
     useEffect(() => {
-        if(user.isCoach || userUpdateStatus === ACTION_TYPE.SUCCESS) {
+        if(user.isCoach) {
             setStep(steps[steps.length-1])
+        }
+        else if(userUpdateStatus === ACTION_TYPE.SUCCESS) {
+            setStep(steps[steps.length-1])
+            dispatch(cleanUpdateUser())
         }
         else if(userUpdateStatus === ACTION_TYPE.FAILED) {
             toaster.danger("An error occurred, please try again later");
@@ -35,19 +39,20 @@ export default function BecomeACoachPane() {
         let nextStepIndex = steps.findIndex((elem) => elem===step)+1 
         if(nextStepIndex === steps.length-1) {
             dispatch(updateUser({isCoach: true}))
-            // dispatch(cleanUpdateUser())
-            // Il faut clean une fois que t'es en success et pas avant :-)
         }
         else {
             setStep(steps[nextStepIndex])
         }
     }
     
-
-    return <Pane elevation={4} width="33%" alignItems="center" justifyContent="center" margin="auto">
-        {userUpdateStatus === ACTION_TYPE.LOADING && <Spinner/>}
-        {step === "intro" && <IntroStep />}
-        {step === "final" && <FinalStep />}
-        {step === "intro" && <Button type="submit" label="Start" appearance="primary" onClick={e => goForward()}/>}
-    </Pane>
+    if(userUpdateStatus === ACTION_TYPE.LOADING){
+        return <Spinner/>
+    }
+    else {
+        return <Pane elevation={4} width="33%" alignItems="center" justifyContent="center" margin="auto">
+            {step === "intro" && <IntroStep />}
+            {step === "final" && <FinalStep />}
+            {step === "intro" && <Button type="submit" label="Start" appearance="primary" onClick={e => goForward()}/>}
+        </Pane>
+    }
 }
