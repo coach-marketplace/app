@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
-import { connect } from "react-redux";
 
-import { Form, Field, Button, toaster } from "../../ui";
+import { Form, Field, Button, toaster, Tag, Autocomplete, TextInput } from "../../ui";
 
 import { ACTION_TYPE, LOCALE } from "../../../helper/constants";
+import { useState } from "react";
 
 /* DATA relevant for coaches:
 - Presentation
@@ -48,6 +48,23 @@ export default function CoachProfileForm ({
     },
   });
 
+  const [sports, setSports] = useState([]);
+
+  const onSportAdded = (sport) => {
+    let newSports = [...sports]
+    newSports.push(sport)
+    setSports(newSports)
+  }
+
+  const onSportDeleted = (sport) => {
+    let newSports = [...sports]
+    const index = newSports.indexOf(sport);
+    if (index > -1) {
+      newSports.splice(index, 1);
+      setSports(newSports);
+    }
+  };
+
   useEffect(() => {
     if (updateUserProfileStatus === ACTION_TYPE.SUCCESS) {
       toaster.success("Your changes have been saved");
@@ -58,7 +75,9 @@ export default function CoachProfileForm ({
     }
   }, [cleanUpdateUserStore, updateUserProfileStatus]);
 
+
   return (
+    <>
     <Form onSubmit={handleSubmit}>
       <Field
         label="About you"
@@ -102,6 +121,33 @@ export default function CoachProfileForm ({
         Save
       </Button>
     </Form>
+    <div>
+		<Autocomplete
+			title="Sports"
+			onChange={(changedItem) => onSportAdded(changedItem)}
+			items={['Swimming', 'Yoga', 'Nutrition', 'Running', 'Tennis']}
+		>
+			{(props) => {
+				const { getInputProps, getRef, inputValue } = props
+				return (
+					<TextInput
+						placeholder="Sports"
+						value={inputValue}
+						innerRef={getRef}
+						{...getInputProps()}
+					/>
+				)
+			}}
+		</Autocomplete>
+    <div>
+      {
+        sports.map((item) => {
+          return <Tag closeable={true} text={item} onDelete={() => onSportDeleted(item)}/>
+        })
+      }
+    </div>
+	</div>    
+  </>
   );
 };
 

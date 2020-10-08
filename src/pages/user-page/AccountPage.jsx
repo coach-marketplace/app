@@ -26,7 +26,6 @@ class AccountPage extends Component {
       case "account-and-security":
         return <SecuritySection />;
       case "coach-profile":
-        console.log("coucou")
         return <CoachProfileForm />;
       default:
         return <ProfileForm />;

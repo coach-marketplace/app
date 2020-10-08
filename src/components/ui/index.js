@@ -22,6 +22,9 @@ import TabUI from "./tab/Tab";
 import TextUI from "./typography/Text";
 import TitleUI from "./typography/Title";
 import toasterUI from "./toaster/toaster";
+import AutocompleteUI from "./autocomplete/autocomplete";
+import TagUI from "./tag/tag"
+import TextInputUI from "./text-input/TextInput"
 
 export const Alert = AlertUI;
 export const Avatar = AvatarUI;
@@ -47,3 +50,6 @@ export const TabList = TabListUI;
 export const Text = TextUI;
 export const Title = TitleUI;
 export const toaster = toasterUI;
+export const Autocomplete = AutocompleteUI;
+export const Tag = TagUI;
+export const TextInput = TextInputUI;
