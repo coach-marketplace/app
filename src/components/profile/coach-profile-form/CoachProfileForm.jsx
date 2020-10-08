@@ -125,21 +125,25 @@ export default function CoachProfileForm ({
 		<Autocomplete
 			title="Sports"
 			onChange={(changedItem) => onSportAdded(changedItem)}
-			items={['Swimming', 'Yoga', 'Nutrition', 'Running', 'Tennis']}
+      items={['Swimming', 'Yoga', 'Nutrition', 'Running', 'Tennis']}
 		>
 			{(props) => {
-				const { getInputProps, getRef, inputValue } = props
+				const { getInputProps, getRef, inputValue, openMenu } = props
 				return (
 					<TextInput
 						placeholder="Sports"
 						value={inputValue}
 						innerRef={getRef}
-						{...getInputProps()}
+						{...getInputProps({
+              onFocus: () => {
+                openMenu()
+              }
+            })}
 					/>
 				)
 			}}
 		</Autocomplete>
-    <div>
+    <div style={{display: "flex"}}>
       {
         sports.map((item) => {
           return <Tag closeable={true} text={item} onDelete={() => onSportDeleted(item)}/>

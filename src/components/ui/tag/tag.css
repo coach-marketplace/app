@@ -1,0 +1,19 @@
+.tag {
+    background-color: lightseagreen;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    border-radius: 9px;
+    margin: 0.1rem;
+    padding: 0.25rem;
+    font-size: 0.9vw;
+}
+
+.tag-button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
