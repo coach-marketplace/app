@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+// eslint-disable-next-line
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 
-import { Form, Field, Button, toaster, Tag, Autocomplete, TextInput } from "../../ui";
+import { Form, Field, Button, toaster, Tag, Autocomplete, TextInput, Spinner } from "../../ui";
 
-import { ACTION_TYPE, LOCALE } from "../../../helper/constants";
-import { useState } from "react";
+import { ACTION_TYPE } from "../../../helper/constants";
+import { useDispatch, useSelector } from "react-redux";
+
+import { retrieveAll as getAllSports } from "../../../store/modules/sport/actions"
 
 /* DATA relevant for coaches:
 - Presentation
@@ -49,6 +52,10 @@ export default function CoachProfileForm ({
   });
 
   const [sports, setSports] = useState([]);
+  const sportsList = useSelector(state => state.sport.list)
+  const sportsNameList = sportsList.map(({ name }) => name)
+  const getSportsStatus = useSelector(state => state.sport.actions.getAll.status)
+  const dispatch = useDispatch()
 
   const onSportAdded = (sport) => {
     let newSports = [...sports]
@@ -66,6 +73,9 @@ export default function CoachProfileForm ({
   };
 
   useEffect(() => {
+    if(sportsList.length === 0) {
+      dispatch(getAllSports());
+    }
     if (updateUserProfileStatus === ACTION_TYPE.SUCCESS) {
       toaster.success("Your changes have been saved");
       cleanUpdateUserStore();
@@ -73,9 +83,11 @@ export default function CoachProfileForm ({
       toaster.danger("An error occurred, please try again later");
       cleanUpdateUserStore();
     }
-  }, [cleanUpdateUserStore, updateUserProfileStatus]);
+  }, [cleanUpdateUserStore, updateUserProfileStatus, getSportsStatus]);
 
-
+  if(!getSportsStatus || getSportsStatus === ACTION_TYPE.LOADING) {
+    return <Spinner />
+  }
   return (
     <>
     <Form onSubmit={handleSubmit}>
@@ -125,7 +137,7 @@ export default function CoachProfileForm ({
 		<Autocomplete
 			title="Sports"
 			onChange={(changedItem) => onSportAdded(changedItem)}
-      items={['Swimming', 'Yoga', 'Nutrition', 'Running', 'Tennis']}
+      items={sportsNameList}
 		>
 			{(props) => {
 				const { getInputProps, getRef, inputValue, openMenu } = props
