@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const StyledImage = styled.img`
   object-fit: cover;
@@ -8,11 +8,11 @@ export const StyledImage = styled.img`
       return `
         width: ${width || height};
         height: ${width || height};
-      `;
+      `
     }
     return `
       width: auto;
       height: auto;
-    `;
+    `
   }}
-`;
+`

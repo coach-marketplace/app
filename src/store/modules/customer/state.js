@@ -1,7 +1,7 @@
 import {
   INITIAL_ACTION_STATE,
   INITIAL_ACTION_STATE_NEW,
-} from "../../../helper/constants";
+} from '../../../helper/constants'
 
 export default {
   list: [],
@@ -10,4 +10,4 @@ export default {
     fetch: { ...INITIAL_ACTION_STATE_NEW },
     create: { ...INITIAL_ACTION_STATE },
   },
-};
+}

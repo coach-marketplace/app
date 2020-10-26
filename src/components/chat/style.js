@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import { COLOR, SPACER } from "../../helper/constants";
+import { COLOR, SPACER } from '../../helper/constants'
 
 export const ChatContainer = styled.article`
   display: flex;
@@ -9,7 +9,7 @@ export const ChatContainer = styled.article`
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: auto;
-`;
+`
 
 export const ChatMessagesContainer = styled.article`
   display: flex;
@@ -18,7 +18,7 @@ export const ChatMessagesContainer = styled.article`
   flex-grow: 1;
   overflow-y: auto;
   background-color: white;
-`;
+`
 
 export const ChatHeader = styled.header`
   display: flex;
@@ -28,7 +28,7 @@ export const ChatHeader = styled.header`
   box-sizing: border-box;
   padding: ${SPACER.M};
   align-items: center;
-`;
+`
 
 export const ChatForm = styled.form`
   display: flex;
@@ -36,7 +36,7 @@ export const ChatForm = styled.form`
   height: 60px;
   border-top: 1px solid ${COLOR.TEXT};
   align-items: center;
-`;
+`
 
 export const InputWrapper = styled.div`
   flex-grow: 1;
@@ -49,4 +49,4 @@ export const InputWrapper = styled.div`
     padding-left: ${SPACER.L};
     font-size: 16px;
   }
-`;
+`

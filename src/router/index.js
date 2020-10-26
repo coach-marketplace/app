@@ -1,99 +1,99 @@
-import React, { Component } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Redirect } from "react-router";
+import React, { Component } from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Redirect } from 'react-router'
 
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from './ProtectedRoute'
 
-import HomePage from "../pages/home-page/HomePage";
-import LoginPage from "../pages/auth-page/LoginPage";
-import RegisterPage from "../pages/auth-page/RegisterPage";
-import CustomersPage from "../pages/customers-page/CustomersPage";
+import HomePage from '../pages/home-page/HomePage'
+import LoginPage from '../pages/auth-page/LoginPage'
+import RegisterPage from '../pages/auth-page/RegisterPage'
+import CustomersPage from '../pages/customers-page/CustomersPage'
 // import NewCustomerPage from "../pages/customers-page/NewCustomerPage";
-import ServicePage from "../pages/service-page/ServicePage";
+import ServicePage from '../pages/service-page/ServicePage'
 // import NewServicePage from "../pages/service-page/NewServicePage";
 // import SchedulePage from "../pages/schedule-page/SchedulePage";
 // import ProfilePage from "../pages/profile-page/ProfilePage";
-import AccountPage from "../pages/user-page/AccountPage";
+import AccountPage from '../pages/user-page/AccountPage'
 // import BodyPage from "../pages/profile-page/BodyPage";
-import LibraryPage from "../pages/library-page/LibraryPage";
-import ConversationsPage from "../pages/conversations-page/ConversationsPage";
-import ConversationPage from "../pages/conversations-page/ConversationPage";
-import EditProgramPage from "../pages/library-page/EditProgramPage";
+import LibraryPage from '../pages/library-page/LibraryPage'
+import ConversationsPage from '../pages/conversations-page/ConversationsPage'
+import ConversationPage from '../pages/conversations-page/ConversationPage'
+import EditProgramPage from '../pages/library-page/EditProgramPage'
 
 // TODO: Clean up routes, add new service into a modal to remove the page
 
 const routes = [
   {
-    path: "/login",
+    path: '/login',
     isExact: true,
     isProtected: false,
     isOnlyCoach: false,
     component: LoginPage,
   },
   {
-    path: "/register",
+    path: '/register',
     isExact: true,
     isProtected: false,
     isOnlyCoach: false,
     component: RegisterPage,
   },
   {
-    path: "/",
+    path: '/',
     isExact: true,
     isProtected: true,
     isOnlyCoach: false,
     component: HomePage,
   },
   {
-    path: "/customers",
+    path: '/customers',
     isExact: true,
     isProtected: true,
     isOnlyCoach: true,
     component: CustomersPage,
   },
   {
-    path: "/services",
+    path: '/services',
     isExact: true,
     isProtected: true,
     isOnlyCoach: true,
     component: ServicePage,
   },
   {
-    path: "/account/:section",
+    path: '/account/:section',
     isExact: true,
     isProtected: true,
     isOnlyCoach: false,
     component: AccountPage,
   },
   {
-    path: "/library/:type",
+    path: '/library/:type',
     isExact: true,
     isProtected: true,
     isOnlyCoach: true,
     component: LibraryPage,
   },
   {
-    path: "/inbox",
+    path: '/inbox',
     isExact: true,
     isProtected: true,
     isOnlyCoach: false,
     component: ConversationsPage,
   },
   {
-    path: "/conversation/:id",
+    path: '/conversation/:id',
     isExact: true,
     isProtected: true,
     isOnlyCoach: false,
     component: ConversationPage,
   },
   {
-    path: "/coach/programs/:id/edit",
+    path: '/coach/programs/:id/edit',
     isExact: true,
     isProtected: true,
     isOnlyCoach: true,
     component: EditProgramPage,
   },
-];
+]
 
 class Router extends Component {
   render() {
@@ -101,7 +101,7 @@ class Router extends Component {
       <BrowserRouter>
         <Switch>
           {routes.map((route) => {
-            const RouteComponent = route.isProtected ? ProtectedRoute : Route;
+            const RouteComponent = route.isProtected ? ProtectedRoute : Route
 
             return (
               <RouteComponent
@@ -111,7 +111,7 @@ class Router extends Component {
                 onlyCoach={route.isOnlyCoach}
                 component={route.component}
               />
-            );
+            )
           })}
           <Redirect from="*" to="/" />
           {/* 
@@ -123,8 +123,8 @@ class Router extends Component {
           /> */}
         </Switch>
       </BrowserRouter>
-    );
+    )
   }
 }
 
-export default Router;
+export default Router

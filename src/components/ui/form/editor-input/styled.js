@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import { COLOR } from "../../../../helper/constants";
+import { COLOR } from '../../../../helper/constants'
 
 export const EditorContainer = styled.div`
   width: 100%;
@@ -18,4 +18,4 @@ export const EditorContainer = styled.div`
   a {
     color: ${COLOR.PRIMARY};
   }
-`;
+`

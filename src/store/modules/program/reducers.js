@@ -1,4 +1,4 @@
-import cloneDeep from "lodash.clonedeep";
+import cloneDeep from 'lodash.clonedeep'
 
 import {
   GET_PROGRAMS_FAILED,
@@ -21,221 +21,221 @@ import {
   DELETE_PROGRAM_FAILED,
   DELETE_PROGRAM_SUCCESS,
   CLEAN_DELETE_PROGRAM,
-} from "./constants";
-import initialState from "./state";
+} from './constants'
+import initialState from './state'
 import {
   ACTION_TYPE,
   INITIAL_ACTION_STATE_NEW,
-} from "../../../helper/constants";
+} from '../../../helper/constants'
 
 const getAllFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.getAll = { status: ACTION_TYPE.FAILED, error: action.error };
+  const newState = cloneDeep(state)
+  newState.actions.getAll = { status: ACTION_TYPE.FAILED, error: action.error }
 
-  return newState;
-};
+  return newState
+}
 const getAllSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const programs = action.payload;
+  const newState = cloneDeep(state)
+  const programs = action.payload
 
-  newState.list = [...programs];
-  newState.actions.getAll = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.list = [...programs]
+  newState.actions.getAll = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const getAllLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.getAll = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.getAll = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const getAllClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.getAll = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.getAll = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const getOneFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.getOne = { status: ACTION_TYPE.FAILED, error: action.error };
+  const newState = cloneDeep(state)
+  newState.actions.getOne = { status: ACTION_TYPE.FAILED, error: action.error }
 
-  return newState;
-};
+  return newState
+}
 const getOneSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const fetchedProgram = action.payload;
+  const newState = cloneDeep(state)
+  const fetchedProgram = action.payload
   const fetchedProgramIndex = newState.list.findIndex(
-    (program) => program._id === fetchedProgram._id
-  );
+    (program) => program._id === fetchedProgram._id,
+  )
 
   if (fetchedProgramIndex !== -1) {
-    newState.list[fetchedProgramIndex] = fetchedProgram;
+    newState.list[fetchedProgramIndex] = fetchedProgram
   } else {
-    newState.list = [...newState.list, fetchedProgram];
+    newState.list = [...newState.list, fetchedProgram]
   }
-  newState.actions.getOne = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.actions.getOne = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const getOneLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.getOne = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.getOne = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const getOneClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.getOne = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.getOne = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const createFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.create = { status: ACTION_TYPE.FAILED, error: action.error };
+  const newState = cloneDeep(state)
+  newState.actions.create = { status: ACTION_TYPE.FAILED, error: action.error }
 
-  return newState;
-};
+  return newState
+}
 const createSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const newProgram = action.payload;
+  const newState = cloneDeep(state)
+  const newProgram = action.payload
 
-  newState.list = [...newState.list, newProgram];
-  newState.actions.create = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.list = [...newState.list, newProgram]
+  newState.actions.create = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const createLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.create = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.create = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const createClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.create = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.create = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const updateFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.update = { status: ACTION_TYPE.FAILED, error: action.error };
+  const newState = cloneDeep(state)
+  newState.actions.update = { status: ACTION_TYPE.FAILED, error: action.error }
 
-  return newState;
-};
+  return newState
+}
 const updateSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const updatedProgram = action.payload;
+  const newState = cloneDeep(state)
+  const updatedProgram = action.payload
   const updateProgramIndex = newState.list.findIndex(
-    (program) => program._id === updatedProgram._id
-  );
+    (program) => program._id === updatedProgram._id,
+  )
 
   if (updateProgramIndex !== -1) {
-    newState.list[updateProgramIndex] = updatedProgram;
+    newState.list[updateProgramIndex] = updatedProgram
   } else {
-    newState.list = [...newState.list, updatedProgram];
+    newState.list = [...newState.list, updatedProgram]
   }
-  newState.actions.update = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.actions.update = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const updateLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.update = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.update = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const updateClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.update = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.update = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const deleteFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.delete = { status: ACTION_TYPE.FAILED, error: action.error };
+  const newState = cloneDeep(state)
+  newState.actions.delete = { status: ACTION_TYPE.FAILED, error: action.error }
 
-  return newState;
-};
+  return newState
+}
 const deleteSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const deletedProgramId = action.payload;
+  const newState = cloneDeep(state)
+  const deletedProgramId = action.payload
   const programIndex = newState.list.findIndex(
-    (program) => program._id === deletedProgramId
-  );
+    (program) => program._id === deletedProgramId,
+  )
   if (programIndex > -1) {
-    newState.list.splice(programIndex, 1);
+    newState.list.splice(programIndex, 1)
   }
-  newState.actions.delete = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.actions.delete = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const deleteLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.delete = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.delete = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const deleteClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.delete = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.delete = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PROGRAMS_FAILED:
-      return getAllFailed(state, action);
+      return getAllFailed(state, action)
     case GET_PROGRAMS_LOADING:
-      return getAllLoading(state);
+      return getAllLoading(state)
     case GET_PROGRAMS_SUCCESS:
-      return getAllSuccess(state, action);
+      return getAllSuccess(state, action)
     case CLEAN_GET_PROGRAMS:
-      return getAllClean(state);
+      return getAllClean(state)
 
     case GET_ONE_FAILED:
-      return getOneFailed(state, action);
+      return getOneFailed(state, action)
     case GET_ONE_LOADING:
-      return getOneLoading(state);
+      return getOneLoading(state)
     case GET_ONE_SUCCESS:
-      return getOneSuccess(state, action);
+      return getOneSuccess(state, action)
     case CLEAN_GET_ONE:
-      return getOneClean(state);
+      return getOneClean(state)
 
     case CREATE_PROGRAM_FAILED:
-      return createFailed(state, action);
+      return createFailed(state, action)
     case CREATE_PROGRAM_LOADING:
-      return createLoading(state);
+      return createLoading(state)
     case CREATE_PROGRAM_SUCCESS:
-      return createSuccess(state, action);
+      return createSuccess(state, action)
     case CLEAN_CREATE_PROGRAM:
-      return createClean(state);
+      return createClean(state)
 
     case UPDATE_PROGRAM_FAILED:
-      return updateFailed(state, action);
+      return updateFailed(state, action)
     case UPDATE_PROGRAM_LOADING:
-      return updateLoading(state);
+      return updateLoading(state)
     case UPDATE_PROGRAM_SUCCESS:
-      return updateSuccess(state, action);
+      return updateSuccess(state, action)
     case CLEAN_UPDATE_PROGRAM:
-      return updateClean(state);
+      return updateClean(state)
 
     case DELETE_PROGRAM_FAILED:
-      return deleteFailed(state, action);
+      return deleteFailed(state, action)
     case DELETE_PROGRAM_LOADING:
-      return deleteLoading(state);
+      return deleteLoading(state)
     case DELETE_PROGRAM_SUCCESS:
-      return deleteSuccess(state, action);
+      return deleteSuccess(state, action)
     case CLEAN_DELETE_PROGRAM:
-      return deleteClean(state);
+      return deleteClean(state)
 
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default reducer;
+export default reducer
