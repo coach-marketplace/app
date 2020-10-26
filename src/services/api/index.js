@@ -1,5 +1,5 @@
-import axios from "axios";
-import queryString from "query-string";
+import axios from 'axios'
+import queryString from 'query-string'
 
 /**
  * API
@@ -7,58 +7,58 @@ import queryString from "query-string";
 
 class API {
   static init() {
-    this.headers = { "Content-type": "application/json" };
-    this.baseUrl = `${process.env.REACT_APP_API_URL}v1/`;
+    this.headers = { 'Content-type': 'application/json' }
+    this.baseUrl = `${process.env.REACT_APP_API_URL}v1/`
   }
 
   static setToken(token) {
     if (!this.headers) {
-      throw new Error("No headers in API instance");
+      throw new Error('No headers in API instance')
     }
-    this.headers.authorization = token;
+    this.headers.authorization = token
   }
 
   static get(endPoint, params = {}, query = {}) {
-    let queryUrl = "";
+    let queryUrl = ''
     if (Object.keys(query).length > 0) {
-      queryUrl += `?${queryString.stringify(query)}`;
+      queryUrl += `?${queryString.stringify(query)}`
     }
 
     return axios({
-      method: "get",
+      method: 'get',
       url: `${this.baseUrl}${endPoint}${queryUrl}`,
       headers: this.headers,
-    });
+    })
   }
 
   static post(endPoint, data = {}) {
     return axios({
-      method: "post",
+      method: 'post',
       url: `${this.baseUrl}${endPoint}`,
       headers: this.headers,
       data,
-    });
+    })
   }
 
   static put(endPoint, data = {}) {
     return axios({
-      method: "put",
+      method: 'put',
       url: `${this.baseUrl}${endPoint}`,
       headers: this.headers,
       data,
-    });
+    })
   }
 
   static delete(endPoint, data = {}) {
     return axios({
-      method: "delete",
+      method: 'delete',
       url: `${this.baseUrl}${endPoint}`,
       headers: this.headers,
       data,
-    });
+    })
   }
 }
 
-API.init();
+API.init()
 
-export default API;
+export default API

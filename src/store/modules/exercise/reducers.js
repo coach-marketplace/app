@@ -1,4 +1,4 @@
-import cloneDeep from "lodash.clonedeep";
+import cloneDeep from 'lodash.clonedeep'
 
 import {
   GET_EXERCISES_FAILED,
@@ -17,173 +17,173 @@ import {
   DELETE_EXERCISE_FAILED,
   DELETE_EXERCISE_SUCCESS,
   CLEAN_DELETE_EXERCISE,
-} from "./constants";
-import initialState from "./state";
+} from './constants'
+import initialState from './state'
 import {
   ACTION_TYPE,
   INITIAL_ACTION_STATE_NEW,
-} from "../../../helper/constants";
+} from '../../../helper/constants'
 
 const getAllFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.getAll = { status: ACTION_TYPE.FAILED, error: action.error };
+  const newState = cloneDeep(state)
+  newState.actions.getAll = { status: ACTION_TYPE.FAILED, error: action.error }
 
-  return newState;
-};
+  return newState
+}
 const getAllSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const exercises = action.payload;
+  const newState = cloneDeep(state)
+  const exercises = action.payload
 
-  newState.list = [...exercises];
-  newState.actions.getAll = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.list = [...exercises]
+  newState.actions.getAll = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const getAllLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.getAll = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.getAll = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const getAllClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.getAll = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.getAll = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const createFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.create = { status: ACTION_TYPE.FAILED, error: action.error };
+  const newState = cloneDeep(state)
+  newState.actions.create = { status: ACTION_TYPE.FAILED, error: action.error }
 
-  return newState;
-};
+  return newState
+}
 const createSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const newExercise = action.payload;
+  const newState = cloneDeep(state)
+  const newExercise = action.payload
 
-  newState.list = [...newState.list, newExercise];
-  newState.actions.create = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.list = [...newState.list, newExercise]
+  newState.actions.create = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const createLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.create = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.create = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const createClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.create = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.create = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const updateFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.update = { status: ACTION_TYPE.FAILED, error: action.error };
+  const newState = cloneDeep(state)
+  newState.actions.update = { status: ACTION_TYPE.FAILED, error: action.error }
 
-  return newState;
-};
+  return newState
+}
 const updateSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const newExercise = action.payload;
+  const newState = cloneDeep(state)
+  const newExercise = action.payload
   const updateExerciseIndex = newState.list.findIndex(
-    (exercise) => exercise._id === newExercise._id
-  );
+    (exercise) => exercise._id === newExercise._id,
+  )
 
-  newState.list[updateExerciseIndex] = newExercise;
-  newState.actions.update = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.list[updateExerciseIndex] = newExercise
+  newState.actions.update = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const updateLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.update = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.update = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const updateClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.update = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.update = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const deleteFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.delete = { status: ACTION_TYPE.FAILED, error: action.error };
+  const newState = cloneDeep(state)
+  newState.actions.delete = { status: ACTION_TYPE.FAILED, error: action.error }
 
-  return newState;
-};
+  return newState
+}
 const deleteSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const deletedExerciseId = action.payload;
+  const newState = cloneDeep(state)
+  const deletedExerciseId = action.payload
   const exerciseIndex = newState.list.findIndex(
-    (exercise) => exercise._id === deletedExerciseId
-  );
+    (exercise) => exercise._id === deletedExerciseId,
+  )
   if (exerciseIndex > -1) {
-    newState.list.splice(exerciseIndex, 1);
+    newState.list.splice(exerciseIndex, 1)
   }
-  newState.actions.delete = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.actions.delete = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const deleteLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.delete = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.delete = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const deleteClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.delete = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.delete = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_EXERCISES_FAILED:
-      return getAllFailed(state, action);
+      return getAllFailed(state, action)
     case GET_EXERCISES_LOADING:
-      return getAllLoading(state);
+      return getAllLoading(state)
     case GET_EXERCISES_SUCCESS:
-      return getAllSuccess(state, action);
+      return getAllSuccess(state, action)
     case CLEAN_GET_EXERCISES:
-      return getAllClean(state);
+      return getAllClean(state)
 
     case CREATE_EXERCISE_FAILED:
-      return createFailed(state, action);
+      return createFailed(state, action)
     case CREATE_EXERCISE_LOADING:
-      return createLoading(state);
+      return createLoading(state)
     case CREATE_EXERCISE_SUCCESS:
-      return createSuccess(state, action);
+      return createSuccess(state, action)
     case CLEAN_CREATE_EXERCISE:
-      return createClean(state);
+      return createClean(state)
 
     case UPDATE_EXERCISE_FAILED:
-      return updateFailed(state, action);
+      return updateFailed(state, action)
     case UPDATE_EXERCISE_LOADING:
-      return updateLoading(state);
+      return updateLoading(state)
     case UPDATE_EXERCISE_SUCCESS:
-      return updateSuccess(state, action);
+      return updateSuccess(state, action)
     case CLEAN_UPDATE_EXERCISE:
-      return updateClean(state);
+      return updateClean(state)
 
     case DELETE_EXERCISE_FAILED:
-      return deleteFailed(state, action);
+      return deleteFailed(state, action)
     case DELETE_EXERCISE_LOADING:
-      return deleteLoading(state);
+      return deleteLoading(state)
     case DELETE_EXERCISE_SUCCESS:
-      return deleteSuccess(state, action);
+      return deleteSuccess(state, action)
     case CLEAN_DELETE_EXERCISE:
-      return deleteClean(state);
+      return deleteClean(state)
 
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default reducer;
+export default reducer

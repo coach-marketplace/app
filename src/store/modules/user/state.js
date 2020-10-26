@@ -1,4 +1,4 @@
-import { INITIAL_ACTION_STATE_NEW } from "../../../helper/constants";
+import { INITIAL_ACTION_STATE_NEW } from '../../../helper/constants'
 
 export default {
   current: null,
@@ -10,4 +10,4 @@ export default {
     update: { ...INITIAL_ACTION_STATE_NEW },
     updatePassword: { ...INITIAL_ACTION_STATE_NEW },
   },
-};
+}
