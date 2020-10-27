@@ -4,10 +4,10 @@
 // import { SPACER, SPACERS, GENDER, LOCALE } from "../constants";
 
 export const capitalize = (string) => {
-  if (typeof string !== "string") return "";
+  if (typeof string !== 'string') return ''
 
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
 
 // export const getMarginDefaultProps = () => ({
 //   marginBottom: SPACER.NONE,
@@ -24,61 +24,61 @@ export const capitalize = (string) => {
 // });
 
 export const getMarginProps = (props) => {
-  const marginProps = {};
+  const marginProps = {}
   if (props.marginBottom) {
-    marginProps.marginBottom = props.marginBottom;
+    marginProps.marginBottom = props.marginBottom
   }
   if (props.marginTop) {
-    marginProps.marginTop = props.marginTop;
+    marginProps.marginTop = props.marginTop
   }
   if (props.marginRight) {
-    marginProps.marginRight = props.marginRight;
+    marginProps.marginRight = props.marginRight
   }
   if (props.marginLeft) {
-    marginProps.marginLeft = props.marginLeft;
+    marginProps.marginLeft = props.marginLeft
   }
-  return marginProps;
-};
+  return marginProps
+}
 
 export const getStyledMarginRules = (props) => {
-  let rules = "";
+  let rules = ''
   if (props.marginBottom) {
-    rules += `margin-bottom: ${props.marginBottom};`;
+    rules += `margin-bottom: ${props.marginBottom};`
   }
   if (props.marginTop) {
-    rules += `margin-top: ${props.marginTop};`;
+    rules += `margin-top: ${props.marginTop};`
   }
   if (props.marginRight) {
-    rules += `margin-right: ${props.marginRight};`;
+    rules += `margin-right: ${props.marginRight};`
   }
   if (props.marginLeft) {
-    rules += `margin-left: ${props.marginLeft};`;
+    rules += `margin-left: ${props.marginLeft};`
   }
-  return rules;
-};
+  return rules
+}
 
 export const getFixedSize = (width = null, height = null) => {
-  let widthRules = "";
-  let heightRules = "";
+  let widthRules = ''
+  let heightRules = ''
   if (width) {
     widthRules = `
       width: ${width};
       min-width: ${width};
       max-width: ${width};
-    `;
+    `
   }
   if (height) {
     heightRules = `
       height: ${height};
       min-height: ${height};
       max-height: ${height};
-    `;
+    `
   }
   return `
     ${widthRules}
     ${heightRules}
-  `;
-};
+  `
+}
 
 /**
  * Locales options form
@@ -88,20 +88,20 @@ export const getFixedSize = (width = null, height = null) => {
  * @constant localesOptionsForm
  */
 export const localesOptionsForm = [
-  { label: "English", value: "en-EU" }, //LOCALE.EN_US },
-  { label: "French", value: "fr-FR" }, //LOCALE.FR_FR },
-];
+  { label: 'English', value: 'en-EU' }, //LOCALE.EN_US },
+  { label: 'French', value: 'fr-FR' }, //LOCALE.FR_FR },
+]
 
 export const genderOptionsForm = [
-  { label: "Male", value: "male" },
-  { label: "Female", value: "female" },
-  { label: "Other", value: "other" },
-  { label: "Rather not to say", value: "not-say" },
+  { label: 'Male', value: 'male' },
+  { label: 'Female', value: 'female' },
+  { label: 'Other', value: 'other' },
+  { label: 'Rather not to say', value: 'not-say' },
   // { label: "Male", value: GENDER.MALE },
   // { label: "Female", value: GENDER.FEMALE },
   // { label: "Other", value: GENDER.OTHER },
   // { label: "Rather not to say", value: GENDER.NOT_SAY },
-];
+]
 
 /**
  * Get random string
@@ -111,4 +111,4 @@ export const genderOptionsForm = [
  *
  * @return {string} Random string
  */
-export const getRandomString = () => Math.random().toString(36).substr(2, 9);
+export const getRandomString = () => Math.random().toString(36).substr(2, 9)

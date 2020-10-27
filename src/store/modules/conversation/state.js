@@ -1,4 +1,4 @@
-import { INITIAL_ACTION_STATE } from "../../../helper/constants";
+import { INITIAL_ACTION_STATE } from '../../../helper/constants'
 
 export default {
   list: [],
@@ -7,4 +7,4 @@ export default {
     getOne: { ...INITIAL_ACTION_STATE },
     create: { ...INITIAL_ACTION_STATE },
   },
-};
+}

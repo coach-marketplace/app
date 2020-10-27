@@ -1,4 +1,4 @@
-import cloneDeep from "lodash.clonedeep";
+import cloneDeep from 'lodash.clonedeep'
 
 import {
   GET_CUSTOMERS_FAILED,
@@ -11,134 +11,134 @@ import {
   CREATE_LOADING,
   CREATE_FAILED,
   CREATE_SUCCESS,
-} from "./constants";
-import initialState from "./state";
+} from './constants'
+import initialState from './state'
 import {
   ACTION_TYPE,
   INITIAL_ACTION_STATE_NEW,
-} from "../../../helper/constants";
+} from '../../../helper/constants'
 
 const getAllFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.getAll.loading = false;
-  newState.actions.getAll.success = false;
-  newState.actions.getAll.error = action.error;
+  const newState = cloneDeep(state)
+  newState.actions.getAll.loading = false
+  newState.actions.getAll.success = false
+  newState.actions.getAll.error = action.error
 
-  return newState;
-};
+  return newState
+}
 const getAllSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const customers = action.payload;
+  const newState = cloneDeep(state)
+  const customers = action.payload
 
-  newState.list = [...customers];
-  newState.actions.getAll.loading = false;
-  newState.actions.getAll.error = null;
-  newState.actions.getAll.success = true;
+  newState.list = [...customers]
+  newState.actions.getAll.loading = false
+  newState.actions.getAll.error = null
+  newState.actions.getAll.success = true
 
-  return newState;
-};
+  return newState
+}
 const getAllLoading = (state) => {
-  const newState = cloneDeep(state);
+  const newState = cloneDeep(state)
 
-  newState.actions.getAll.loading = true;
-  newState.actions.getAll.success = false;
-  newState.actions.getAll.error = null;
+  newState.actions.getAll.loading = true
+  newState.actions.getAll.success = false
+  newState.actions.getAll.error = null
 
-  return newState;
-};
+  return newState
+}
 
 const fetchFailed = (state, action) => {
-  const newState = cloneDeep(state);
-  newState.actions.fetch.status = action.error;
+  const newState = cloneDeep(state)
+  newState.actions.fetch.status = action.error
 
-  return newState;
-};
+  return newState
+}
 const fetchSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const fetchedCustomer = action.payload;
+  const newState = cloneDeep(state)
+  const fetchedCustomer = action.payload
   const customerIndex = newState.list.findIndex(
-    (customer) => customer._id === fetchedCustomer._id
-  );
+    (customer) => customer._id === fetchedCustomer._id,
+  )
 
   if (customerIndex === -1) {
-    newState.list.push(fetchedCustomer);
+    newState.list.push(fetchedCustomer)
   } else {
-    newState.list[customerIndex] = fetchedCustomer;
+    newState.list[customerIndex] = fetchedCustomer
   }
-  newState.actions.fetch = { status: ACTION_TYPE.SUCCESS, error: null };
+  newState.actions.fetch = { status: ACTION_TYPE.SUCCESS, error: null }
 
-  return newState;
-};
+  return newState
+}
 const fetchLoading = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.fetch = { status: ACTION_TYPE.LOADING, error: null };
+  const newState = cloneDeep(state)
+  newState.actions.fetch = { status: ACTION_TYPE.LOADING, error: null }
 
-  return newState;
-};
+  return newState
+}
 const fetchClean = (state) => {
-  const newState = cloneDeep(state);
-  newState.actions.fetch = { ...INITIAL_ACTION_STATE_NEW };
+  const newState = cloneDeep(state)
+  newState.actions.fetch = { ...INITIAL_ACTION_STATE_NEW }
 
-  return newState;
-};
+  return newState
+}
 
 const createFailed = (state, action) => {
-  const newState = cloneDeep(state);
+  const newState = cloneDeep(state)
 
-  newState.actions.create.loading = false;
-  newState.actions.create.success = false;
-  newState.actions.create.error = action.error;
+  newState.actions.create.loading = false
+  newState.actions.create.success = false
+  newState.actions.create.error = action.error
 
-  return newState;
-};
+  return newState
+}
 const createSuccess = (state, action) => {
-  const newState = cloneDeep(state);
-  const newCustomer = action.payload;
+  const newState = cloneDeep(state)
+  const newCustomer = action.payload
 
-  newState.list = [...newState.list, newCustomer];
-  newState.actions.create.loading = false;
-  newState.actions.create.error = null;
-  newState.actions.create.success = true;
+  newState.list = [...newState.list, newCustomer]
+  newState.actions.create.loading = false
+  newState.actions.create.error = null
+  newState.actions.create.success = true
 
-  return newState;
-};
+  return newState
+}
 const createLoading = (state) => {
-  const newState = cloneDeep(state);
+  const newState = cloneDeep(state)
 
-  newState.actions.create.loading = true;
-  newState.actions.create.success = false;
-  newState.actions.create.error = null;
+  newState.actions.create.loading = true
+  newState.actions.create.success = false
+  newState.actions.create.error = null
 
-  return newState;
-};
+  return newState
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CUSTOMERS_FAILED:
-      return getAllFailed(state, action);
+      return getAllFailed(state, action)
     case GET_CUSTOMERS_LOADING:
-      return getAllLoading(state);
+      return getAllLoading(state)
     case GET_CUSTOMERS_SUCCESS:
-      return getAllSuccess(state, action);
+      return getAllSuccess(state, action)
 
     case FETCH_CUSTOMER_FAILED:
-      return fetchFailed(state, action);
+      return fetchFailed(state, action)
     case FETCH_CUSTOMER_LOADING:
-      return fetchLoading(state);
+      return fetchLoading(state)
     case FETCH_CUSTOMER_SUCCESS:
-      return fetchSuccess(state, action);
+      return fetchSuccess(state, action)
     case CLEAN_FETCH_CUSTOMER:
-      return fetchClean(state);
+      return fetchClean(state)
 
     case CREATE_FAILED:
-      return createFailed(state, action);
+      return createFailed(state, action)
     case CREATE_LOADING:
-      return createLoading(state);
+      return createLoading(state)
     case CREATE_SUCCESS:
-      return createSuccess(state, action);
+      return createSuccess(state, action)
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default reducer;
+export default reducer

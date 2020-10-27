@@ -23,6 +23,12 @@ class Navigation extends PureComponent {
     return (
       <List className="navigation">
         <ListItem>
+        {!user.isCoach && <Link 
+          key={-1}
+          to="/coach/new"
+          >
+            <Button is="div" label={"Become a Coach"} appearance="minimal" />
+        </Link>}
           {navItems.map((navItem, index) => (
             <Link
               key={index}

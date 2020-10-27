@@ -1,4 +1,4 @@
-import API from "../../../services/api";
+import API from '../../../services/api'
 
 import {
   GET_ASSIGNMENTS_FAILED,
@@ -17,112 +17,112 @@ import {
   DELETE_ASSIGNMENT_FAILED,
   DELETE_ASSIGNMENT_SUCCESS,
   CLEAN_DELETE_ASSIGNMENT,
-} from "./constants";
-import store from "../../index";
+} from './constants'
+import store from '../../index'
 
-const getByProgramLoading = () => ({ type: GET_ASSIGNMENTS_LOADING });
+const getByProgramLoading = () => ({ type: GET_ASSIGNMENTS_LOADING })
 const getByProgramSuccess = (programId, payload) => ({
   type: GET_ASSIGNMENTS_SUCCESS,
   payload,
-});
-const getByProgramFailed = (error) => ({ type: GET_ASSIGNMENTS_FAILED, error });
-const getByProgramClean = () => ({ type: CLEAN_GET_ASSIGNMENTS });
+})
+const getByProgramFailed = (error) => ({ type: GET_ASSIGNMENTS_FAILED, error })
+const getByProgramClean = () => ({ type: CLEAN_GET_ASSIGNMENTS })
 
-const createLoading = () => ({ type: CREATE_ASSIGNMENT_LOADING });
+const createLoading = () => ({ type: CREATE_ASSIGNMENT_LOADING })
 const createSuccess = (programId, payload) => ({
   type: CREATE_ASSIGNMENT_SUCCESS,
   payload,
   programId,
-});
-const createFailed = (error) => ({ type: CREATE_ASSIGNMENT_FAILED, error });
-const createClean = () => ({ type: CLEAN_CREATE_ASSIGNMENT });
+})
+const createFailed = (error) => ({ type: CREATE_ASSIGNMENT_FAILED, error })
+const createClean = () => ({ type: CLEAN_CREATE_ASSIGNMENT })
 
-const updateLoading = () => ({ type: UPDATE_ASSIGNMENT_LOADING });
+const updateLoading = () => ({ type: UPDATE_ASSIGNMENT_LOADING })
 const updateSuccess = (programId, payload) => ({
   type: UPDATE_ASSIGNMENT_SUCCESS,
   payload,
   programId,
-});
-const updateFailed = (error) => ({ type: UPDATE_ASSIGNMENT_FAILED, error });
-const updateClean = () => ({ type: CLEAN_UPDATE_ASSIGNMENT });
+})
+const updateFailed = (error) => ({ type: UPDATE_ASSIGNMENT_FAILED, error })
+const updateClean = () => ({ type: CLEAN_UPDATE_ASSIGNMENT })
 
-const deleteLoading = () => ({ type: DELETE_ASSIGNMENT_LOADING });
+const deleteLoading = () => ({ type: DELETE_ASSIGNMENT_LOADING })
 const deleteSuccess = (programId, payload) => ({
   type: DELETE_ASSIGNMENT_SUCCESS,
   payload,
   programId,
-});
-const deleteFailed = (error) => ({ type: DELETE_ASSIGNMENT_FAILED, error });
-const deleteClean = () => ({ type: CLEAN_DELETE_ASSIGNMENT });
+})
+const deleteFailed = (error) => ({ type: DELETE_ASSIGNMENT_FAILED, error })
+const deleteClean = () => ({ type: CLEAN_DELETE_ASSIGNMENT })
 
 export const retrieveByProgram = (programId) => {
   return (dispatch) => {
-    dispatch(getByProgramLoading());
+    dispatch(getByProgramLoading())
     const {
       user: { current: user },
-    } = store.getState();
+    } = store.getState()
 
     API.get(`coach/${user._id}/programs/${programId}/assignments`)
       .then((response) => {
-        dispatch(getByProgramSuccess(programId, response.data));
+        dispatch(getByProgramSuccess(programId, response.data))
       })
       .catch((error) => {
-        dispatch(getByProgramFailed(error.message));
-      });
-  };
-};
-export const cleanGetAll = () => (dispatch) => dispatch(getByProgramClean());
+        dispatch(getByProgramFailed(error.message))
+      })
+  }
+}
+export const cleanGetAll = () => (dispatch) => dispatch(getByProgramClean())
 
 export const create = (programId, data) => {
   return (dispatch) => {
-    dispatch(createLoading());
+    dispatch(createLoading())
     const {
       user: { current: user },
-    } = store.getState();
+    } = store.getState()
 
     API.post(`coach/${user._id}/programs/${programId}/assign`, data)
       .then((response) => {
-        dispatch(createSuccess(programId, response.data));
+        dispatch(createSuccess(programId, response.data))
       })
       .catch((error) => {
-        dispatch(createFailed(error.message));
-      });
-  };
-};
-export const cleanCreate = () => (dispatch) => dispatch(createClean());
+        dispatch(createFailed(error.message))
+      })
+  }
+}
+export const cleanCreate = () => (dispatch) => dispatch(createClean())
 
 export const update = (programId, data) => {
   return (dispatch) => {
-    dispatch(updateLoading());
+    dispatch(updateLoading())
     const {
       user: { current: user },
-    } = store.getState();
+    } = store.getState()
 
     API.put(`coach/${user._id}/program/${programId}/assign`, data)
       .then((response) => {
-        dispatch(updateSuccess(response.data));
+        dispatch(updateSuccess(response.data))
       })
       .catch((error) => {
-        dispatch(updateFailed(error.message));
-      });
-  };
-};
-export const cleanUpdate = () => (dispatch) => dispatch(updateClean());
+        dispatch(updateFailed(error.message))
+      })
+  }
+}
+export const cleanUpdate = () => (dispatch) => dispatch(updateClean())
 
 export const del = (programId, assignmentId) => {
   return (dispatch) => {
-    dispatch(deleteLoading());
+    dispatch(deleteLoading())
     const {
       user: { current: user },
-    } = store.getState();
+    } = store.getState()
 
     API.delete(`coach/${user._id}/program/${programId}/assign/${assignmentId}`)
       .then(() => {
-        dispatch(deleteSuccess(assignmentId));
+        dispatch(deleteSuccess(assignmentId))
       })
       .catch((error) => {
-        dispatch(deleteFailed(error.message));
-      });
-  };
-};
-export const cleanDelete = () => (dispatch) => dispatch(deleteClean());
+        dispatch(deleteFailed(error.message))
+      })
+  }
+}
+export const cleanDelete = () => (dispatch) => dispatch(deleteClean())

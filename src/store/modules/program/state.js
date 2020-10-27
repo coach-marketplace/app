@@ -1,4 +1,4 @@
-import { INITIAL_ACTION_STATE_NEW } from "../../../helper/constants";
+import { INITIAL_ACTION_STATE_NEW } from '../../../helper/constants'
 
 export default {
   list: [],
@@ -9,4 +9,4 @@ export default {
     update: { ...INITIAL_ACTION_STATE_NEW },
     delete: { ...INITIAL_ACTION_STATE_NEW },
   },
-};
+}

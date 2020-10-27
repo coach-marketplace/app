@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import { COLOR, SPACER } from "../../../helper/constants";
+import { COLOR, SPACER } from '../../../helper/constants'
 
 export const Section = styled.section`
   display: flex;
@@ -15,4 +15,4 @@ export const Section = styled.section`
       : `
       border: none;
     `}
-`;
+`
