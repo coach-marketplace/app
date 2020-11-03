@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import React, { useEffect, useState } from "react";
-import { useFormik } from "formik";
+import {Formik, FieldArray } from "formik";
 
 import { Form, Field, Button, toaster, Tag, Autocomplete, TextInput, Spinner } from "../../ui";
 
@@ -13,8 +13,6 @@ import { retrieveAll as getAllSports } from "../../../store/modules/sport/action
 - Presentation
 - company ?
 - sports
-- level of customers
-- classes at home, at coach's home or in another place
 */
 
 export default function CoachProfileForm ({
@@ -30,26 +28,21 @@ export default function CoachProfileForm ({
     errors,
     touched,
     handleBlur,
-  } = useFormik({
+  } = Formik /*useFormikContext({
     enableReinitialize: true,
     initialValues: {
-      customers: {
-        beginner: false,
-        intermediate: false,
-        confirmed: false,
-        pro: false,
-      }
+      selectedSports: [],
       /*firstName: user.firstName || "",
       lastName: user.lastName || "",
       phone: user.phone || "",
       gender: user.gender || "",
       birthDate: user.birthDate || "",
-      lang: user.lang || LOCALE.EN_US,*/
+      lang: user.lang || LOCALE.EN_US,
     },
     onSubmit: (values) => {
       updateUser(values);
     },
-  });
+  });*/
 
   const [sports, setSports] = useState([]);
   const sportsList = useSelector(state => state.sport.list)
@@ -61,6 +54,7 @@ export default function CoachProfileForm ({
     let newSports = [...sports]
     newSports.push(sport)
     setSports(newSports)
+    return newSports
   }
 
   const onSportDeleted = (sport) => {
@@ -70,7 +64,12 @@ export default function CoachProfileForm ({
       newSports.splice(index, 1);
       setSports(newSports);
     }
+    return newSports
   };
+
+  const submitCoachProfileChanges = () => {
+    //TODO
+  }
 
   useEffect(() => {
     if(sportsList.length === 0) {
@@ -90,80 +89,104 @@ export default function CoachProfileForm ({
   }
   return (
     <>
-    <Form onSubmit={handleSubmit}>
-      <Field
-        label="About you"
-        name="description"
-        type="textarea"
-        placeholder="Tell us a bit about yourselve"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.description}
-        errorMessage={touched.description && errors.description}
-        disabled={updateUserProfileStatus === ACTION_TYPE.LOADING}
-      />
-
-      <Field
-        label="Company"
-        name="company"
-        type="text"
-        placeholder="Company (if applicable)"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.company}
-        errorMessage={touched.company && errors.company}
-        disabled={updateUserProfileStatus === ACTION_TYPE.LOADING}
-      />
-
-      <Field
-        label="Sports"
-        name="Spots"
-        type="text"
-        placeholder="Tennis, nutrition, yoga..."
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.sports}
-      />
-
-      <Button
-        type="submit"
-        isLoading={updateUserProfileStatus === ACTION_TYPE.LOADING}
-        appearance="primary"
-      >
-        Save
-      </Button>
-    </Form>
-    <div>
-		<Autocomplete
-			title="Sports"
-			onChange={(changedItem) => onSportAdded(changedItem)}
-      items={sportsNameList}
-		>
-			{(props) => {
-				const { getInputProps, getRef, inputValue, openMenu } = props
-				return (
-					<TextInput
-						placeholder="Sports"
-						value={inputValue}
-						innerRef={getRef}
-						{...getInputProps({
-              onFocus: () => {
-                openMenu()
-              }
-            })}
-					/>
-				)
-			}}
-		</Autocomplete>
-    <div style={{display: "flex"}}>
-      {
-        sports.map((item) => {
-          return <Tag closeable={true} text={item} onDelete={() => onSportDeleted(item)}/>
-        })
+    <Formik
+      initialValues={
+        { 
+          description: "",
+          company: "",
+          selectedSports: [], 
+        }
       }
-    </div>
-	</div>    
+      >
+      {props => {
+        const {
+          values,
+          touched,
+          errors,
+          dirty,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          handleReset
+        } = props;
+        return (
+        <Form onSubmit={handleSubmit}>
+          <Field
+            label="About you"
+            name="description"
+            type="textarea"
+            placeholder="Tell us a bit about yourselve"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.description}
+            errorMessage={touched.description && errors.description}
+            disabled={updateUserProfileStatus === ACTION_TYPE.LOADING}
+          />
+
+          <Field
+            label="Company"
+            name="company"
+            type="text"
+            placeholder="Company (if applicable)"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.company}
+            errorMessage={touched.company && errors.company}
+            disabled={updateUserProfileStatus === ACTION_TYPE.LOADING}
+          />
+
+          <FieldArray
+            name="selectedSports"
+            id="selectedSports">
+            {(arrayHelpers) => { return (
+              <>
+              <label>Sports</label>
+              <Autocomplete
+                title="Sports"
+                onChange={(changedItem) => {
+                  arrayHelpers.push(changedItem)
+                  //TODO clear input value
+                }}
+                items={sportsNameList}
+              >
+                {(props) => {
+                  const { getInputProps, getRef, inputValue, openMenu } = props
+                  return (
+                    <TextInput
+                      placeholder="Sports"
+                      value={inputValue}
+                      innerRef={getRef}
+                      {...getInputProps({
+                        onFocus: () => {
+                          openMenu()
+                        }
+                      })}
+                    />
+                  )
+                }}
+              </Autocomplete>
+              <div style={{display: "flex"}}>
+                {values.selectedSports.map((item, index) => { return(
+                  <Tag closeable={true} text={item} onDelete={() => arrayHelpers.remove(index)}/>
+                )})}
+              </div>
+              </>
+            )}}
+          </FieldArray>
+
+          
+
+          <Button
+            type="submit"
+            isLoading={updateUserProfileStatus === ACTION_TYPE.LOADING}
+            appearance="primary"
+          >
+            Save
+          </Button>
+        </Form>
+        )}}
+  </Formik>
   </>
   );
 };
-
