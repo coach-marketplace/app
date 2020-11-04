@@ -8,20 +8,10 @@ import { ACTION_TYPE } from "../../../helper/constants";
 import { useDispatch, useSelector } from "react-redux";
 
 import { retrieveAll as getAllSports } from "../../../store/modules/sport/actions"
-import { fetchCoachProfile } from "../../../store/modules/coach/actions"
+import { fetchCoachProfile, updateCoachProfile } from "../../../store/modules/coach/actions"
 
-/* DATA relevant for coaches:
-- Presentation
-- company ?
-- sports
-*/
 
-export default function CoachProfileForm ({
-  user,
-  updateUserProfileStatus,
-  updateUser,
-  cleanUpdateUserStore,
-}) {
+export default function CoachProfileForm () {
 
   const sportsList = useSelector(state => state.sport.list)
   const sportsNameList = sportsList.map(({ name }) => name)
@@ -30,12 +20,23 @@ export default function CoachProfileForm ({
   const coachProfile = useSelector(state => state.coach.coachProfile)
   const fetchCoachProfileStatus = useSelector(state => state.coach.actions.fetchCoachProfile.status)
 
+  const updateCoachProfileStatus = useSelector(state => state.coach.actions.updateCoachProfile.status)
+
   const dispatch = useDispatch()
   
 
-
-  const submitCoachProfileChanges = () => {
-    //TODO
+  const submitCoachProfileChanges = (values) => {
+    let selectedSportsId = []
+    values.selectedSports.forEach((sportName) => {
+      selectedSportsId.push(sportsList.find(elem => elem.name === sportName)._id)
+    })
+    dispatch(updateCoachProfile(
+      {
+        description: values.description,
+        company: values.company,
+        sports: selectedSportsId
+      }
+    ))
   }
 
   useEffect(() => {
@@ -45,20 +46,18 @@ export default function CoachProfileForm ({
     if(!fetchCoachProfileStatus) {
       dispatch(fetchCoachProfile());
     }
-    if (updateUserProfileStatus === ACTION_TYPE.SUCCESS) {
+    if (updateCoachProfileStatus === ACTION_TYPE.SUCCESS) {
       toaster.success("Your changes have been saved");
-      cleanUpdateUserStore();
-    } else if (updateUserProfileStatus === ACTION_TYPE.FAILED) {
+    } else if (updateCoachProfileStatus === ACTION_TYPE.FAILED) {
       toaster.danger("An error occurred, please try again later");
-      cleanUpdateUserStore();
     }
-  }, [cleanUpdateUserStore, updateUserProfileStatus, getSportsStatus, fetchCoachProfileStatus]);
+  }, [dispatch, getSportsStatus, fetchCoachProfileStatus, updateCoachProfileStatus]);
 
   if(!getSportsStatus || getSportsStatus === ACTION_TYPE.LOADING ||
-    !fetchCoachProfileStatus || fetchCoachProfileStatus == ACTION_TYPE.LOADING) {
+    !fetchCoachProfileStatus || fetchCoachProfileStatus === ACTION_TYPE.LOADING) {
     return <Spinner />
   }
-  else if(getSportsStatus == ACTION_TYPE.FAILED || fetchCoachProfileStatus == ACTION_TYPE.FAILED) {
+  else if(getSportsStatus === ACTION_TYPE.FAILED || fetchCoachProfileStatus === ACTION_TYPE.FAILED) {
     return  <Alert intent="danger"
               title="We could not retrieve your data. Please try again later"
             />
@@ -70,21 +69,22 @@ export default function CoachProfileForm ({
         { 
           description: "" || coachProfile.description,
           company: "" || coachProfile.company,
-          selectedSports: [] || coachProfile.sports.map(({ name }) => name), 
+          selectedSports: coachProfile.sports.map((id) => {
+              return sportsList.find((elem) => elem._id === id).name
+            }) 
+            || []
         }
       }
+      onSubmit={(values) => submitCoachProfileChanges(values)}
       >
       {props => {
         const {
           values,
           touched,
           errors,
-          dirty,
-          isSubmitting,
           handleChange,
           handleBlur,
           handleSubmit,
-          handleReset
         } = props;
         return (
         <Form onSubmit={handleSubmit}>
@@ -97,7 +97,7 @@ export default function CoachProfileForm ({
             onBlur={handleBlur}
             value={values.description}
             errorMessage={touched.description && errors.description}
-            disabled={updateUserProfileStatus === ACTION_TYPE.LOADING}
+            disabled={updateCoachProfileStatus === ACTION_TYPE.LOADING}
           />
 
           <Field
@@ -109,7 +109,7 @@ export default function CoachProfileForm ({
             onBlur={handleBlur}
             value={values.company}
             errorMessage={touched.company && errors.company}
-            disabled={updateUserProfileStatus === ACTION_TYPE.LOADING}
+            disabled={updateCoachProfileStatus === ACTION_TYPE.LOADING}
           />
 
           <FieldArray
@@ -155,7 +155,7 @@ export default function CoachProfileForm ({
 
           <Button
             type="submit"
-            isLoading={updateUserProfileStatus === ACTION_TYPE.LOADING}
+            isLoading={updateCoachProfileStatus === ACTION_TYPE.LOADING}
             appearance="primary"
           >
             Save

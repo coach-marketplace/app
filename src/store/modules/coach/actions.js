@@ -35,7 +35,7 @@ const updateCoachProfileFailed = (error) => ({ type: UPDATE_COACH_PROFILE_FAILED
  * Fetch coach profile
  * @return {void}
  */
-export const fetchCoachProfile = (token) => {
+export const fetchCoachProfile = () => {
   return (dispatch) => {
     dispatch(fetchCoachProfileLoading())
     const {
@@ -55,8 +55,10 @@ export const updateCoachProfile = (data) => {
   return (dispatch) => {
     dispatch(updateCoachProfileLoading())
     const {
-      coachProfile
+      coach: {coachProfile: coachProfile}
     } = store.getState()
+
+    console.log(coachProfile)
 
     API.put(`coach/${coachProfile.coach}/coach-profile/${coachProfile._id}`, data)
       .then((response) => {
