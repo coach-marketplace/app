@@ -82,8 +82,6 @@ const reducer = (state = initialState, action) => {
       return updateCoachProfileSuccess(state, action)
     case UPDATE_COACH_PROFILE_FAILED:
       return updateCoachProfileFailed(state, action)
-    case CLEAN_UPDATE_COACH_PROFILE:
-      return updateCoachProfileClean(state)
 
     default:
       return state

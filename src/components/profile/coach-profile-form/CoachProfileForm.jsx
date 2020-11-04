@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from "react";
 import {Formik, FieldArray } from "formik";
 
-import { Form, Field, Button, toaster, Tag, Autocomplete, TextInput, Spinner } from "../../ui";
+import { Alert, Form, Field, Button, toaster, Tag, Autocomplete, TextInput, Spinner } from "../../ui";
 
 import { ACTION_TYPE } from "../../../helper/constants";
 import { useDispatch, useSelector } from "react-redux";
 
 import { retrieveAll as getAllSports } from "../../../store/modules/sport/actions"
+import { fetchCoachProfile } from "../../../store/modules/coach/actions"
 
 /* DATA relevant for coaches:
 - Presentation
@@ -21,59 +22,28 @@ export default function CoachProfileForm ({
   updateUser,
   cleanUpdateUserStore,
 }) {
-  const {
-    handleSubmit,
-    handleChange,
-    values,
-    errors,
-    touched,
-    handleBlur,
-  } = Formik /*useFormikContext({
-    enableReinitialize: true,
-    initialValues: {
-      selectedSports: [],
-      /*firstName: user.firstName || "",
-      lastName: user.lastName || "",
-      phone: user.phone || "",
-      gender: user.gender || "",
-      birthDate: user.birthDate || "",
-      lang: user.lang || LOCALE.EN_US,
-    },
-    onSubmit: (values) => {
-      updateUser(values);
-    },
-  });*/
 
-  const [sports, setSports] = useState([]);
   const sportsList = useSelector(state => state.sport.list)
   const sportsNameList = sportsList.map(({ name }) => name)
   const getSportsStatus = useSelector(state => state.sport.actions.getAll.status)
+  
+  const coachProfile = useSelector(state => state.coach.coachProfile)
+  const fetchCoachProfileStatus = useSelector(state => state.coach.actions.fetchCoachProfile.status)
+
   const dispatch = useDispatch()
+  
 
-  const onSportAdded = (sport) => {
-    let newSports = [...sports]
-    newSports.push(sport)
-    setSports(newSports)
-    return newSports
-  }
-
-  const onSportDeleted = (sport) => {
-    let newSports = [...sports]
-    const index = newSports.indexOf(sport);
-    if (index > -1) {
-      newSports.splice(index, 1);
-      setSports(newSports);
-    }
-    return newSports
-  };
 
   const submitCoachProfileChanges = () => {
     //TODO
   }
 
   useEffect(() => {
-    if(sportsList.length === 0) {
+    if(!getSportsStatus) {
       dispatch(getAllSports());
+    }
+    if(!fetchCoachProfileStatus) {
+      dispatch(fetchCoachProfile());
     }
     if (updateUserProfileStatus === ACTION_TYPE.SUCCESS) {
       toaster.success("Your changes have been saved");
@@ -82,19 +52,25 @@ export default function CoachProfileForm ({
       toaster.danger("An error occurred, please try again later");
       cleanUpdateUserStore();
     }
-  }, [cleanUpdateUserStore, updateUserProfileStatus, getSportsStatus]);
+  }, [cleanUpdateUserStore, updateUserProfileStatus, getSportsStatus, fetchCoachProfileStatus]);
 
-  if(!getSportsStatus || getSportsStatus === ACTION_TYPE.LOADING) {
+  if(!getSportsStatus || getSportsStatus === ACTION_TYPE.LOADING ||
+    !fetchCoachProfileStatus || fetchCoachProfileStatus == ACTION_TYPE.LOADING) {
     return <Spinner />
+  }
+  else if(getSportsStatus == ACTION_TYPE.FAILED || fetchCoachProfileStatus == ACTION_TYPE.FAILED) {
+    return  <Alert intent="danger"
+              title="We could not retrieve your data. Please try again later"
+            />
   }
   return (
     <>
     <Formik
       initialValues={
         { 
-          description: "",
-          company: "",
-          selectedSports: [], 
+          description: "" || coachProfile.description,
+          company: "" || coachProfile.company,
+          selectedSports: [] || coachProfile.sports.map(({ name }) => name), 
         }
       }
       >
@@ -160,7 +136,7 @@ export default function CoachProfileForm ({
                       {...getInputProps({
                         onFocus: () => {
                           openMenu()
-                        }
+                        },
                       })}
                     />
                   )
