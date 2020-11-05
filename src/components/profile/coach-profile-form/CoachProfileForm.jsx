@@ -62,6 +62,7 @@ export default function CoachProfileForm () {
               title="We could not retrieve your data. Please try again later"
             />
   }
+  
   return (
     <>
     <Formik
@@ -69,10 +70,10 @@ export default function CoachProfileForm () {
         { 
           description: "" || coachProfile.description,
           company: "" || coachProfile.company,
-          selectedSports: coachProfile.sports.map((id) => {
-              return sportsList.find((elem) => elem._id === id).name
-            }) 
-            || []
+          selectedSports: coachProfile.sports ? coachProfile.sports.map((id) => {
+                return sportsList.find((elem) => elem._id === id).name
+              })
+            : []
         }
       }
       onSubmit={(values) => submitCoachProfileChanges(values)}
