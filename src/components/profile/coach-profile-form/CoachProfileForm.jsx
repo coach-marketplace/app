@@ -8,7 +8,7 @@ import { ACTION_TYPE } from "../../../helper/constants";
 import { useDispatch, useSelector } from "react-redux";
 
 import { retrieveAll as getAllSports } from "../../../store/modules/sport/actions"
-import { fetchCoachProfile, updateCoachProfile } from "../../../store/modules/coach/actions"
+import { createCoachProfile, fetchCoachProfile, updateCoachProfile } from "../../../store/modules/coach/actions"
 
 
 export default function CoachProfileForm () {
@@ -21,6 +21,8 @@ export default function CoachProfileForm () {
   const fetchCoachProfileStatus = useSelector(state => state.coach.actions.fetchCoachProfile.status)
 
   const updateCoachProfileStatus = useSelector(state => state.coach.actions.updateCoachProfile.status)
+
+  const createCoachProfileStatus = useSelector(state => state.coach.actions.createCoachProfile.status)
 
   const dispatch = useDispatch()
   
@@ -54,13 +56,19 @@ export default function CoachProfileForm () {
   }, [dispatch, getSportsStatus, fetchCoachProfileStatus, updateCoachProfileStatus]);
 
   if(!getSportsStatus || getSportsStatus === ACTION_TYPE.LOADING ||
-    !fetchCoachProfileStatus || fetchCoachProfileStatus === ACTION_TYPE.LOADING) {
+    !fetchCoachProfileStatus || fetchCoachProfileStatus === ACTION_TYPE.LOADING /* || 
+    createCoachProfilStatus === ACTION_TYPE.LOADING*/) {
     return <Spinner />
   }
-  else if(getSportsStatus === ACTION_TYPE.FAILED || fetchCoachProfileStatus === ACTION_TYPE.FAILED) {
+  else if(getSportsStatus === ACTION_TYPE.FAILED || fetchCoachProfileStatus === ACTION_TYPE.FAILED /*||
+    createCoachProfilStatus === ACTION_TYPE.FAILED*/) {
     return  <Alert intent="danger"
               title="We could not retrieve your data. Please try again later"
             />
+  }
+  else if(fetchCoachProfileStatus === ACTION_TYPE.SUCCESS && !coachProfile && !createCoachProfileStatus) {
+    dispatch(createCoachProfile({})) //create new empty coach profile is no coach profile could have been retrieved
+    return <Spinner />
   }
   
   return (

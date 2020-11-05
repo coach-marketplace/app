@@ -1,4 +1,8 @@
 import {
+  CREATE_COACH_PROFILE_FAILED,
+  CREATE_COACH_PROFILE_LOADING,
+  CREATE_COACH_PROFILE_SUCCESS,
+
   FETCH_COACH_PROFILE_FAILED,
   FETCH_COACH_PROFILE_LOADING,
   FETCH_COACH_PROFILE_SUCCESS,
@@ -9,6 +13,13 @@ import {
 } from './constants'
 import store from '../../index'
 import API from '../../../services/api'
+
+/**
+ * create coach profile
+ */
+const createCoachProfileLoading = () => ({ type: CREATE_COACH_PROFILE_LOADING })
+const createCoachProfileSuccess = (payload) => ({ type: CREATE_COACH_PROFILE_SUCCESS, payload })
+const createCoachProfileFailed = (error) => ({ type: CREATE_COACH_PROFILE_FAILED, error })
 
 /**
  * Fetch coach profile
@@ -29,6 +40,26 @@ const fetchCoachProfileFailed = (error) => ({
 const updateCoachProfileLoading = () => ({ type: UPDATE_COACH_PROFILE_LOADING })
 const updateCoachProfileSuccess = (payload) => ({ type: UPDATE_COACH_PROFILE_SUCCESS, payload })
 const updateCoachProfileFailed = (error) => ({ type: UPDATE_COACH_PROFILE_FAILED, error })
+
+/**
+ * Create profile for coach 
+ */
+
+export const createCoachProfile = (data) => {
+  return (dispatch) => {
+    dispatch(createCoachProfileLoading())
+    const {
+      user: {current: user}
+    } = store.getState()
+  API.post(`coach/${user._id}/coach-profile`)
+      .then((response) => {
+        dispatch(createCoachProfileSuccess(response.data))
+      })
+      .catch((error) => {
+        dispatch(createCoachProfileFailed(error.message))
+      })
+  }
+}
 
 
 /**
