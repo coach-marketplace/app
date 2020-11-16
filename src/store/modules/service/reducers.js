@@ -7,8 +7,10 @@ import {
   CREATE_SERVICE_LOADING,
   CREATE_SERVICE_FAILED,
   CREATE_SERVICE_SUCCESS,
+  CLEAN_CREATE_SERVICE,
 } from './constants'
 import initialState from './state'
+import { INITIAL_ACTION_STATE } from '../../../helper/constants'
 
 const getServicesFailed = (state, action) => {
   const newState = cloneDeep(state)
@@ -48,7 +50,6 @@ const createFailed = (state, action) => {
 
   return newState
 }
-
 const createSuccess = (state, action) => {
   const newState = cloneDeep(state)
   const newService = action.payload
@@ -60,12 +61,17 @@ const createSuccess = (state, action) => {
 
   return newState
 }
-
 const createLoading = (state) => {
   const newState = cloneDeep(state)
   newState.actions.create.loading = true
   newState.actions.create.success = false
   newState.actions.create.error = null
+
+  return newState
+}
+const deleteCreate = (state) => {
+  const newState = cloneDeep(state)
+  newState.actions.create = { ...INITIAL_ACTION_STATE }
 
   return newState
 }
@@ -78,12 +84,15 @@ const reducer = (state = initialState, action) => {
       return getServicesLoading(state)
     case GET_SERVICES_SUCCESS:
       return getServicesSuccess(state, action)
+
     case CREATE_SERVICE_FAILED:
       return createFailed(state, action)
     case CREATE_SERVICE_LOADING:
       return createLoading(state)
     case CREATE_SERVICE_SUCCESS:
       return createSuccess(state, action)
+    case CLEAN_CREATE_SERVICE:
+      return deleteCreate(state)
     default:
       return state
   }

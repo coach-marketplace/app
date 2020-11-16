@@ -10,7 +10,6 @@ import RegisterPage from '../pages/auth-page/RegisterPage'
 import CustomersPage from '../pages/customers-page/CustomersPage'
 // import NewCustomerPage from "../pages/customers-page/NewCustomerPage";
 import ServicePage from '../pages/service-page/ServicePage'
-// import NewServicePage from "../pages/service-page/NewServicePage";
 // import SchedulePage from "../pages/schedule-page/SchedulePage";
 // import ProfilePage from "../pages/profile-page/ProfilePage";
 import AccountPage from '../pages/user-page/AccountPage'
