@@ -3,10 +3,17 @@
   overflow-y: auto;
   margin: 0;
   border-top: 0;
+  border-right: solid 1px #AAA;
+  border-left: solid 1px #AAA;
   background: white;
-  position: absolute;
+  position: relative;
+  top:-20px;
   z-index: 1000;
   list-style: none;
   padding: 0;
-  min-width: 200px;
+  min-width: 170px;
+}
+
+li {
+  padding: 5px;
 }

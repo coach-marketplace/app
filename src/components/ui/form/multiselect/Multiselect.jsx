@@ -63,6 +63,9 @@ export default function Mutliselect({
                     <ul 
                       {...getMenuProps()}
                       className="menu"
+                      style={isOpen && getFilteredItems().length > 0 ? 
+                        {  borderBottom: "solid 1px #AAA" } : {} 
+                      }
                     >
                         {isOpen &&
                             getFilteredItems().map((item, index) => (
