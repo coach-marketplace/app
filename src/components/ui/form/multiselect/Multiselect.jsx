@@ -68,6 +68,11 @@ export default function Mutliselect({
                             getFilteredItems().map((item, index) => (
                               <li
                                   {...getItemProps({ item, index })}
+                                  style={index === highlightedIndex ? 
+                                    {
+                                      backgroundColor: '#bde4ff',
+                                      cursor: "grab"
+                                    } : {} }
                               >
                                 {item}
                               </li>
