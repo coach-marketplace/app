@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import {Formik, FieldArray } from "formik";
 
-import { Alert, Form, Field, Button, toaster, Tag, Autocomplete, TextInput, Spinner } from "../../ui";
+import { Alert, Form, Field, Button, toaster, Multiselect, Spinner } from "../../ui";
 
 import { ACTION_TYPE } from "../../../helper/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,12 +56,12 @@ export default function CoachProfileForm () {
   }, [dispatch, getSportsStatus, fetchCoachProfileStatus, updateCoachProfileStatus]);
 
   if(!getSportsStatus || getSportsStatus === ACTION_TYPE.LOADING ||
-    !fetchCoachProfileStatus || fetchCoachProfileStatus === ACTION_TYPE.LOADING /* || 
-    createCoachProfilStatus === ACTION_TYPE.LOADING*/) {
+    !fetchCoachProfileStatus || fetchCoachProfileStatus === ACTION_TYPE.LOADING  || 
+    createCoachProfileStatus === ACTION_TYPE.LOADING) {
     return <Spinner />
   }
-  else if(getSportsStatus === ACTION_TYPE.FAILED || fetchCoachProfileStatus === ACTION_TYPE.FAILED /*||
-    createCoachProfilStatus === ACTION_TYPE.FAILED*/) {
+  else if(getSportsStatus === ACTION_TYPE.FAILED || fetchCoachProfileStatus === ACTION_TYPE.FAILED ||
+    createCoachProfileStatus === ACTION_TYPE.FAILED) {
     return  <Alert intent="danger"
               title="We could not retrieve your data. Please try again later"
             />
@@ -126,36 +126,13 @@ export default function CoachProfileForm () {
             id="selectedSports">
             {(arrayHelpers) => { return (
               <>
-              <label>Sports</label>
-              <Autocomplete
+              <Multiselect
                 title="Sports"
-                onChange={(changedItem) => {
-                  arrayHelpers.push(changedItem)
-                  //TODO clear input value
-                }}
                 items={sportsNameList}
-              >
-                {(props) => {
-                  const { getInputProps, getRef, inputValue, openMenu } = props
-                  return (
-                    <TextInput
-                      placeholder="Sports"
-                      value={inputValue}
-                      innerRef={getRef}
-                      {...getInputProps({
-                        onFocus: () => {
-                          openMenu()
-                        },
-                      })}
-                    />
-                  )
-                }}
-              </Autocomplete>
-              <div style={{display: "flex"}}>
-                {values.selectedSports.map((item, index) => { return(
-                  <Tag closeable={true} text={item} onDelete={() => arrayHelpers.remove(index)}/>
-                )})}
-              </div>
+                selectedItems={values.selectedSports}
+                addSelectedItem={arrayHelpers.push}
+                removeSelectedItem={arrayHelpers.remove}
+              />
               </>
             )}}
           </FieldArray>
@@ -166,6 +143,7 @@ export default function CoachProfileForm () {
             type="submit"
             isLoading={updateCoachProfileStatus === ACTION_TYPE.LOADING}
             appearance="primary"
+            style= {{marginTop: "10px"}}
           >
             Save
           </Button>

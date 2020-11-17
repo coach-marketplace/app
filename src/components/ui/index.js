@@ -22,9 +22,11 @@ import TabUI from './tab/Tab'
 import TextUI from './typography/Text'
 import TitleUI from './typography/Title'
 import toasterUI from './toaster/toaster'
-import AutocompleteUI from './autocomplete/autocomplete'
+//import AutocompleteUI from './autocomplete/autocomplete'
 import TagUI from './tag/tag'
 import TextInputUI from './text-input/TextInput'
+import AutocompleteUI from './form/auto-complete/AutoComplete'
+import MultiselectUI from './form/multiselect/Multiselect.jsx'
 
 export const Alert = AlertUI
 export const Avatar = AvatarUI
@@ -53,3 +55,4 @@ export const toaster = toasterUI
 export const Autocomplete = AutocompleteUI
 export const Tag = TagUI
 export const TextInput = TextInputUI
+export const Multiselect = MultiselectUI

@@ -7,7 +7,7 @@ import Dropdown from "./Dropdown";
 import Input from "../input/Input";
 import Spinner from "../../loader/Spinner";
 import NoResultText from "../../empty-states/NoResultText";
-import Text from "../../text/Text";
+import {Text} from "../../index";
 
 class AutoComplete extends Component {
   static propTypes = {

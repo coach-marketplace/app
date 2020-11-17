@@ -86,7 +86,7 @@ export const updateCoachProfile = (data) => {
   return (dispatch) => {
     dispatch(updateCoachProfileLoading())
     const {
-      coach: {coachProfile: coachProfile}
+      coach: {coachProfile}
     } = store.getState()
 
     console.log(coachProfile)
