@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "downshift": "^6.0.6",
-    "draft-js": "^0.11.5",
+    "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "elevate-ui": "^1.2.4",
     "evergreen-ui": "^4.24.0",
