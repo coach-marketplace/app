@@ -69,12 +69,14 @@ const createLoading = (state) => {
 
   return newState
 }
+
 const deleteCreate = (state) => {
   const newState = cloneDeep(state)
   newState.actions.create = { ...INITIAL_ACTION_STATE }
 
   return newState
 }
+
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -84,7 +86,6 @@ const reducer = (state = initialState, action) => {
       return getServicesLoading(state)
     case GET_SERVICES_SUCCESS:
       return getServicesSuccess(state, action)
-
     case CREATE_SERVICE_FAILED:
       return createFailed(state, action)
     case CREATE_SERVICE_LOADING:
