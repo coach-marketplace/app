@@ -64,12 +64,22 @@ const updateLoading = (state) => {
 }
 const updateSuccess = (state, action) => {
   const newState = cloneDeep(state)
-  const { firstName, lastName, phone, gender, dateOfBirth } = action.payload
+  const {
+    firstName,
+    lastName,
+    phone,
+    gender,
+    dateOfBirth,
+    isCoach,
+  } = action.payload
+
   newState.current.firstName = firstName
   newState.current.lastName = lastName
   newState.current.phone = phone
   newState.current.gender = gender
   newState.current.dateOfBirth = dateOfBirth
+  newState.current.isCoach = isCoach
+
   newState.actions.update = { status: ACTION_TYPE.SUCCESS, error: null }
 
   return newState

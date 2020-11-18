@@ -14,6 +14,7 @@ import assignmentReducer from './modules/assignment/reducers'
 import sportReducer from './modules/sport/reducers'
 import coachProfileReducer from './modules/coach/reducers'
 
+
 const rootReducer = combineReducers({
   auth: authReducer,
   customer: customerReducer,

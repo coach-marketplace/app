@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import { Pane, Text } from "../../ui";
+import { Pane, Text } from '../../ui'
 
 class ServiceCard extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-  };
+  }
 
-  static defaultProps = {};
+  static defaultProps = {}
 
   render() {
-    const { title } = this.props;
+    const { title } = this.props
 
     return (
       <Pane
@@ -21,11 +21,12 @@ class ServiceCard extends Component {
         alignItems="center"
         padding={20}
         marginTop={10}
+        background="white"
       >
         <Text>{title}</Text>
       </Pane>
-    );
+    )
   }
 }
 
-export default ServiceCard;
+export default ServiceCard

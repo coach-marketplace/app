@@ -7,6 +7,7 @@ import {
   CREATE_SERVICE_LOADING,
   CREATE_SERVICE_FAILED,
   CREATE_SERVICE_SUCCESS,
+  CLEAN_CREATE_SERVICE,
 } from './constants'
 import store from '../../index'
 
@@ -17,6 +18,7 @@ const getAllFailed = (error) => ({ type: GET_SERVICES_FAILED, error })
 const createLoading = () => ({ type: CREATE_SERVICE_LOADING })
 const createSuccess = (payload) => ({ type: CREATE_SERVICE_SUCCESS, payload })
 const createFailed = (error) => ({ type: CREATE_SERVICE_FAILED, error })
+const createClean = () => ({ type: CLEAN_CREATE_SERVICE })
 
 export const retrieveAll = () => {
   return (dispatch) => {
@@ -60,3 +62,5 @@ export const create = (data) => {
       })
   }
 }
+
+export const cleanCreate = () => (dispatch) => dispatch(createClean())
