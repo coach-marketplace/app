@@ -6,14 +6,13 @@ export {
 
 export {
   COLOR,
-  SIZE,
-  SIZES,
   Z_INDEX,
   BREAKPOINT,
   SPACER,
   SPACERS,
   LAYOUT,
   MEDIA_QUERY,
+  SHADOW,
 } from './style'
 
 export const LOCALE = {

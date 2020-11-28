@@ -1,16 +1,5 @@
 import { getFixedSize } from '../utils'
 
-export const SIZE = {
-  XXS: 20,
-  XS: 24,
-  M: 32,
-  L: 40,
-  XL: 48,
-  XXL: 56,
-}
-
-export const SIZES = Object.keys(SIZE).map((key) => key.toLowerCase())
-
 export const Z_INDEX = {
   DROPDOWN: 10000,
 }
@@ -22,7 +11,7 @@ export const SYSTEM_COLOR = {
   // CORNFLOWER_BLUE: "#425A70",
   DENIM: '#1070CA',
   OCEAN_GREEN: '#47B881',
-  // SILVER: "#BCBBBB",
+  SILVER: '#BCBBBB',
   SUN: '#F9A409',
   STALE_GRAY: '#66788A',
 }
@@ -31,6 +20,7 @@ export const COLOR = {
   PRIMARY: SYSTEM_COLOR.SUN,
 
   BACKGROUND_LIGHT: SYSTEM_COLOR.AQUA_HAZE,
+  BORDER: SYSTEM_COLOR.SILVER,
   TEXT: SYSTEM_COLOR.STALE_GRAY,
 
   DANGER: SYSTEM_COLOR.CINNABAR,
@@ -80,3 +70,13 @@ export const LAYOUT = {
     ${getFixedSize('100%')}
   `,
 }
+
+export const SHADOW = {
+  BOX: '0 15px 45px 0 rgba(0, 0, 0, 0.1)',
+}
+
+// TODO: define gradient for backgrounds
+// export const GRADIENT = {
+//   FADE_BLUE: `linear-gradient(180deg, ${Color.BLUE_DODGER} 0%, ${Color.BLUE_RIBBON} 100%)`,
+//   FADE_PURPLE: `linear-gradient(180deg, ${Color.CORNFLOWER_MAUVE} 0%, ${Color.CORNFLOWER_MAUVE_LIGHT} 100%)`,
+// };

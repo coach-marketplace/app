@@ -10,7 +10,6 @@ export class User {
   phone = ''
   firstName = ''
   lastName = ''
-  fullName = ''
   gender = ''
   dateOfBirth = ''
   isAdmin = false
@@ -37,15 +36,21 @@ export class User {
     this.isEmailVerified = data.isEmailVerified
     this.createdAt = data.createdAt
     this.accounts = data.accounts
-    this.setFullName(this.firstName, this.lastName)
     this.setAvatar(data)
   }
 
-  setFullName(firstName, lastName) {
+  get subscriptionDate() {
+    const date = new Date(this.createdAt)
+
+    return date.toDateString()
+  }
+
+  get fullName() {
     let fullName = ''
-    fullName += firstName ? `${firstName} ` : '? '
-    fullName += lastName ? `${lastName} ` : '?'
-    this.fullName = fullName
+    fullName += this.firstName ? `${this.firstName} ` : '? '
+    fullName += this.lastName ? `${this.lastName} ` : '?'
+
+    return fullName
   }
 
   setAvatar(data) {

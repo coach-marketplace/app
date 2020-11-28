@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-import Layout from "../../components/layout/main-page-layout/MainPageLayout";
-import Header from "../../components/layout/header/Header";
-import CustomersContainer from "../../components/customer/customers-container/CustomersContainer";
-import { Title } from "../../components/ui";
+import Layout from '../../components/layout/main-page-layout/MainPageLayout'
+import Header from '../../components/layout/header/Header'
+import CustomersContainer from '../../components/customer/customers-container'
+import { Title } from '../../components/ui'
 
 const CustomersPage = () => (
   <Layout
@@ -15,6 +15,6 @@ const CustomersPage = () => (
       </div>
     }
   />
-);
+)
 
-export default CustomersPage;
+export default CustomersPage

@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
-import { StyledCustomerContainer } from "./style";
-import AddCustomerFormModal from "../add-customer-form-modal/AddCustomerFormModal";
-import Button from "../../ui/button/Button";
-import UserCard from "../../user/user-card/UserCard";
-import toaster from "../../ui/toaster/toaster";
+import { CustomersContainer, ToolBar } from './style'
+import UserRow from './customer-row'
+import ContainerHeader from './container-header'
+import AddCustomerFormModal from '../add-customer-form-modal/AddCustomerFormModal'
+import { Button, toaster, Input } from '../../ui'
 import {
   retrieveAll as retrieveAllCustomers,
   create as createCustomer,
-} from "../../../store/modules/customer/actions";
+} from '../../../store/modules/customer/actions'
 import {
   create as createConversation,
   resetCreateAction as resetCreateConversationStoreAction,
-} from "../../../store/modules/conversation/actions";
+} from '../../../store/modules/conversation/actions'
 
-const CustomersContainer = ({
+const CustomersContainerComponent = ({
   customers,
   getCustomers,
   isCreateCustomerLoading,
@@ -28,11 +28,12 @@ const CustomersContainer = ({
   resetCreateConversationStoreAction,
   history,
 }) => {
-  const [isAddCustomerModalOpen, setIsAddCustomerModalOpen] = useState(false);
+  const [isAddCustomerModalOpen, setIsAddCustomerModalOpen] = useState(false)
+  const [searchString, setSearchString] = useState('')
 
   useEffect(() => {
-    !customers.length && getCustomers();
-  }, [customers.length, getCustomers]);
+    !customers.length && getCustomers()
+  }, [customers.length, getCustomers])
 
   useEffect(() => {
     if (
@@ -40,14 +41,14 @@ const CustomersContainer = ({
       isCreateConversationSuccess &&
       conversationJustCreated
     ) {
-      history.push(`/conversation/${conversationJustCreated}`);
+      history.push(`/conversation/${conversationJustCreated}`)
       /**
        * We need to clean the store else the next time we come back here the
        * value will be the same et we will be redirect to conversation again.
        */
-      resetCreateConversationStoreAction();
+      resetCreateConversationStoreAction()
     } else if (!isCreateConversationLoading && isCreateConversationError) {
-      toaster.danger("Error to contact this customer");
+      toaster.danger('Error to contact this customer')
     }
   }, [
     conversationJustCreated,
@@ -56,7 +57,7 @@ const CustomersContainer = ({
     isCreateConversationLoading,
     isCreateConversationSuccess,
     resetCreateConversationStoreAction,
-  ]);
+  ])
 
   return (
     <div>
@@ -66,25 +67,33 @@ const CustomersContainer = ({
         isLoading={isCreateCustomerLoading}
       />
 
-      <Button
-        label="New"
-        iconBefore="plus"
-        appearance="minimal"
-        onClick={() => setIsAddCustomerModalOpen(!isAddCustomerModalOpen)}
-      />
+      <ToolBar>
+        <Input
+          type="search"
+          onChange={(e) => setSearchString(e.target.value)}
+          value={searchString}
+        />
+        <Button
+          label="New"
+          iconBefore="plus"
+          appearance="primary"
+          onClick={() => setIsAddCustomerModalOpen(!isAddCustomerModalOpen)}
+        />
+      </ToolBar>
 
-      <StyledCustomerContainer>
+      <CustomersContainer>
+        <ContainerHeader />
         {customers.map((customer) => (
-          <UserCard
+          <UserRow
             key={customer._id}
             userData={customer.lead}
             onMessageClick={() => createConversation(customer.lead._id)}
           />
         ))}
-      </StyledCustomerContainer>
+      </CustomersContainer>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => ({
   customers: state.customer.list,
@@ -93,7 +102,7 @@ const mapStateToProps = (state) => ({
   isCreateConversationError: state.conversation.actions.create.error,
   isCreateConversationSuccess: state.conversation.actions.create.success,
   conversationJustCreated: state.conversation.actions.create.data,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   createCustomer: (data) => dispatch(createCustomer(data)),
@@ -102,8 +111,8 @@ const mapDispatchToProps = (dispatch) => ({
   createConversation: (userId) => dispatch(createConversation([userId])),
   resetCreateConversationStoreAction: () =>
     dispatch(resetCreateConversationStoreAction()),
-});
+})
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(CustomersContainer)
-);
+  connect(mapStateToProps, mapDispatchToProps)(CustomersContainerComponent),
+)

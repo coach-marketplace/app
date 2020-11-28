@@ -1,8 +1,13 @@
 import styled from 'styled-components'
 
-export const StyledCustomerContainer = styled.div`
+export const CustomersContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: -10px;
-  margin-top: 20px;
+  margin-top: 30px;
+  box-sizing: border-box;
+`
+
+export const ToolBar = styled.div`
+  display: flex;
+  justify-content: space-between;
 `

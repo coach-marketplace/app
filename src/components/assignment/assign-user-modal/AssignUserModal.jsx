@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import {
   Dialog,
@@ -10,11 +10,11 @@ import {
   Form,
   DayPicker,
   toaster,
-} from "../../ui";
-import UserCard from "../../user/user-card/UserCard";
-import { retrieveAll as fetchCustomers } from "../../../store/modules/customer/actions";
-import { create, cleanCreate } from "../../../store/modules/assignment/actions";
-import { ACTION_TYPE } from "../../../helper/constants";
+} from '../../ui'
+// import UserCard from '../../user/user-card/UserCard'
+import { retrieveAll as fetchCustomers } from '../../../store/modules/customer/actions'
+import { create, cleanCreate } from '../../../store/modules/assignment/actions'
+import { ACTION_TYPE } from '../../../helper/constants'
 
 const AssignUserModal = ({
   isOpen,
@@ -26,58 +26,58 @@ const AssignUserModal = ({
   cleanCreateAssignmentStore,
   programId,
 }) => {
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [idsDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [startDate, setStartDate] = useState(null);
+  const [selectedUsers, setSelectedUsers] = useState([])
+  const [idsDatePickerOpen, setIsDatePickerOpen] = useState(false)
+  const [startDate, setStartDate] = useState(null)
 
   useEffect(() => {
-    if (!isOpen) return;
-    if (customers.length) return;
-    fetchContacts();
-  }, [customers.length, fetchContacts, isOpen]);
+    if (!isOpen) return
+    if (customers.length) return
+    fetchContacts()
+  }, [customers.length, fetchContacts, isOpen])
 
   useEffect(() => {
     switch (createAssignmentStatus) {
       case ACTION_TYPE.SUCCESS:
-        cleanCreateAssignmentStore();
-        onClose();
-        break;
+        cleanCreateAssignmentStore()
+        onClose()
+        break
       case ACTION_TYPE.FAILED:
-        toaster.danger("Error during the assignment, retry later");
-        cleanCreateAssignmentStore();
-        break;
+        toaster.danger('Error during the assignment, retry later')
+        cleanCreateAssignmentStore()
+        break
       default:
-        return;
+        return
     }
-  }, [cleanCreateAssignmentStore, createAssignmentStatus, onClose]);
+  }, [cleanCreateAssignmentStore, createAssignmentStatus, onClose])
 
   const handleUsersChange = (event) => {
     const {
       target: { value },
-    } = event;
-    const selectedUsersClone = [...selectedUsers];
+    } = event
+    const selectedUsersClone = [...selectedUsers]
 
     if (selectedUsers.includes(value)) {
-      const valueIndex = selectedUsers.indexOf(value);
-      selectedUsersClone.splice(valueIndex, 1);
-      setSelectedUsers(selectedUsersClone);
+      const valueIndex = selectedUsers.indexOf(value)
+      selectedUsersClone.splice(valueIndex, 1)
+      setSelectedUsers(selectedUsersClone)
     } else {
-      selectedUsersClone.push(value);
-      setSelectedUsers(selectedUsersClone);
+      selectedUsersClone.push(value)
+      setSelectedUsers(selectedUsersClone)
     }
-  };
+  }
 
   const handleSubmit = () => {
-    console.log("program id", programId);
-    console.log("data", {
+    console.log('program id', programId)
+    console.log('data', {
       traineeIds: selectedUsers,
       startDate: startDate.toISOString(),
-    });
+    })
     // createAssignment(programId, {
     //   traineeIds: selectedUsers,
     //   startDate: startDate.toISOString(),
     // });
-  };
+  }
 
   return (
     <Dialog
@@ -101,9 +101,9 @@ const AssignUserModal = ({
                     onChange={handleUsersChange}
                     checked={selectedUsers.includes(customer._id)}
                   />
-                  <UserCard userData={customer} />
+                  {/* <UserCard userData={customer} /> */}
                 </Pane>
-              );
+              )
             })}
           </Pane>
           <Pane>
@@ -122,23 +122,23 @@ const AssignUserModal = ({
         </Pane>
       </Form>
     </Dialog>
-  );
-};
+  )
+}
 
 AssignUserModal.propTypes = {
   createWorkoutStatus: PropTypes.string,
   customers: PropTypes.arrayOf(PropTypes.shape({})),
-};
+}
 
 const mapStateToProps = (state) => ({
   customers: state.customer.list.map((contact) => contact.lead),
   createAssignmentStatus: state.assignment.actions.create.status,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   fetchContacts: () => dispatch(fetchCustomers()),
   createAssignment: (programId, data) => dispatch(create(programId, data)),
   cleanCreateAssignmentStore: () => dispatch(cleanCreate()),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssignUserModal);
+export default connect(mapStateToProps, mapDispatchToProps)(AssignUserModal)

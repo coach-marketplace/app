@@ -86,7 +86,9 @@ class ServiceForm extends Component {
 
   render() {
     const { onCancel, isLoading } = this.props
-    const { propositions, formData, isAutoCompleteLoading } = this.state
+    const {
+      /*propositions,*/ formData /*, isAutoCompleteLoading*/,
+    } = this.state
 
     return (
       <form onSubmit={this.onServiceSubmitted}>
