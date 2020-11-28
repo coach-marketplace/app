@@ -5,9 +5,10 @@ import Header from "../../components/layout/header/Header";
 import AsideLeftLayout from "../../components/layout/aside-left-layout/AsideLeftLayout";
 import AsideAccountNav from "../../components/account/aside-account-nav/AsideAccountNav";
 
-import ProfileForm from "../../components/profile/ProfileForm";
-import UserMetricsForm from "../../components/profile/UserMetricsForm";
-import ChangePasswordForm from "../../components/profile/ChangePasswordForm";
+import ProfileForm from "../../components/profile/profile-form/ProfileForm";
+import UserMetricsContainer from "../../components/profile/user-metrics-container/UserMetricsContainer";
+import SecuritySection from "../../components/account/security-section/SecuritySection";
+import CoachProfileForm from "../../components/profile/coach-profile-form/CoachProfileForm"
 
 class AccountPage extends Component {
   renderSection = () => {
@@ -16,13 +17,16 @@ class AccountPage extends Component {
         params: { section },
       },
     } = this.props;
+
     switch (section) {
       case "profile":
         return <ProfileForm />;
       case "metrics":
-        return <UserMetricsForm />;
+        return <UserMetricsContainer />;
       case "account-and-security":
-        return <ChangePasswordForm />;
+        return <SecuritySection />;
+      case "coach-profile":
+        return <CoachProfileForm />;
       default:
         return <ProfileForm />;
     }

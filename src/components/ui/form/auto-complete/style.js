@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import { COLOR, Z_INDEX } from "../../../../helper/constants";
+import { COLOR, Z_INDEX } from '../../../../helper/constants'
 
 export const StyledContainer = styled.div`
   position: relative;
-`;
+`
 
 export const StyledDropdown = styled.div`
   position: absolute;
@@ -19,7 +19,7 @@ export const StyledDropdown = styled.div`
   z-index: ${Z_INDEX.DROPDOWN};
   display: flex;
   flex-direction: column;
-`;
+`
 
 export const StyledDropdownItem = styled.li`
   display: flex;
@@ -29,4 +29,4 @@ export const StyledDropdownItem = styled.li`
   &:hover {
     background-color: #f4f4f4;
   }
-`;
+`

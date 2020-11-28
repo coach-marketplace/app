@@ -1,65 +1,138 @@
-import React, { Component } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, { Component } from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Redirect } from 'react-router'
 
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from './ProtectedRoute'
 
-import HomePage from "../pages/home-page/HomePage";
-import LoginPage from "../pages/auth-page/LoginPage";
-import RegisterPage from "../pages/auth-page/RegisterPage";
-import CustomersPage from "../pages/customers-page/CustomersPage";
-import NewCustomerPage from "../pages/customers-page/NewCustomerPage";
-import ServicePage from "../pages/service-page/ServicePage";
-import NewServicePage from "../pages/service-page/NewServicePage";
-import SchedulePage from "../pages/schedule-page/SchedulePage";
+import HomePage from '../pages/home-page/HomePage'
+import LoginPage from '../pages/auth-page/LoginPage'
+import RegisterPage from '../pages/auth-page/RegisterPage'
+import CustomersPage from '../pages/customers-page/CustomersPage'
+// import NewCustomerPage from "../pages/customers-page/NewCustomerPage";
+import ServicePage from '../pages/service-page/ServicePage'
+// import NewServicePage from "../pages/service-page/NewServicePage";
+// import SchedulePage from "../pages/schedule-page/SchedulePage";
 // import ProfilePage from "../pages/profile-page/ProfilePage";
-import AccountPage from "../pages/user-page/AccountPage";
-// import ChangePasswordPage from "../components/account/security-section/SecuritySection";
+import AccountPage from '../pages/user-page/AccountPage'
 // import BodyPage from "../pages/profile-page/BodyPage";
-import LibraryPage from "../pages/library-page/LibraryPage";
-import ConversationsPage from "../pages/conversations-page/ConversationsPage";
-import ConversationPage from "../pages/conversations-page/ConversationPage";
+import LibraryPage from '../pages/library-page/LibraryPage'
+import ConversationsPage from '../pages/conversations-page/ConversationsPage'
+import ConversationPage from '../pages/conversations-page/ConversationPage'
+import EditProgramPage from '../pages/library-page/EditProgramPage'
+import NewCoachPage from '../pages/user-page/NewCoachPage'
+
+// TODO: Clean up routes, add new service into a modal to remove the page
+
+const routes = [
+  {
+    path: '/login',
+    isExact: true,
+    isProtected: false,
+    isOnlyCoach: false,
+    component: LoginPage,
+  },
+  {
+    path: '/register',
+    isExact: true,
+    isProtected: false,
+    isOnlyCoach: false,
+    component: RegisterPage,
+  },
+  {
+    path: '/',
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: false,
+    component: HomePage,
+  },
+  {
+    path: '/customers',
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: true,
+    component: CustomersPage,
+  },
+  {
+    path: '/services',
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: true,
+    component: ServicePage,
+  },
+  {
+    path: '/account/:section',
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: false,
+    component: AccountPage,
+  },
+  {
+    path: '/library/:type',
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: true,
+    component: LibraryPage,
+  },
+  {
+    path: '/inbox',
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: false,
+    component: ConversationsPage,
+  },
+  {
+    path: '/conversation/:id',
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: false,
+    component: ConversationPage,
+  },
+  {
+    path: '/coach/programs/:id/edit',
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: true,
+    component: EditProgramPage,
+  },
+  {
+    path: '/coach/new',
+    isExact: true,
+    isProtected: true,
+    isOnlyCoach: false,
+    component: NewCoachPage,
+  },
+]
 
 class Router extends Component {
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/login" exact component={LoginPage} />
-          <Route path="/register" exact component={RegisterPage} />
+          {routes.map((route) => {
+            const RouteComponent = route.isProtected ? ProtectedRoute : Route
 
-          {/* <Route path="/password" exact component={ChangePasswordPage} /> */}
-
-          <ProtectedRoute path="/" exact component={HomePage} />
-          <ProtectedRoute path="/customers" exact component={CustomersPage} />
+            return (
+              <RouteComponent
+                key={route.path}
+                path={route.path}
+                exact={route.isExact}
+                onlyCoach={route.isOnlyCoach}
+                component={route.component}
+              />
+            )
+          })}
+          <Redirect from="*" to="/" />
+          {/* 
           <ProtectedRoute
             path="/customers/new"
             exact
+            onlyCoach
             component={NewCustomerPage}
-          />
-          <ProtectedRoute path="/services" exact component={ServicePage} />
-          <ProtectedRoute
-            path="/services/new"
-            exact
-            component={NewServicePage}
-          />
-          <ProtectedRoute path="/schedule" exact component={SchedulePage} />
-          {/* <ProtectedRoute path="/profile" exact component={ProfilePage} /> */}
-          <ProtectedRoute
-            path="/account/:section"
-            exact
-            component={AccountPage}
-          />
-          <ProtectedRoute path="/library/:type" exact component={LibraryPage} />
-          <ProtectedRoute path="/inbox" exact component={ConversationsPage} />
-          <ProtectedRoute
-            path="/conversation/:id"
-            exact
-            component={ConversationPage}
-          />
+          /> */}
         </Switch>
       </BrowserRouter>
-    );
+    )
   }
 }
 
-export default Router;
+export default Router

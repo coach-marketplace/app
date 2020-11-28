@@ -1,11 +1,16 @@
 export const ACTION_TYPE = {
-  SUCCESS: "_SUCCESS",
-  LOADING: "_LOADING",
-  FAILED: "_FAILED"
-};
+  SUCCESS: 'success',
+  LOADING: 'loading',
+  FAILED: 'failed',
+}
 
 export const INITIAL_ACTION_STATE = {
   loading: false,
   error: null,
-  success: false
-};
+  success: false,
+}
+
+export const INITIAL_ACTION_STATE_NEW = {
+  status: '',
+  error: null,
+}

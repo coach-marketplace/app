@@ -5,72 +5,62 @@ import { connect } from "react-redux";
 import {
   ChatContainer,
   ChatHeader,
-  ChatMessagesContainer,
   ChatForm,
+  ChatMessagesContainer,
+  InputWrapper,
 } from "./style.js";
-import Text from "../ui/text/Text";
-import Spinner from "../ui/loader/Spinner";
-import Input from "../ui/form/input/Input";
-import Button from "../ui/button/Button";
-import { retrieveAllConversationMessages } from "../../store/modules/message/actions";
+import MessagesContainer from "./messages-container/MessageContainer";
+import { Text, Spinner, Input, Button, Avatar } from "../ui";
+import { postMessage } from "../../store/modules/message/actions";
 import Conversation from "../../services/domains/Conversation";
 
 /**
  * The chat is represented by a Channel who represent the conversation itself,
  * and conversation is the conversation data from the DB
  */
-const Chat = ({
-  conversation,
-  getMessages,
-  user,
-  fetchConversationMessages,
-}) => {
+const Chat = ({ conversation, messages, user, postMessage }) => {
   const [channel, setChannel] = useState(null);
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    if (!conversation) {
-      return;
-    }
-    // TODO: Fetch messages at the beginning
+    if (!conversation) return;
+
     !channel && setChannel(new Conversation(conversation));
+  }, [conversation, channel]);
 
-    const msgs = getMessages(conversation._id);
-    if (!msgs || !msgs.length) {
-      // fetchConversationMessages(channel._id);
-      console.log(channel);
-      return;
-    }
-    console.log("has message?", !!msgs.length);
-
-    setMessages(msgs);
-  }, [channel, conversation, fetchConversationMessages, getMessages]);
-
-  if (!channel) {
-    return <Spinner />;
-  }
+  if (!channel) return <Spinner />;
 
   return (
     <ChatContainer>
       <ChatHeader>
-        <Text>{channel.getParticipantsNames(user._id)}</Text>
+        {channel.getParticipantsNamesArray(user._id).map((name, index) => (
+          <Avatar key={index} name={name} size={32} />
+        ))}
+        <Text marginLeft={10}>{channel.getParticipantsNames(user._id)}</Text>
       </ChatHeader>
       <ChatMessagesContainer>
-        {!conversation ? "loading..." : conversation._id}
-        {messages && JSON.stringify(messages)}
+        <MessagesContainer currentUser={user} messages={messages} />
       </ChatMessagesContainer>
       <ChatForm
         onSubmit={(event) => {
           event.preventDefault();
-          console.log("tok", message);
+          postMessage(
+            channel._id,
+            {
+              text: message,
+            },
+            () => setMessage("")
+          );
         }}
       >
-        <Input
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-        />
-        <Button>Send</Button>
+        <InputWrapper>
+          <Input
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+            placeholder={`Send a message`}
+          />
+        </InputWrapper>
+        <Button appearance="minimal">Send</Button>
       </ChatForm>
     </ChatContainer>
   );
@@ -84,13 +74,11 @@ Chat.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.user.current,
-  getMessages: (conversationId) =>
-    state.message.listByConversationId[conversationId],
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchConversationMessages: (conversationId) =>
-    dispatch(retrieveAllConversationMessages(conversationId)),
+  postMessage: (conversationId, data, callback) =>
+    dispatch(postMessage(conversationId, data, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

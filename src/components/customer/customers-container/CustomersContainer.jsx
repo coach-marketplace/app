@@ -1,75 +1,118 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
-import AddCustomerFormModal from "../add-customer-form-modal/AddCustomerFormModal";
-import Button from "../../ui/button/Button";
+import { CustomersContainer, ToolBar } from './style'
+import UserRow from './customer-row'
+import ContainerHeader from './container-header'
+import AddCustomerFormModal from '../add-customer-form-modal/AddCustomerFormModal'
+import { Button, toaster, Input } from '../../ui'
 import {
   retrieveAll as retrieveAllCustomers,
   create as createCustomer,
-} from "../../../store/modules/customer/actions";
-import UserCard from "../../user/user-card/UserCard";
+} from '../../../store/modules/customer/actions'
+import {
+  create as createConversation,
+  resetCreateAction as resetCreateConversationStoreAction,
+} from '../../../store/modules/conversation/actions'
 
-import { StyledCustomerContainer } from "./style";
+const CustomersContainerComponent = ({
+  customers,
+  getCustomers,
+  isCreateCustomerLoading,
+  isCreateConversationLoading,
+  isCreateConversationError,
+  isCreateConversationSuccess,
+  createConversation,
+  conversationJustCreated,
+  resetCreateConversationStoreAction,
+  history,
+}) => {
+  const [isAddCustomerModalOpen, setIsAddCustomerModalOpen] = useState(false)
+  const [searchString, setSearchString] = useState('')
 
-class CustomersContainer extends Component {
-  state = { isAddCustomerModalOpen: false };
+  useEffect(() => {
+    !customers.length && getCustomers()
+  }, [customers.length, getCustomers])
 
-  componentDidMount() {
-    const { customers, getCustomers } = this.props;
+  useEffect(() => {
+    if (
+      !isCreateConversationLoading &&
+      isCreateConversationSuccess &&
+      conversationJustCreated
+    ) {
+      history.push(`/conversation/${conversationJustCreated}`)
+      /**
+       * We need to clean the store else the next time we come back here the
+       * value will be the same et we will be redirect to conversation again.
+       */
+      resetCreateConversationStoreAction()
+    } else if (!isCreateConversationLoading && isCreateConversationError) {
+      toaster.danger('Error to contact this customer')
+    }
+  }, [
+    conversationJustCreated,
+    history,
+    isCreateConversationError,
+    isCreateConversationLoading,
+    isCreateConversationSuccess,
+    resetCreateConversationStoreAction,
+  ])
 
-    !customers.length && getCustomers();
-  }
+  return (
+    <div>
+      <AddCustomerFormModal
+        onToggle={() => setIsAddCustomerModalOpen(!isAddCustomerModalOpen)}
+        isOpen={isAddCustomerModalOpen}
+        isLoading={isCreateCustomerLoading}
+      />
 
-  toggleAddCustomerModal = () => {
-    const { isAddCustomerModalOpen } = this.state;
-
-    this.setState({ isAddCustomerModalOpen: !isAddCustomerModalOpen });
-  };
-
-  render() {
-    const { customers, isCreateCustomerLoading } = this.props;
-    const { isAddCustomerModalOpen } = this.state;
-
-    return (
-      <div>
-        <AddCustomerFormModal
-          onToggle={this.toggleAddCustomerModal}
-          isOpen={isAddCustomerModalOpen}
-          isLoading={isCreateCustomerLoading}
+      <ToolBar>
+        <Input
+          type="search"
+          onChange={(e) => setSearchString(e.target.value)}
+          value={searchString}
         />
-
         <Button
           label="New"
           iconBefore="plus"
-          appearance="minimal"
-          onClick={this.toggleAddCustomerModal}
+          appearance="primary"
+          onClick={() => setIsAddCustomerModalOpen(!isAddCustomerModalOpen)}
         />
+      </ToolBar>
 
-        <StyledCustomerContainer>
-          {customers.map((customer) => (
-            <UserCard
-              key={customer._id}
-              email={customer.lead.email}
-              firstName={customer.lead.firstName}
-              lastName={customer.lead.lastName}
-            />
-          ))}
-        </StyledCustomerContainer>
-      </div>
-    );
-  }
+      <CustomersContainer>
+        <ContainerHeader />
+        {customers.map((customer) => (
+          <UserRow
+            key={customer._id}
+            userData={customer.lead}
+            onMessageClick={() => createConversation(customer.lead._id)}
+          />
+        ))}
+      </CustomersContainer>
+    </div>
+  )
 }
 
 const mapStateToProps = (state) => ({
   customers: state.customer.list,
   isCreateCustomerLoading: state.customer.actions.create.loading,
-  isCreateCustomerSuccess: state.customer.actions.create.success,
-  isCreateCustomerError: state.customer.actions.create.error,
-});
+  isCreateConversationLoading: state.conversation.actions.create.loading,
+  isCreateConversationError: state.conversation.actions.create.error,
+  isCreateConversationSuccess: state.conversation.actions.create.success,
+  conversationJustCreated: state.conversation.actions.create.data,
+})
 
 const mapDispatchToProps = (dispatch) => ({
   createCustomer: (data) => dispatch(createCustomer(data)),
   getCustomers: () => dispatch(retrieveAllCustomers()),
-});
+  // Don't forget to pass a array containing the participants ids
+  createConversation: (userId) => dispatch(createConversation([userId])),
+  resetCreateConversationStoreAction: () =>
+    dispatch(resetCreateConversationStoreAction()),
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomersContainer);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CustomersContainerComponent),
+)
