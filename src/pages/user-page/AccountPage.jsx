@@ -8,6 +8,7 @@ import AsideAccountNav from "../../components/account/aside-account-nav/AsideAcc
 import ProfileForm from "../../components/profile/profile-form/ProfileForm";
 import UserMetricsContainer from "../../components/profile/user-metrics-container/UserMetricsContainer";
 import SecuritySection from "../../components/account/security-section/SecuritySection";
+import CoachProfileForm from "../../components/profile/coach-profile-form/CoachProfileForm"
 
 class AccountPage extends Component {
   renderSection = () => {
@@ -24,6 +25,8 @@ class AccountPage extends Component {
         return <UserMetricsContainer />;
       case "account-and-security":
         return <SecuritySection />;
+      case "coach-profile":
+        return <CoachProfileForm />;
       default:
         return <ProfileForm />;
     }

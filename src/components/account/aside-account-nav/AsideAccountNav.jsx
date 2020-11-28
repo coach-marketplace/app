@@ -4,12 +4,20 @@ import { Link } from "react-router-dom";
 import Pane from "../../ui/pane/Pane";
 import Button from "../../ui/button/Button";
 
+import { useSelector } from "react-redux";
+
 const AsideAccountNav = () => {
+  const isCoach = useSelector(state => state.user.current.isCoach);
+
   const navigation = [
     { label: "Profile", path: "/account/profile" },
     { label: "Metrics", path: "/account/metrics" },
     { label: "Accounts & Security", path: "/account/account-and-security" },
   ];
+
+  if(isCoach) {
+    navigation.push({ label: "Coach Profile", path: "/account/coach-profile"})
+  }
 
   return (
     <Pane

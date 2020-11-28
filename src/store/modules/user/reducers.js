@@ -59,6 +59,7 @@ const fetchAuthUserSuccess = (state, action) => {
 const updateLoading = (state) => {
   const newState = cloneDeep(state)
   newState.actions.update = { status: ACTION_TYPE.LOADING, error: null }
+
   return newState
 }
 const updateSuccess = (state, action) => {
@@ -71,12 +72,14 @@ const updateSuccess = (state, action) => {
     dateOfBirth,
     isCoach,
   } = action.payload
+
   newState.current.firstName = firstName
   newState.current.lastName = lastName
   newState.current.phone = phone
   newState.current.gender = gender
   newState.current.dateOfBirth = dateOfBirth
   newState.current.isCoach = isCoach
+
   newState.actions.update = { status: ACTION_TYPE.SUCCESS, error: null }
 
   return newState
