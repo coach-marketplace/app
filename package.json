@@ -43,7 +43,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start-server": "node server.js",
-    "prettier": "prettier --config .prettierrc --write \"src/**/*.js\""
+    "prettier": "prettier --config .prettierrc --check \"src/**/*.js\"",
+    "prettier:write": "prettier --config .prettierrc --write \"src/**/*.js\""
   },
   "eslintConfig": {
     "extends": "react-app"
