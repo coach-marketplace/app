@@ -2,7 +2,7 @@ name: Node CI
 
 on:
   push:
-    branches: [staging]
+    branches: [staging, master]
 
 jobs:
   build:
@@ -30,16 +30,14 @@ jobs:
         id: branch_name
         run: echo ::set-output name=BRANCH_NAME::${GITHUB_REF##*/}
 
-      - name: Branch name
+      - name: Build app
         if: steps.branch_name.outputs.BRANCH_NAME == 'master'
-        run: echo can be deployed
+        run: npm run build
 
-      # - name: Build app
-      #   run: npm run build
-
-      # - name: Deploy 🚀
-      #   uses: JamesIves/github-pages-deploy-action@3.6.2
-      #   with:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     BRANCH: gh-pages
-      #     FOLDER: build
+      - name: Deploy 🚀
+        if: steps.branch_name.outputs.BRANCH_NAME == 'master'
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
