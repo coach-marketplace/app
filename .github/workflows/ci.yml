@@ -26,8 +26,12 @@ jobs:
       - name: Run prettier
         run: npm run prettier
 
+      - name: Extract branch name
+        id: branch_name
+        run: echo ::set-output name=BRANCH_NAME::${GITHUB_REF##*/}
+
       - name: Branch name
-        if: ${GITHUB_REF##*/} === 'master'
+        if: steps.branch_name.outputs.BRANCH_NAME == 'master'
         run: echo can be deployed
 
       # - name: Build app
