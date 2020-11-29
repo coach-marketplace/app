@@ -20,11 +20,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Run prettier
-        run: npm run prettier
-
       - name: Installing dependencies
         run: npm ci
+
+      - name: Run prettier
+        run: npm run prettier
 
       - name: lol
         run: echo "BRANCH=$BRANCH_NAME"
