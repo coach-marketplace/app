@@ -1,15 +1,40 @@
 name: Node CI
 
-on: [push]
+on:
+  push:
+    branches: [staging]
 
 jobs:
-  tests:
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
 
-      - name: Install dependencies
-        run: npm install
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
       - name: Run prettier
         run: npm run prettier
+
+      - name: Installing dependencies
+        run: npm ci
+
+      - name: lol
+        run: echo "BRANCH=$BRANCH_NAME"
+
+      # - name: Build app
+      #   run: npm run build
+
+      # - name: Deploy 🚀
+      #   uses: JamesIves/github-pages-deploy-action@3.6.2
+      #   with:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     BRANCH: gh-pages
+      #     FOLDER: build
