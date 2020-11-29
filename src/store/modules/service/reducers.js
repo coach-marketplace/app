@@ -77,7 +77,6 @@ const deleteCreate = (state) => {
   return newState
 }
 
-
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_SERVICES_FAILED:

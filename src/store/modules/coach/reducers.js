@@ -5,18 +5,14 @@ import {
   CREATE_COACH_PROFILE_FAILED,
   CREATE_COACH_PROFILE_LOADING,
   CREATE_COACH_PROFILE_SUCCESS,
-
   FETCH_COACH_PROFILE_FAILED,
   FETCH_COACH_PROFILE_LOADING,
   FETCH_COACH_PROFILE_SUCCESS,
-
   UPDATE_COACH_PROFILE_LOADING,
   UPDATE_COACH_PROFILE_SUCCESS,
   UPDATE_COACH_PROFILE_FAILED,
 } from './constants'
-import {
-  ACTION_TYPE,
-} from '../../../helper/constants'
+import { ACTION_TYPE } from '../../../helper/constants'
 
 /**
  * create coach profile
@@ -32,18 +28,23 @@ const createCoachProfileFailed = (state, action) => {
 }
 const createCoachProfileLoading = (state) => {
   const newState = cloneDeep(state)
-  newState.actions.createCoachProfile = { status: ACTION_TYPE.LOADING, error: null }
+  newState.actions.createCoachProfile = {
+    status: ACTION_TYPE.LOADING,
+    error: null,
+  }
 
   return newState
 }
 const createCoachProfileSuccess = (state, action) => {
   const newState = cloneDeep(state)
   newState.coachProfile = action.payload
-  newState.actions.createCoachProfile = { status: ACTION_TYPE.SUCCESS, error: null }
+  newState.actions.createCoachProfile = {
+    status: ACTION_TYPE.SUCCESS,
+    error: null,
+  }
 
   return newState
 }
-
 
 /**
  * Fetch coach profile
@@ -59,14 +60,20 @@ const fetchCoachProfileFailed = (state, action) => {
 }
 const fetchCoachProfileLoading = (state) => {
   const newState = cloneDeep(state)
-  newState.actions.fetchCoachProfile = { status: ACTION_TYPE.LOADING, error: null }
+  newState.actions.fetchCoachProfile = {
+    status: ACTION_TYPE.LOADING,
+    error: null,
+  }
 
   return newState
 }
 const fetchCoachProfileSuccess = (state, action) => {
   const newState = cloneDeep(state)
   newState.coachProfile = action.payload
-  newState.actions.fetchCoachProfile = { status: ACTION_TYPE.SUCCESS, error: null }
+  newState.actions.fetchCoachProfile = {
+    status: ACTION_TYPE.SUCCESS,
+    error: null,
+  }
 
   return newState
 }
@@ -76,24 +83,33 @@ const fetchCoachProfileSuccess = (state, action) => {
  */
 const updateCoachProfileLoading = (state) => {
   const newState = cloneDeep(state)
-  newState.actions.updateCoachProfile = { status: ACTION_TYPE.LOADING, error: null }
+  newState.actions.updateCoachProfile = {
+    status: ACTION_TYPE.LOADING,
+    error: null,
+  }
 
   return newState
 }
 const updateCoachProfileSuccess = (state, action) => {
   const newState = cloneDeep(state)
-  const { description, company, sports} = action.payload
+  const { description, company, sports } = action.payload
   newState.coachProfile.description = description
   newState.coachProfile.company = company
   newState.coachProfile.sports = sports
 
-  newState.actions.updateCoachProfile = { status: ACTION_TYPE.SUCCESS, error: null }
+  newState.actions.updateCoachProfile = {
+    status: ACTION_TYPE.SUCCESS,
+    error: null,
+  }
 
   return newState
 }
 const updateCoachProfileFailed = (state, action) => {
   const newState = cloneDeep(state)
-  newState.actions.updateCoachProfile = { status: ACTION_TYPE.FAILED, error: action.error }
+  newState.actions.updateCoachProfile = {
+    status: ACTION_TYPE.FAILED,
+    error: action.error,
+  }
 
   return newState
 }
