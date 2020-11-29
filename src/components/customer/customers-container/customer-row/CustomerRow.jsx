@@ -8,7 +8,7 @@ import {
   CellActions,
   CustomerInfoWrapper,
 } from './style'
-import { Pane, Text, Avatar, Button } from '../../../ui'
+import { Avatar, Button } from '../../../ui'
 import { User } from '../../../../services/domains/User'
 
 const UserRowComponent = ({ userData, onManageClick, onMessageClick }) => {
