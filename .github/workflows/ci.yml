@@ -33,6 +33,11 @@ jobs:
       - name: Build app
         if: steps.branch_name.outputs.BRANCH_NAME == 'master'
         run: npm run build
+        with:
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}
+          REACT_APP_GOOGLE_CLIENT_SECRET: ${{ secrets.REACT_APP_GOOGLE_CLIENT_SECRET }}
 
       - name: Deploy 🚀
         if: steps.branch_name.outputs.BRANCH_NAME == 'master'
