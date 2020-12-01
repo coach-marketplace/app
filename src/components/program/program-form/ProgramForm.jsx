@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useFormik } from "formik";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
 
 // import validationSchema from "./validation";
-import { Form, Field, Button, Pane } from "../../ui";
-import { localesOptionsForm } from "../../../helper/utils";
-import { LOCALE } from "../../../helper/constants";
+import { Form, Field, Button, Pane } from '../../ui'
+import { localesOptionsForm } from '../../../helper/utils'
+import { LOCALE } from '../../../helper/constants'
 
 const ProgramForm = ({ initialValues, onSubmit, isLoading }) => {
   const {
@@ -17,15 +17,15 @@ const ProgramForm = ({ initialValues, onSubmit, isLoading }) => {
     errors,
   } = useFormik({
     initialValues: {
-      title: initialValues.title || "",
-      description: initialValues.description || "",
+      title: initialValues.title || '',
+      description: initialValues.description || '',
       days: initialValues.days || 1,
       lang: initialValues.lang || LOCALE.EN_US,
       isPrivate: initialValues.isPrivate || false,
     },
     // validationSchema: validationSchema,
     onSubmit: (values) => onSubmit(values),
-  });
+  })
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -102,15 +102,15 @@ const ProgramForm = ({ initialValues, onSubmit, isLoading }) => {
         </Button>
       </Pane>
     </Form>
-  );
-};
+  )
+}
 
 ProgramForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-};
+}
 
 ProgramForm.defaultProps = {
   initialValues: {},
-};
+}
 
-export default ProgramForm;
+export default ProgramForm

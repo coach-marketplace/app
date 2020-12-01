@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router";
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 
-import { Container } from "./styled";
-import { Title, toaster, Text } from "../../components/ui";
-import Layout from "../../components/layout/main-page-layout/MainPageLayout";
-import OAuthForm from "../../components/auth/o-auth-form/OAuthForm";
-import LoginForm from "../../components/auth/login-form/LoginForm";
-import * as actions from "../../store/modules/auth/actions";
+import { Container } from './styled'
+import { Title, toaster, Text } from '../../components/ui'
+import Layout from '../../components/layout/main-page-layout/MainPageLayout'
+import OAuthForm from '../../components/auth/o-auth-form/OAuthForm'
+import LoginForm from '../../components/auth/login-form/LoginForm'
+import * as actions from '../../store/modules/auth/actions'
 
 const LoginPage = ({
   isLoginError,
@@ -18,27 +18,27 @@ const LoginPage = ({
   login,
   cleanLoginStore,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (!isLoginLoading && isLoginSuccess) {
-      window.location = "/";
+      window.location = '/'
     } else if (!isLoginLoading && isLoginError) {
-      toaster.danger("Email or password incorrect");
-      setIsLoading(false);
-      cleanLoginStore();
+      toaster.danger('Email or password incorrect')
+      setIsLoading(false)
+      cleanLoginStore()
     }
-  }, [cleanLoginStore, isLoginError, isLoginLoading, isLoginSuccess]);
+  }, [cleanLoginStore, isLoginError, isLoginLoading, isLoginSuccess])
 
   const onSubmit = (data) => {
-    setIsLoading(true);
-    login(data);
-  };
+    setIsLoading(true)
+    login(data)
+  }
 
-  const goToRegisterPage = () => history.push("/register");
+  const goToRegisterPage = () => history.push('/register')
 
   if (user) {
-    return <Redirect to="/" />;
+    return <Redirect to="/" />
   }
 
   return (
@@ -58,19 +58,19 @@ const LoginPage = ({
         </Container>
       }
     />
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => ({
   isLoginError: state.auth.actions.login.error,
   isLoginLoading: state.auth.actions.login.loading,
   isLoginSuccess: state.auth.actions.login.success,
   user: state.user.current,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   login: (data) => dispatch(actions.login(data)),
   cleanLoginStore: () => dispatch(actions.cleanLogin()),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
-import { Tablist as TabListUI } from "evergreen-ui";
+import { Tablist as TabListUI } from 'evergreen-ui'
 
-const TabList = (props) => <TabListUI {...props} />;
+const TabList = (props) => <TabListUI {...props} />
 
-export default TabList;
+export default TabList

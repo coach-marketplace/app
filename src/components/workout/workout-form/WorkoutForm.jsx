@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useFormik } from "formik";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
 
 // import validationSchema from "./validation";
-import { Form, Field, Button, Pane } from "../../ui";
-import { localesOptionsForm } from "../../../helper/utils";
-import { LOCALE } from "../../../helper/constants";
+import { Form, Field, Button, Pane } from '../../ui'
+import { localesOptionsForm } from '../../../helper/utils'
+import { LOCALE } from '../../../helper/constants'
 
 const WorkoutForm = ({
   initialValues,
@@ -24,13 +24,13 @@ const WorkoutForm = ({
     setFieldValue,
   } = useFormik({
     initialValues: {
-      title: initialValues.title || "",
-      instructions: initialValues.instructions || "",
+      title: initialValues.title || '',
+      instructions: initialValues.instructions || '',
       lang: initialValues.lang || LOCALE.EN_US,
     },
     // validationSchema: validationSchema,
     onSubmit: (values) => onSubmit(values),
-  });
+  })
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -72,7 +72,7 @@ const WorkoutForm = ({
         label="Instructions"
         name="instructions"
         type="editor-input"
-        onChange={(value) => setFieldValue("instructions", value)}
+        onChange={(value) => setFieldValue('instructions', value)}
         value={values.instructions}
         errorMessage={touched.instructions && errors.instructions}
         disabled={isLoading}
@@ -80,7 +80,7 @@ const WorkoutForm = ({
 
       <Pane display="flex">
         <Button type="submit" isLoading={isLoading} appearance="primary">
-          {submitText || "Create"}
+          {submitText || 'Create'}
         </Button>
         {onDelete && (
           <Button
@@ -90,20 +90,20 @@ const WorkoutForm = ({
             intent="danger"
             onClick={onDelete}
           >
-            {"Delete"}
+            {'Delete'}
           </Button>
         )}
       </Pane>
     </Form>
-  );
-};
+  )
+}
 
 WorkoutForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-};
+}
 
 WorkoutForm.defaultProps = {
   initialValues: {},
-};
+}
 
-export default WorkoutForm;
+export default WorkoutForm

@@ -1,23 +1,23 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Pane, Text, Button } from "../../ui";
+import { Pane, Text, Button } from '../../ui'
 
 const getDescriptionCard = (program) => {
-  let content = `${program.days} days`;
+  let content = `${program.days} days`
 
   if (program.content && program.content.length) {
-    content += " — ";
+    content += ' — '
     if (program.content[0].description.length > 30) {
-      content += program.content[0].description.slice(0, 31);
-      content += "...";
+      content += program.content[0].description.slice(0, 31)
+      content += '...'
     } else {
-      content += program.content[0].description;
+      content += program.content[0].description
     }
   }
 
-  return content;
-};
+  return content
+}
 
 const ProgramCard = ({ program, onEdit }) => {
   return (
@@ -47,12 +47,12 @@ const ProgramCard = ({ program, onEdit }) => {
         </Button>
       </Pane>
     </Pane>
-  );
-};
+  )
+}
 
 ProgramCard.propTypes = {
   program: PropTypes.shape({}).isRequired,
   onEdit: PropTypes.func,
-};
+}
 
-export default ProgramCard;
+export default ProgramCard

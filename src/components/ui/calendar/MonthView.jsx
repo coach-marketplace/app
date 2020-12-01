@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 // import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import Month from "./Months";
-import Day from "./Day";
+import Month from './Months'
+import Day from './Day'
 
 // const MONTHS = [
 //   "January",
@@ -21,14 +21,14 @@ import Day from "./Day";
 // ];
 
 const DAYS = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+]
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ const HeaderContainer = styled.div`
   > div {
     width: 14.2%;
   }
-`;
+`
 
 const MonthContainer = styled.div`
   display: flex;
@@ -46,39 +46,39 @@ const MonthContainer = styled.div`
   > div {
     width: 14.2%;
   }
-`;
+`
 
 class MonthView extends Component {
-  static propTypes = {};
+  static propTypes = {}
 
-  static defaultProps = {};
+  static defaultProps = {}
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       month: new Month(),
-    };
+    }
   }
 
   render() {
-    const { month } = this.state;
+    const { month } = this.state
 
     return (
       <div>
         <HeaderContainer>
           {[...Array(7).keys()].map((i) => {
-            return <div key={i}>{DAYS[i]}</div>;
+            return <div key={i}>{DAYS[i]}</div>
           })}
         </HeaderContainer>
         <MonthContainer>
           {month.getDays().map((dayDate, i) => {
-            return <Day key={i} date={dayDate} />;
+            return <Day key={i} date={dayDate} />
           })}
         </MonthContainer>
       </div>
-    );
+    )
   }
 }
 
-export default MonthView;
+export default MonthView

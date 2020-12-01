@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { SideSheet } from "evergreen-ui";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { SideSheet } from 'evergreen-ui'
 
-import Pane from "../pane/Pane";
+import Pane from '../pane/Pane'
 
 const SideModal = ({ children, ...props }) => {
   return (
@@ -11,11 +11,11 @@ const SideModal = ({ children, ...props }) => {
         {children}
       </Pane>
     </SideSheet>
-  );
-};
+  )
+}
 
 SideModal.propTypes = {
   children: PropTypes.node,
-};
+}
 
-export default SideModal;
+export default SideModal

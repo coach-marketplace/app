@@ -5,68 +5,68 @@
  * - https://openbase.io/js/react-draft-wysiwyg
  */
 
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   EditorState,
   convertToRaw,
   ContentState,
   convertFromHTML,
-} from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { Editor } from "react-draft-wysiwyg";
+} from 'draft-js'
+import draftToHtml from 'draftjs-to-html'
+import { Editor } from 'react-draft-wysiwyg'
 
-import "../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import '../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
-import { EditorContainer } from "./styled";
+import { EditorContainer } from './styled'
 
 class EditorInput extends Component {
   static propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
 
     const initialStateContent = props.value
       ? EditorState.createWithContent(
-          ContentState.createFromBlockArray(convertFromHTML(props.value))
+          ContentState.createFromBlockArray(convertFromHTML(props.value)),
         )
-      : EditorState.createEmpty();
+      : EditorState.createEmpty()
 
     this.state = {
       editorState: initialStateContent,
-    };
+    }
   }
 
   onEditorChange = () => {
-    const { onChange } = this.props;
-    const { editorState } = this.state;
+    const { onChange } = this.props
+    const { editorState } = this.state
 
-    const result = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    const result = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
-    onChange(result);
-  };
+    onChange(result)
+  }
 
   render() {
-    const { editorState } = this.state;
+    const { editorState } = this.state
 
     return (
       <EditorContainer>
         <Editor
           toolbar={{
-            options: ["blockType", "list", "link"],
+            options: ['blockType', 'list', 'link'],
             blockType: {
               inDropdown: false,
-              options: ["Normal", "H1"],
+              options: ['Normal', 'H1'],
             },
             list: {
-              options: ["unordered", "ordered"],
+              options: ['unordered', 'ordered'],
             },
             link: {
-              defaultTargetOption: "_blank",
-              options: ["link", "unlink"],
+              defaultTargetOption: '_blank',
+              options: ['link', 'unlink'],
             },
           }}
           onChange={this.onEditorChange}
@@ -74,8 +74,8 @@ class EditorInput extends Component {
           editorState={editorState}
         />
       </EditorContainer>
-    );
+    )
   }
 }
 
-export default EditorInput;
+export default EditorInput

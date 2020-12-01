@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { useFormik } from "formik";
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { useFormik } from 'formik'
 
-import { Button, Form, Field, toaster } from "../../ui";
+import { Button, Form, Field, toaster } from '../../ui'
 import {
   updatePassword,
   cleanUpdatePassword,
-} from "../../../store/modules/user/actions";
-import { ACTION_TYPE } from "../../../helper/constants";
+} from '../../../store/modules/user/actions'
+import { ACTION_TYPE } from '../../../helper/constants'
 
 // TODO: improve validation
 const PasswordForm = ({
@@ -25,32 +25,32 @@ const PasswordForm = ({
   } = useFormik({
     enableReinitialize: true,
     initialValues: {
-      oldPassword: "",
-      newPassword: "",
-      newPasswordConfirm: "",
+      oldPassword: '',
+      newPassword: '',
+      newPasswordConfirm: '',
     },
     onSubmit: (values) => {
       if (values.newPassword !== values.newPasswordConfirm) {
-        toaster.danger("Your new password and confirmation doesn't match");
+        toaster.danger("Your new password and confirmation doesn't match")
       } else {
         updatePassword({
           current: values.oldPassword,
           new: values.newPassword,
-        });
-        resetForm();
+        })
+        resetForm()
       }
     },
-  });
+  })
 
   useEffect(() => {
     if (updatePasswordStatus === ACTION_TYPE.SUCCESS) {
-      toaster.success("Your password is correctly changed");
-      cleanUpdatePasswordStore();
+      toaster.success('Your password is correctly changed')
+      cleanUpdatePasswordStore()
     } else if (updatePasswordStatus === ACTION_TYPE.FAILED) {
-      toaster.danger("An error occurred, please try again later");
-      cleanUpdatePasswordStore();
+      toaster.danger('An error occurred, please try again later')
+      cleanUpdatePasswordStore()
     }
-  }, [cleanUpdatePasswordStore, updatePasswordStatus]);
+  }, [cleanUpdatePasswordStore, updatePasswordStatus])
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -89,16 +89,16 @@ const PasswordForm = ({
 
       <Button type="submit" label="save" appearance="primary" />
     </Form>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => ({
   updatePasswordStatus: state.user.actions.updatePassword.status,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   updatePassword: (data) => dispatch(updatePassword(data)),
   cleanUpdatePasswordStore: () => dispatch(cleanUpdatePassword()),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(PasswordForm);
+export default connect(mapStateToProps, mapDispatchToProps)(PasswordForm)

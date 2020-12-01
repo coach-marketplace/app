@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import queryString from "query-string";
-import { withRouter } from "react-router-dom";
+import React from 'react'
+import PropTypes from 'prop-types'
+import queryString from 'query-string'
+import { withRouter } from 'react-router-dom'
 
-import { Button, Pane, Image, Text } from "../../ui";
-import googleIcon from "../../../assets/images/icons/icon-google.png";
+import { Button, Pane, Image, Text } from '../../ui'
+import googleIcon from '../../../assets/images/icons/icon-google.png'
 
 /**
  * Get Filtered Query String
@@ -19,28 +19,28 @@ import googleIcon from "../../../assets/images/icons/icon-google.png";
  * @return {string} The allowed queryString for the login with OAuth
  */
 const getFilteredQueryString = (search) => {
-  const parsed = queryString.parse(search);
-  const filtered = {};
-  parsed.requestUri && (filtered.requestUri = parsed.requestUri);
+  const parsed = queryString.parse(search)
+  const filtered = {}
+  parsed.requestUri && (filtered.requestUri = parsed.requestUri)
 
-  const qs = queryString.stringify(filtered);
+  const qs = queryString.stringify(filtered)
 
-  return qs ? `?${qs}` : "";
-};
+  return qs ? `?${qs}` : ''
+}
 
 const OAuthForm = ({ location, title }) => {
   const onLoginWithGoogle = () => {
-    const { pathname, search } = location;
+    const { pathname, search } = location
     /**
      * Don't forget to remove the last `/` from the base url
      */
     const completeCurrentUrl = `${process.env.REACT_APP_BASE_URL.slice(
       0,
-      -1
-    )}${pathname}${getFilteredQueryString(search)}`;
+      -1,
+    )}${pathname}${getFilteredQueryString(search)}`
 
-    window.location = `${process.env.REACT_APP_API_URL}v1/auth/login-google?isCoach=true&redirectUrl=${completeCurrentUrl}`;
-  };
+    window.location = `${process.env.REACT_APP_API_URL}v1/auth/login-google?isCoach=true&redirectUrl=${completeCurrentUrl}`
+  }
 
   return (
     <Pane display="flex" flexDirection="column" alignItems="center">
@@ -50,13 +50,13 @@ const OAuthForm = ({ location, title }) => {
           src={googleIcon}
           alt="Google icon"
           width="20px"
-          style={{ marginRight: "5px" }}
+          style={{ marginRight: '5px' }}
         />
         Google
       </Button>
     </Pane>
-  );
-};
+  )
+}
 
 OAuthForm.propTypes = {
   location: PropTypes.shape({
@@ -64,6 +64,6 @@ OAuthForm.propTypes = {
     search: PropTypes.string,
   }).isRequired,
   title: PropTypes.string.isRequired,
-};
+}
 
-export default withRouter(OAuthForm);
+export default withRouter(OAuthForm)

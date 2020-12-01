@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Droppable } from "react-beautiful-dnd";
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { Droppable } from 'react-beautiful-dnd'
 
-import { Container, TitleWrapper, DroppableContainer } from "./styled";
-import ProgramWorkoutContainer from "../program-workout-container/ProgramWorkoutContainer";
-import AddWorkoutModal from "../add-workout-modal/AddWorkoutModal";
-import { Button } from "../../../ui";
-import { getRandomString } from "../../../../helper/utils";
+import { Container, TitleWrapper, DroppableContainer } from './styled'
+import ProgramWorkoutContainer from '../program-workout-container/ProgramWorkoutContainer'
+import AddWorkoutModal from '../add-workout-modal/AddWorkoutModal'
+import { Button } from '../../../ui'
+import { getRandomString } from '../../../../helper/utils'
 
 const DayContainer = ({
   title,
@@ -16,14 +16,14 @@ const DayContainer = ({
   onWorkoutAdd,
   onWorkoutRemove,
 }) => {
-  const [isAddWorkoutModalOpen, setIsAddWorkoutModalOpen] = useState(false);
+  const [isAddWorkoutModalOpen, setIsAddWorkoutModalOpen] = useState(false)
 
   const onWorkoutChoose = (workoutId) => {
-    const orderNumbers = programWorkouts.map((workout) => workout.startTime);
+    const orderNumbers = programWorkouts.map((workout) => workout.startTime)
 
-    let startTime = 0;
+    let startTime = 0
     if (orderNumbers.length) {
-      startTime = Math.max(...orderNumbers) + 1;
+      startTime = Math.max(...orderNumbers) + 1
     }
 
     onWorkoutAdd({
@@ -31,12 +31,12 @@ const DayContainer = ({
       workout: workoutId,
       day,
       startTime,
-    });
-  };
+    })
+  }
 
   const sortedProgramWorkouts = programWorkouts.sort(
-    (workoutA, workoutB) => workoutA.startTime - workoutB.startTime
-  );
+    (workoutA, workoutB) => workoutA.startTime - workoutB.startTime,
+  )
 
   return (
     <Container cols={cols}>
@@ -57,7 +57,7 @@ const DayContainer = ({
           >
             {sortedProgramWorkouts.map((programWorkout, index) => {
               if (!programWorkout._id) {
-                return null;
+                return null
               }
 
               return (
@@ -67,7 +67,7 @@ const DayContainer = ({
                   programWorkout={programWorkout}
                   onRemove={onWorkoutRemove}
                 />
-              );
+              )
             })}
             {provided.placeholder}
           </DroppableContainer>
@@ -77,8 +77,8 @@ const DayContainer = ({
         <Button onClick={() => setIsAddWorkoutModalOpen(true)}>Add</Button>
       </div>
     </Container>
-  );
-};
+  )
+}
 
 DayContainer.propTypes = {
   title: PropTypes.string,
@@ -91,6 +91,6 @@ DayContainer.propTypes = {
   cols: PropTypes.number,
   onWorkoutAdd: PropTypes.func,
   onWorkoutRemove: PropTypes.func,
-};
+}
 
-export default DayContainer;
+export default DayContainer

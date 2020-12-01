@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { SegmentedControl } from "evergreen-ui";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { SegmentedControl } from 'evergreen-ui'
 
 const RadioButton = ({ options, value, onChange, ...props }) => {
   return (
@@ -10,18 +10,18 @@ const RadioButton = ({ options, value, onChange, ...props }) => {
       onChange={onChange}
       {...props}
     />
-  );
-};
+  )
+}
 
 RadioButton.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       value: PropTypes.any.isRequired,
-    })
+    }),
   ).isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.any.isRequired,
-};
+}
 
-export default RadioButton;
+export default RadioButton

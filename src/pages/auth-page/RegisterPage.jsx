@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router'
+import { connect } from 'react-redux'
 
-import { Container } from "./styled";
+import { Container } from './styled'
 import {
   register as registerUser,
   login as loginUser,
   cleanRegister,
   cleanLogin,
-} from "../../store/modules/auth/actions";
-import { Title, toaster, Text } from "../../components/ui";
-import Layout from "../../components/layout/main-page-layout/MainPageLayout";
-import OAuthForm from "../../components/auth/o-auth-form/OAuthForm";
-import RegisterForm from "../../components/auth/register-form/RegisterForm";
+} from '../../store/modules/auth/actions'
+import { Title, toaster, Text } from '../../components/ui'
+import Layout from '../../components/layout/main-page-layout/MainPageLayout'
+import OAuthForm from '../../components/auth/o-auth-form/OAuthForm'
+import RegisterForm from '../../components/auth/register-form/RegisterForm'
 
 const RegisterPage = ({
   cleanRegisterStore,
@@ -28,16 +28,16 @@ const RegisterPage = ({
   register,
   user,
 }) => {
-  const [loginData, setLoginData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [loginData, setLoginData] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (!isRegisterLoading && isRegisterError) {
-      toaster.danger("Error during registration");
-      setIsLoading(false);
-      cleanRegisterStore();
+      toaster.danger('Error during registration')
+      setIsLoading(false)
+      cleanRegisterStore()
     } else if (!isRegisterLoading && isRegisterSuccess) {
-      login(loginData);
+      login(loginData)
     }
   }, [
     cleanRegisterStore,
@@ -46,28 +46,28 @@ const RegisterPage = ({
     isRegisterSuccess,
     login,
     loginData,
-  ]);
+  ])
 
   useEffect(() => {
     if (!isLoginLoading && isLoginError) {
-      toaster.danger("Error during authentication, try to login");
-      setIsLoading(false);
-      cleanLoginStore();
+      toaster.danger('Error during authentication, try to login')
+      setIsLoading(false)
+      cleanLoginStore()
     } else if (!isLoginLoading && isLoginSuccess) {
-      window.location = "/";
+      window.location = '/'
     }
-  }, [cleanLoginStore, isLoginError, isLoginLoading, isLoginSuccess]);
+  }, [cleanLoginStore, isLoginError, isLoginLoading, isLoginSuccess])
 
   const onSubmit = (data) => {
-    setLoginData({ email: data.email, password: data.password });
-    register(data);
-  };
+    setLoginData({ email: data.email, password: data.password })
+    register(data)
+  }
 
   const goToLoginPage = () => {
-    history.push("/login");
-  };
+    history.push('/login')
+  }
 
-  if (user) return <Redirect to="/" />;
+  if (user) return <Redirect to="/" />
 
   return (
     <Layout
@@ -86,8 +86,8 @@ const RegisterPage = ({
         </Container>
       }
     />
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => ({
   isRegisterLoading: state.auth.actions.register.loading,
@@ -97,13 +97,13 @@ const mapStateToProps = (state) => ({
   isLoginError: state.auth.actions.login.error,
   isLoginSuccess: state.auth.actions.login.success,
   user: state.user.current,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   register: (data) => dispatch(registerUser(data)),
   login: (data) => dispatch(loginUser(data)),
   cleanLoginStore: () => dispatch(cleanLogin()),
   cleanRegisterStore: () => dispatch(cleanRegister()),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage)

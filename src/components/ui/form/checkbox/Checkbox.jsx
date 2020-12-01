@@ -1,6 +1,6 @@
-import React from "react";
-import { Checkbox as CheckboxUI } from "evergreen-ui";
+import React from 'react'
+import { Checkbox as CheckboxUI } from 'evergreen-ui'
 
-const Checkbox = (props) => <CheckboxUI {...props} />;
+const Checkbox = (props) => <CheckboxUI {...props} />
 
-export default Checkbox;
+export default Checkbox

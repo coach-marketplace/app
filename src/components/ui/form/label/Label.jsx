@@ -1,3 +1,3 @@
-import { Label as LabelUI } from "evergreen-ui";
+import { Label as LabelUI } from 'evergreen-ui'
 
-export default LabelUI;
+export default LabelUI

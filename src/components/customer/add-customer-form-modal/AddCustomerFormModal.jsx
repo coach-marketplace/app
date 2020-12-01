@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import CustomerForm from "../customer-form/CustomerForm";
+import CustomerForm from '../customer-form/CustomerForm'
 import {
   Title,
   Input,
@@ -13,11 +13,11 @@ import {
   Pane,
   SideModal,
   Alert,
-} from "../../ui";
-import CustomerDataPreview from "../customer-data-preview/CustomerDataPreview";
-import API from "../../../services/api";
-import { COLOR } from "../../../helper/constants";
-import { create as createCustomer } from "../../../store/modules/customer/actions";
+} from '../../ui'
+import CustomerDataPreview from '../customer-data-preview/CustomerDataPreview'
+import API from '../../../services/api'
+import { COLOR } from '../../../helper/constants'
+import { create as createCustomer } from '../../../store/modules/customer/actions'
 
 const AddCustomerFormModal = ({
   isOpen,
@@ -28,60 +28,60 @@ const AddCustomerFormModal = ({
   isCreateCustomerSuccess,
   isCreateCustomerError,
 }) => {
-  const [customerEmail, setCustomerEmail] = useState("");
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
-  const [customerErrorMessage, setCustomerErrorMessage] = useState("");
-  const [isEmailButtonLoading, setIsEmailButtonLoading] = useState(false);
-  const [fetchedCustomer, setFetchedCustomer] = useState(null);
-  const [isCustomerFetched, setIsCustomerFetched] = useState(false);
+  const [customerEmail, setCustomerEmail] = useState('')
+  const [emailErrorMessage, setEmailErrorMessage] = useState('')
+  const [customerErrorMessage, setCustomerErrorMessage] = useState('')
+  const [isEmailButtonLoading, setIsEmailButtonLoading] = useState(false)
+  const [fetchedCustomer, setFetchedCustomer] = useState(null)
+  const [isCustomerFetched, setIsCustomerFetched] = useState(false)
 
   useEffect(() => {
     if (!isCreateCustomerLoading && isCreateCustomerSuccess) {
-      toaster.success("Customer successfully created");
-      setIsCustomerFetched(false);
+      toaster.success('Customer successfully created')
+      setIsCustomerFetched(false)
     }
     if (!isCreateCustomerLoading && isCreateCustomerError) {
-      toaster.danger("Error when creating the customer");
+      toaster.danger('Error when creating the customer')
     }
-  }, [isCreateCustomerError, isCreateCustomerLoading, isCreateCustomerSuccess]);
+  }, [isCreateCustomerError, isCreateCustomerLoading, isCreateCustomerSuccess])
 
   const fetchUserByEmail = async () => {
-    setIsEmailButtonLoading(true);
+    setIsEmailButtonLoading(true)
 
     if (!customerEmail) {
-      setEmailErrorMessage("Email is required");
-      setIsEmailButtonLoading(false);
-      return;
+      setEmailErrorMessage('Email is required')
+      setIsEmailButtonLoading(false)
+      return
     }
 
     try {
       const fetchedCustomer = await API.get(
         `coach/${user._id}/search-users`,
         {},
-        { email: customerEmail }
-      );
+        { email: customerEmail },
+      )
       if (!fetchedCustomer.data) {
         setCustomerErrorMessage(
-          "This email is not in the database, you have to create it manually."
-        );
+          'This email is not in the database, you have to create it manually.',
+        )
       } else {
-        setCustomerErrorMessage("");
-        setFetchedCustomer(fetchedCustomer.data);
+        setCustomerErrorMessage('')
+        setFetchedCustomer(fetchedCustomer.data)
       }
     } catch (error) {
       setCustomerErrorMessage(
-        "This email is not in the database, you have to create it manually."
-      );
-      setIsEmailButtonLoading(false);
+        'This email is not in the database, you have to create it manually.',
+      )
+      setIsEmailButtonLoading(false)
     }
 
-    setIsCustomerFetched(true);
-    setIsEmailButtonLoading(false);
-  };
+    setIsCustomerFetched(true)
+    setIsEmailButtonLoading(false)
+  }
 
   const addAsCustomer = (data) => {
-    createCustomer(data);
-  };
+    createCustomer(data)
+  }
 
   return (
     <SideModal isShown={isOpen} onCloseComplete={onToggle}>
@@ -138,26 +138,26 @@ const AddCustomerFormModal = ({
         </>
       )}
     </SideModal>
-  );
-};
+  )
+}
 
 AddCustomerFormModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
   user: state.user.current,
   isCreateCustomerLoading: state.customer.actions.create.loading,
   isCreateCustomerSuccess: state.customer.actions.create.success,
   isCreateCustomerError: state.customer.actions.create.error,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   createCustomer: (data) => dispatch(createCustomer(data)),
-});
+})
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(AddCustomerFormModal);
+  mapDispatchToProps,
+)(AddCustomerFormModal)

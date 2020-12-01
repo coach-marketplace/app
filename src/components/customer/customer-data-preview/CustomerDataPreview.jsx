@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Text, Pane } from "../../ui";
+import { Text, Pane } from '../../ui'
 
 /**
  * Component returning a quick preview about a user data
@@ -55,13 +55,13 @@ const CustomerDataPreview = ({ customer }) => {
         <Text>{customer.email}</Text>
       </Pane>
     </Pane>
-  );
-};
+  )
+}
 
 CustomerDataPreview.propTypes = {
   customer: PropTypes.shape({
     firstName: PropTypes.string,
   }),
-};
+}
 
-export default CustomerDataPreview;
+export default CustomerDataPreview

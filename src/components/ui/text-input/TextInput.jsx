@@ -1,3 +1,3 @@
-import { TextInput } from "evergreen-ui";
+import { TextInput } from 'evergreen-ui'
 
-export default TextInput;
+export default TextInput

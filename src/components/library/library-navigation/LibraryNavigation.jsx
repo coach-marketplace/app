@@ -1,17 +1,17 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React from 'react'
+import { useHistory } from 'react-router-dom'
 
-import { StyledNavigation } from "./style";
-import Button from "../../ui/button/Button";
+import { StyledNavigation } from './style'
+import Button from '../../ui/button/Button'
 
 const LibraryNavigation = (props) => {
-  const history = useHistory();
+  const history = useHistory()
 
   const navigation = [
-    { label: "Exercises", path: "/library/exercises" },
-    { label: "Workouts", path: "/library/workouts" },
-    { label: "Programs", path: "/library/programs" },
-  ];
+    { label: 'Exercises', path: '/library/exercises' },
+    { label: 'Workouts', path: '/library/workouts' },
+    { label: 'Programs', path: '/library/programs' },
+  ]
 
   return (
     <StyledNavigation>
@@ -24,7 +24,7 @@ const LibraryNavigation = (props) => {
         />
       ))}
     </StyledNavigation>
-  );
-};
+  )
+}
 
-export default LibraryNavigation;
+export default LibraryNavigation

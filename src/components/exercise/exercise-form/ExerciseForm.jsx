@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useFormik } from "formik";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
 
 // import validationSchema from "./validation";
-import { Form, Field, Button, Pane } from "../../ui";
-import { LOCALE } from "../../../helper/constants";
-import { localesOptionsForm } from "../../../helper/utils";
+import { Form, Field, Button, Pane } from '../../ui'
+import { LOCALE } from '../../../helper/constants'
+import { localesOptionsForm } from '../../../helper/utils'
 
 const ExerciseForm = ({
   initialValues,
@@ -23,15 +23,15 @@ const ExerciseForm = ({
     errors,
   } = useFormik({
     initialValues: {
-      name: initialValues.name || "",
-      instructions: initialValues.instructions || "",
-      videoUrl: initialValues.videoUrl || "",
+      name: initialValues.name || '',
+      instructions: initialValues.instructions || '',
+      videoUrl: initialValues.videoUrl || '',
       lang: initialValues.lang || LOCALE.EN_US,
       isPrivate: initialValues.isPrivate || false,
     },
     // validationSchema: validationSchema,
     onSubmit: (values) => onSubmit(values),
-  });
+  })
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -102,7 +102,7 @@ const ExerciseForm = ({
 
       <Pane display="flex">
         <Button type="submit" isLoading={isLoading} appearance="primary">
-          {submitText || "Create"}
+          {submitText || 'Create'}
         </Button>
         {onDelete && (
           <Button
@@ -112,20 +112,20 @@ const ExerciseForm = ({
             intent="danger"
             onClick={onDelete}
           >
-            {"Delete"}
+            {'Delete'}
           </Button>
         )}
       </Pane>
     </Form>
-  );
-};
+  )
+}
 
 ExerciseForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-};
+}
 
 ExerciseForm.defaultProps = {
   initialValues: {},
-};
+}
 
-export default ExerciseForm;
+export default ExerciseForm

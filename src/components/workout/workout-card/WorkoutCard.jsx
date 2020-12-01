@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Pane, Text, Button } from "../../ui";
+import { Pane, Text, Button } from '../../ui'
 
 const WorkoutCard = ({ workout, onEdit }) => {
   return (
@@ -18,12 +18,12 @@ const WorkoutCard = ({ workout, onEdit }) => {
       <Text>{workout.content[0].title}</Text>
       <Button iconBefore="edit" appearance="minimal" onClick={onEdit} />
     </Pane>
-  );
-};
+  )
+}
 
 WorkoutCard.propTypes = {
   workout: PropTypes.shape({}).isRequired,
   onEdit: PropTypes.func,
-};
+}
 
-export default WorkoutCard;
+export default WorkoutCard

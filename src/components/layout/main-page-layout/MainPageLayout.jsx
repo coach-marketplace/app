@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import { Container, Main, Footer } from "./styled";
-import { Pane } from "../../ui";
+import { Container, Main, Footer } from './styled'
+import { Pane } from '../../ui'
 
 class MainPageLayout extends Component {
   static propTypes = {
     isMainFull: PropTypes.bool,
-  };
+  }
 
   static defaultProps = {
     isMainFull: false,
-  };
+  }
 
   render() {
-    const { header, main, footer, isMainFull } = this.props;
+    const { header, main, footer, isMainFull } = this.props
 
     return (
       <Container>
@@ -37,8 +37,8 @@ class MainPageLayout extends Component {
         <Main isFull={isMainFull}>{main}</Main>
         {footer && <Footer>{footer}</Footer>}
       </Container>
-    );
+    )
   }
 }
 
-export default MainPageLayout;
+export default MainPageLayout

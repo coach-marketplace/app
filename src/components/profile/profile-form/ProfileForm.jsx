@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
-import { connect } from "react-redux";
+import React, { useEffect } from 'react'
+import { useFormik } from 'formik'
+import { connect } from 'react-redux'
 
-import { Form, Field, Button, toaster } from "../../ui";
+import { Form, Field, Button, toaster } from '../../ui'
 import {
   update as updateUser,
   cleanUpdate,
-} from "../../../store/modules/user/actions";
-import { ACTION_TYPE, LOCALE } from "../../../helper/constants";
-import { localesOptionsForm, genderOptionsForm } from "../../../helper/utils";
+} from '../../../store/modules/user/actions'
+import { ACTION_TYPE, LOCALE } from '../../../helper/constants'
+import { localesOptionsForm, genderOptionsForm } from '../../../helper/utils'
 
 const ProfileForm = ({
   user,
@@ -26,27 +26,27 @@ const ProfileForm = ({
   } = useFormik({
     enableReinitialize: true,
     initialValues: {
-      firstName: user.firstName || "",
-      lastName: user.lastName || "",
-      phone: user.phone || "",
-      gender: user.gender || "",
-      birthDate: user.birthDate || "",
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      phone: user.phone || '',
+      gender: user.gender || '',
+      birthDate: user.birthDate || '',
       lang: user.lang || LOCALE.EN_US,
     },
     onSubmit: (values) => {
-      updateUser(values);
+      updateUser(values)
     },
-  });
+  })
 
   useEffect(() => {
     if (updateUserProfileStatus === ACTION_TYPE.SUCCESS) {
-      toaster.success("Your changes have been saved");
-      cleanUpdateUserStore();
+      toaster.success('Your changes have been saved')
+      cleanUpdateUserStore()
     } else if (updateUserProfileStatus === ACTION_TYPE.FAILED) {
-      toaster.danger("An error occurred, please try again later");
-      cleanUpdateUserStore();
+      toaster.danger('An error occurred, please try again later')
+      cleanUpdateUserStore()
     }
-  }, [cleanUpdateUserStore, updateUserProfileStatus]);
+  }, [cleanUpdateUserStore, updateUserProfileStatus])
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -124,17 +124,17 @@ const ProfileForm = ({
         Save
       </Button>
     </Form>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => ({
   user: state.user.current,
   updateUserProfileStatus: state.user.actions.update.status,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   updateUser: (data) => dispatch(updateUser(data)),
   cleanUpdateUserStore: () => dispatch(cleanUpdate()),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileForm)

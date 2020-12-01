@@ -1,20 +1,20 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 // import PropTypes from "prop-types";
 
-import MonthView from "./MonthView";
+import MonthView from './MonthView'
 
 class Calendar extends Component {
-  static propTypes = {};
+  static propTypes = {}
 
-  static defaultProps = {};
+  static defaultProps = {}
 
   render() {
     return (
       <div>
         <MonthView month={3} />
       </div>
-    );
+    )
   }
 }
 
-export default Calendar;
+export default Calendar

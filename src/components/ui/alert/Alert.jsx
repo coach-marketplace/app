@@ -1,3 +1,3 @@
-import { Alert as AlertUI } from "evergreen-ui";
+import { Alert as AlertUI } from 'evergreen-ui'
 
-export default AlertUI;
+export default AlertUI

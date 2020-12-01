@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { MessageContainer, MessageWrapper } from "./style";
-import { Text } from "../../ui";
+import { MessageContainer, MessageWrapper } from './style'
+import { Text } from '../../ui'
 
 const MessageCard = ({ messageText, date, isReceiver }) => {
   /**
@@ -14,13 +14,13 @@ const MessageCard = ({ messageText, date, isReceiver }) => {
         <Text>{messageText}</Text>
       </MessageWrapper>
     </MessageContainer>
-  );
-};
+  )
+}
 
 MessageCard.propTypes = {
   messageText: PropTypes.string.isRequired,
-};
+}
 
-MessageCard.defaultProps = {};
+MessageCard.defaultProps = {}
 
-export default MessageCard;
+export default MessageCard

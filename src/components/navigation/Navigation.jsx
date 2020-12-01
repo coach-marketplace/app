@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { PureComponent } from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import { ListItem, List } from './styled';
-import { Button } from '../ui';
+import { ListItem, List } from './styled'
+import { Button } from '../ui'
 
 class Navigation extends PureComponent {
   state = {
@@ -14,18 +14,18 @@ class Navigation extends PureComponent {
       { label: 'Library', path: '/library/exercises', onlyCoach: true },
       { label: 'Messages', path: '/inbox', onlyCoach: false },
     ],
-  };
+  }
 
   render() {
-    const { navItems } = this.state;
-    const { user } = this.props;
+    const { navItems } = this.state
+    const { user } = this.props
 
     return (
-      <List className='navigation'>
+      <List className="navigation">
         <ListItem>
           {!user.isCoach && (
-            <Link key={-1} to='/coach/new'>
-              <Button is='div' label={'Become a Coach'} appearance='minimal' />
+            <Link key={-1} to="/coach/new">
+              <Button is="div" label={'Become a Coach'} appearance="minimal" />
             </Link>
           )}
           {navItems.map((navItem, index) => (
@@ -36,17 +36,17 @@ class Navigation extends PureComponent {
                 display: navItem.onlyCoach && !user.isCoach ? 'none' : 'block',
               }}
             >
-              <Button is='div' label={navItem.label} appearance='minimal' />
+              <Button is="div" label={navItem.label} appearance="minimal" />
             </Link>
           ))}
         </ListItem>
       </List>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state) => ({
   user: state.user.current,
-});
+})
 
-export default connect(mapStateToProps)(Navigation);
+export default connect(mapStateToProps)(Navigation)

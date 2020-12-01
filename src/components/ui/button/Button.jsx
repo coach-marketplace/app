@@ -1,5 +1,5 @@
-import React from "react";
-import { Button as ButtonUI, IconButton } from "evergreen-ui";
+import React from 'react'
+import { Button as ButtonUI, IconButton } from 'evergreen-ui'
 
 const Button = ({ children, label, iconBefore, ...props }) =>
   !children && !label && iconBefore ? (
@@ -8,6 +8,6 @@ const Button = ({ children, label, iconBefore, ...props }) =>
     <ButtonUI {...props} iconBefore={iconBefore}>
       {children || label}
     </ButtonUI>
-  );
+  )
 
-export default Button;
+export default Button

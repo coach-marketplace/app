@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { useFormik } from "formik";
-import moment from "moment";
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { useFormik } from 'formik'
+import moment from 'moment'
 
-import { Button, Form, Field, DayPicker, Label, toaster, Pane } from "../../ui";
+import { Button, Form, Field, DayPicker, Label, toaster, Pane } from '../../ui'
 
 import {
   addPhysicalMetrics,
   cleanAddPhysicalMetrics,
-} from "../../../store/modules/user/actions";
-import { ACTION_TYPE } from "../../../helper/constants";
+} from '../../../store/modules/user/actions'
+import { ACTION_TYPE } from '../../../helper/constants'
 
 const UserMetricsForm = ({
   addMetricsStatus,
@@ -17,7 +17,7 @@ const UserMetricsForm = ({
   latestHeight,
   latestWeight,
 }) => {
-  const [idsDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [idsDatePickerOpen, setIsDatePickerOpen] = useState(false)
   const {
     handleSubmit,
     handleChange,
@@ -28,8 +28,8 @@ const UserMetricsForm = ({
     setFieldValue,
   } = useFormik({
     initialValues: {
-      height: latestHeight || "",
-      weight: latestWeight || "",
+      height: latestHeight || '',
+      weight: latestWeight || '',
       date: moment(),
     },
     onSubmit: (values) => {
@@ -41,19 +41,19 @@ const UserMetricsForm = ({
           value: values.weight,
         },
         date: values.date.toISOString(),
-      });
+      })
     },
-  });
+  })
 
   useEffect(() => {
     if (addMetricsStatus === ACTION_TYPE.SUCCESS) {
-      toaster.success("You successfully add a new metric");
-      cleanAddPhysicalMetrics();
+      toaster.success('You successfully add a new metric')
+      cleanAddPhysicalMetrics()
     } else if (addMetricsStatus === ACTION_TYPE.FAILED) {
-      toaster.danger("An error occurred, please try again later");
-      cleanAddPhysicalMetrics();
+      toaster.danger('An error occurred, please try again later')
+      cleanAddPhysicalMetrics()
     }
-  }, [addMetricsStatus]);
+  }, [addMetricsStatus])
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -86,7 +86,7 @@ const UserMetricsForm = ({
         <DayPicker
           disabled={addMetricsStatus === ACTION_TYPE.LOADING}
           date={values.date}
-          onDateChange={(date) => setFieldValue("date", date)}
+          onDateChange={(date) => setFieldValue('date', date)}
           focused={idsDatePickerOpen}
           onFocusChange={({ focused }) => setIsDatePickerOpen(focused)}
           id="day-picker"
@@ -95,7 +95,7 @@ const UserMetricsForm = ({
           firstDayOfWeek={1}
           appendToBody={false}
           isOutsideRange={() => false}
-          isDayHighlighted={(day) => moment().isSame(day, "d")}
+          isDayHighlighted={(day) => moment().isSame(day, 'd')}
           openDirection="up"
         />
       </Pane>
@@ -109,16 +109,16 @@ const UserMetricsForm = ({
         Login
       </Button>
     </Form>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => ({
   addMetricsStatus: state.user.actions.addPhysicalMetrics.status,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   addPhysicalMetrics: (data) => dispatch(addPhysicalMetrics(data)),
   cleanAddUserStore: () => dispatch(cleanAddPhysicalMetrics()),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserMetricsForm);
+export default connect(mapStateToProps, mapDispatchToProps)(UserMetricsForm)

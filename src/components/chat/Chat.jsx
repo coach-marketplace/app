@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import {
   ChatContainer,
@@ -8,27 +8,27 @@ import {
   ChatForm,
   ChatMessagesContainer,
   InputWrapper,
-} from "./style.js";
-import MessagesContainer from "./messages-container/MessageContainer";
-import { Text, Spinner, Input, Button, Avatar } from "../ui";
-import { postMessage } from "../../store/modules/message/actions";
-import Conversation from "../../services/domains/Conversation";
+} from './style.js'
+import MessagesContainer from './messages-container/MessageContainer'
+import { Text, Spinner, Input, Button, Avatar } from '../ui'
+import { postMessage } from '../../store/modules/message/actions'
+import Conversation from '../../services/domains/Conversation'
 
 /**
  * The chat is represented by a Channel who represent the conversation itself,
  * and conversation is the conversation data from the DB
  */
 const Chat = ({ conversation, messages, user, postMessage }) => {
-  const [channel, setChannel] = useState(null);
-  const [message, setMessage] = useState("");
+  const [channel, setChannel] = useState(null)
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
-    if (!conversation) return;
+    if (!conversation) return
 
-    !channel && setChannel(new Conversation(conversation));
-  }, [conversation, channel]);
+    !channel && setChannel(new Conversation(conversation))
+  }, [conversation, channel])
 
-  if (!channel) return <Spinner />;
+  if (!channel) return <Spinner />
 
   return (
     <ChatContainer>
@@ -43,14 +43,14 @@ const Chat = ({ conversation, messages, user, postMessage }) => {
       </ChatMessagesContainer>
       <ChatForm
         onSubmit={(event) => {
-          event.preventDefault();
+          event.preventDefault()
           postMessage(
             channel._id,
             {
               text: message,
             },
-            () => setMessage("")
-          );
+            () => setMessage(''),
+          )
         }}
       >
         <InputWrapper>
@@ -63,22 +63,22 @@ const Chat = ({ conversation, messages, user, postMessage }) => {
         <Button appearance="minimal">Send</Button>
       </ChatForm>
     </ChatContainer>
-  );
-};
+  )
+}
 
 Chat.propTypes = {
   conversation: PropTypes.shape({
     _id: PropTypes.string.isRequired,
   }),
-};
+}
 
 const mapStateToProps = (state) => ({
   user: state.user.current,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   postMessage: (conversationId, data, callback) =>
     dispatch(postMessage(conversationId, data, callback)),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(Chat)

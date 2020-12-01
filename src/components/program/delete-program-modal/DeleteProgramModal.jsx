@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
-import { Dialog, Title, toaster, Text, Input, Pane } from "../../ui";
+import { Dialog, Title, toaster, Text, Input, Pane } from '../../ui'
 import {
   del as deleteProgram,
   cleanDelete,
-} from "../../../store/modules/program/actions";
-import { ACTION_TYPE } from "../../../helper/constants";
+} from '../../../store/modules/program/actions'
+import { ACTION_TYPE } from '../../../helper/constants'
 
 const AddProgramModal = ({
   isOpen,
@@ -19,28 +19,28 @@ const AddProgramModal = ({
   deleteProgram,
   cleanDeleteActionStore,
 }) => {
-  const history = useHistory();
-  const [inputValue, setInputValue] = useState("");
+  const history = useHistory()
+  const [inputValue, setInputValue] = useState('')
 
   useEffect(() => {
     switch (deleteProgramStatus) {
       case ACTION_TYPE.FAILED:
-        toaster.danger("Error in deletion, retry later");
-        break;
+        toaster.danger('Error in deletion, retry later')
+        break
       case ACTION_TYPE.SUCCESS:
-        toaster.success("Program successfully deleted");
-        cleanDeleteActionStore();
-        break;
+        toaster.success('Program successfully deleted')
+        cleanDeleteActionStore()
+        break
       default:
-        return;
+        return
     }
-  }, [cleanDeleteActionStore, deleteProgramStatus, history]);
+  }, [cleanDeleteActionStore, deleteProgramStatus, history])
 
   const deleteProgramHandler = (programId) => {
     deleteProgram(programId, () => {
-      history.push("/library/programs");
-    });
-  };
+      history.push('/library/programs')
+    })
+  }
 
   return (
     <Dialog
@@ -58,7 +58,7 @@ const AddProgramModal = ({
         <Title>Are you absolutely sure?</Title>
         <Text>
           This action <Text is="strong">cannot</Text> be undone. This will
-          permanently delete the <Text is="strong">{programTitle}</Text>{" "}
+          permanently delete the <Text is="strong">{programTitle}</Text>{' '}
           program, and remove all customers assignations.
         </Text>
         <Text marginTop={10}>
@@ -73,21 +73,21 @@ const AddProgramModal = ({
         />
       </Pane>
     </Dialog>
-  );
-};
+  )
+}
 
 AddProgramModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
   deleteProgramStatus: state.program.actions.delete.status,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   deleteProgram: (id, cb) => dispatch(deleteProgram(id, cb)),
   cleanDeleteActionStore: () => dispatch(cleanDelete()),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddProgramModal);
+export default connect(mapStateToProps, mapDispatchToProps)(AddProgramModal)

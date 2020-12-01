@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useFormik } from "formik";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
 
-import validationSchema from "./validation";
-import { Form, Field, Button, Pane } from "../../ui";
+import validationSchema from './validation'
+import { Form, Field, Button, Pane } from '../../ui'
 
 const RegisterForm = ({ initialValues, onLogin, isLoading, onSubmit }) => {
   const {
@@ -15,16 +15,16 @@ const RegisterForm = ({ initialValues, onLogin, isLoading, onSubmit }) => {
     errors,
   } = useFormik({
     initialValues: {
-      firstName: initialValues.firstName || "",
-      lastName: initialValues.lastName || "",
-      email: initialValues.email || "",
-      password: initialValues.password || "",
+      firstName: initialValues.firstName || '',
+      lastName: initialValues.lastName || '',
+      email: initialValues.email || '',
+      password: initialValues.password || '',
     },
     validationSchema,
     onSubmit: (values) => {
-      onSubmit(values);
+      onSubmit(values)
     },
-  });
+  })
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -100,17 +100,17 @@ const RegisterForm = ({ initialValues, onLogin, isLoading, onSubmit }) => {
         )}
       </div>
     </Form>
-  );
-};
+  )
+}
 
 RegisterForm.propTypes = {
   onLogin: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-};
+}
 
 RegisterForm.defaultProps = {
   initialValues: {},
-};
+}
 
-export default RegisterForm;
+export default RegisterForm

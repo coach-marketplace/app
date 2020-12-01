@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 
-import ExerciseCard from "../exercise-card/ExerciseCard";
-import CreateExerciseModal from "../create-exercise-modal/CreateExerciseModal";
-import UpdateExerciseModal from "../update-exercise-modal/UpdateExerciseModal";
-import { Button, toaster } from "../../ui";
+import ExerciseCard from '../exercise-card/ExerciseCard'
+import CreateExerciseModal from '../create-exercise-modal/CreateExerciseModal'
+import UpdateExerciseModal from '../update-exercise-modal/UpdateExerciseModal'
+import { Button, toaster } from '../../ui'
 import {
   retrieveAll as retrieveAllExercises,
   create as createExercise,
-} from "../../../store/modules/exercise/actions";
-import { ACTION_TYPE } from "../../../helper/constants";
+} from '../../../store/modules/exercise/actions'
+import { ACTION_TYPE } from '../../../helper/constants'
 
 const ExercisesContainer = ({
   fetchExercises,
@@ -18,24 +18,24 @@ const ExercisesContainer = ({
   fetchExerciseStatus,
 }) => {
   const [isCreateExerciseModalOpen, setIsCreateExerciseModalOpen] = useState(
-    false
-  );
-  const [exerciseIdSelected, setExerciseIdSelected] = useState(null);
+    false,
+  )
+  const [exerciseIdSelected, setExerciseIdSelected] = useState(null)
 
   useEffect(() => {
-    fetchExerciseStatus !== ACTION_TYPE.SUCCESS && fetchExercises();
-  }, [fetchExerciseStatus, fetchExercises]);
+    fetchExerciseStatus !== ACTION_TYPE.SUCCESS && fetchExercises()
+  }, [fetchExerciseStatus, fetchExercises])
 
   useEffect(() => {
     switch (fetchExerciseStatus) {
       case ACTION_TYPE.FAILED:
-        toaster.danger("Error to retrieve exercises");
-        break;
+        toaster.danger('Error to retrieve exercises')
+        break
       case ACTION_TYPE.SUCCESS:
       default:
-        break;
+        break
     }
-  }, [fetchExerciseStatus]);
+  }, [fetchExerciseStatus])
 
   return (
     <div>
@@ -66,17 +66,17 @@ const ExercisesContainer = ({
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => ({
   exercises: state.exercise.list,
   fetchExerciseStatus: state.exercise.actions.getAll.status,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   createExercise: (data) => dispatch(createExercise(data)),
   fetchExercises: () => dispatch(retrieveAllExercises()),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExercisesContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ExercisesContainer)

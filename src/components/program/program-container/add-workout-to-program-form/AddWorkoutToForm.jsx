@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useFormik } from "formik";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
 
-import { Form, Field } from "../../../ui";
+import { Form, Field } from '../../../ui'
 
 const AddWorkoutToForm = ({ initialValues, day, onSubmit }) => {
   const {
@@ -15,14 +15,14 @@ const AddWorkoutToForm = ({ initialValues, day, onSubmit }) => {
     setFieldValue,
   } = useFormik({
     initialValues: {
-      day: initialValues.day || "",
-      startTime: initialValues.instructions || "",
+      day: initialValues.day || '',
+      startTime: initialValues.instructions || '',
     },
     // validationSchema: validationSchema,
     onSubmit: (values) => onSubmit(values),
-  });
+  })
 
-  const dayOptions = [...Array(day).keys()];
+  const dayOptions = [...Array(day).keys()]
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -42,17 +42,17 @@ const AddWorkoutToForm = ({ initialValues, day, onSubmit }) => {
         ))}
       </Field>
     </Form>
-  );
-};
+  )
+}
 
 AddWorkoutToForm.propTypes = {
   initialValues: PropTypes.shape({}),
   maxDays: PropTypes.number,
   onSubmit: PropTypes.func,
-};
+}
 
 AddWorkoutToForm.defaultProps = {
   initialValues: {},
-};
+}
 
-export default AddWorkoutToForm;
+export default AddWorkoutToForm

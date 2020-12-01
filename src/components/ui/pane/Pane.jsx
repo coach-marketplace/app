@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-import { Pane as PaneUI } from "evergreen-ui";
+import { Pane as PaneUI } from 'evergreen-ui'
 
-const Pane = ({ ...props }) => <PaneUI {...props} />;
+const Pane = ({ ...props }) => <PaneUI {...props} />
 
-Pane.displayName = "Pane";
+Pane.displayName = 'Pane'
 
-export default Pane;
+export default Pane

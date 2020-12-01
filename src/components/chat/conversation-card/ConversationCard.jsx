@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import { Text, Pane } from "../../ui";
-import Conversation from "../../../services/domains/Conversation";
+import { Text, Pane } from '../../ui'
+import Conversation from '../../../services/domains/Conversation'
 
 const ConversationCard = ({ conversation, onClick, user }) => {
-  const [conv, setConv] = useState(null);
+  const [conv, setConv] = useState(null)
 
   useEffect(() => {
-    !conv && setConv(new Conversation(conversation));
-  }, [conv, conversation]);
+    !conv && setConv(new Conversation(conversation))
+  }, [conv, conversation])
 
   return (
     <Pane
@@ -26,16 +26,16 @@ const ConversationCard = ({ conversation, onClick, user }) => {
     >
       <Text>{conv && conv.getParticipantsNames(user._id)}</Text>
     </Pane>
-  );
-};
+  )
+}
 
 ConversationCard.propTypes = {
   conversation: PropTypes.object,
   onClick: PropTypes.func,
-};
+}
 
 const mapStateToProps = (state) => ({
   user: state.user.current,
-});
+})
 
-export default connect(mapStateToProps)(ConversationCard);
+export default connect(mapStateToProps)(ConversationCard)

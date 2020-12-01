@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Container } from "./style";
-import MessageCard from "../message-card/MessageCard";
+import { Container } from './style'
+import MessageCard from '../message-card/MessageCard'
 
 const MessageContainer = ({ messages, currentUser }) => {
   return (
@@ -15,11 +15,11 @@ const MessageContainer = ({ messages, currentUser }) => {
             date={message.createdAt}
             isReceiver={message.user === currentUser._id}
           />
-        );
+        )
       })}
     </Container>
-  );
-};
+  )
+}
 
 MessageContainer.propTypes = {
   currentUser: PropTypes.shape({ _id: PropTypes.string.isRequired }).isRequired,
@@ -28,12 +28,12 @@ MessageContainer.propTypes = {
       _id: PropTypes.string,
       text: PropTypes.string,
       createdAt: PropTypes.string,
-    })
+    }),
   ).isRequired,
-};
+}
 
 MessageContainer.defaultProps = {
   messages: [],
-};
+}
 
-export default MessageContainer;
+export default MessageContainer

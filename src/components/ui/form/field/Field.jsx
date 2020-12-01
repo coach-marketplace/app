@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Label from "../label/Label";
-import Input from "../input/Input";
-import Text from "../../typography/Text";
-import Pane from "../../pane/Pane";
-import Switch from "../../switch/Switch";
-import RadioButton from "../radio-button/RadioButton";
-import Select from "../select/Select";
-import EditorInput from "../editor-input/EditorInput";
-import { COLOR } from "../../../../helper/constants";
-import { getMarginProps } from "../../../../helper/utils";
+import Label from '../label/Label'
+import Input from '../input/Input'
+import Text from '../../typography/Text'
+import Pane from '../../pane/Pane'
+import Switch from '../../switch/Switch'
+import RadioButton from '../radio-button/RadioButton'
+import Select from '../select/Select'
+import EditorInput from '../editor-input/EditorInput'
+import { COLOR } from '../../../../helper/constants'
+import { getMarginProps } from '../../../../helper/utils'
 
 const Field = ({
   errorMessage,
@@ -21,27 +21,27 @@ const Field = ({
   children,
   ...props
 }) => {
-  let input;
+  let input
   switch (type) {
-    case "select":
+    case 'select':
       input = (
         <Select {...props} width="100%">
           {children}
         </Select>
-      );
-      break;
-    case "switch":
-      input = <Switch {...props} />;
-      break;
-    case "radio-button":
-      input = <RadioButton {...props} />;
-      break;
-    case "editor-input":
-      input = <EditorInput {...props} />;
-      break;
+      )
+      break
+    case 'switch':
+      input = <Switch {...props} />
+      break
+    case 'radio-button':
+      input = <RadioButton {...props} />
+      break
+    case 'editor-input':
+      input = <EditorInput {...props} />
+      break
     default:
-      input = <Input {...props} type={type} width="100%" />;
-      break;
+      input = <Input {...props} type={type} width="100%" />
+      break
   }
 
   return (
@@ -75,16 +75,16 @@ const Field = ({
         </Text>
       )}
     </Pane>
-  );
-};
+  )
+}
 
 Field.propTypes = {
   label: PropTypes.string,
   isRequired: PropTypes.bool,
-};
+}
 
 Field.defaultProps = {
   isRequired: false,
-};
+}
 
-export default Field;
+export default Field

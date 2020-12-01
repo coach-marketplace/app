@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
-import { Spinner as SpinnerUI } from "evergreen-ui";
+import { Spinner as SpinnerUI } from 'evergreen-ui'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -9,14 +9,14 @@ const StyledContainer = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-`;
+`
 
 const Spinner = (props) => (
   <StyledContainer>
     <SpinnerUI {...props} />
   </StyledContainer>
-);
+)
 
-Spinner.displayName = "Spinner";
+Spinner.displayName = 'Spinner'
 
-export default Spinner;
+export default Spinner

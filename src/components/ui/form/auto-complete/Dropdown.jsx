@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import { StyledDropdown } from "./style";
+import { StyledDropdown } from './style'
 
 // TODO: Handle the click outside functionality
 class Dropdown extends Component {
   static propTypes = {
     children: PropTypes.node,
     isVisible: PropTypes.bool,
-  };
+  }
 
   state = {
     shouldBeClosed: false,
-  };
+  }
 
   // componentDidMount() {
   //   window.addEventListener("click", this.onClick);
@@ -27,13 +27,13 @@ class Dropdown extends Component {
   // };
 
   render() {
-    const { children, isVisible } = this.props;
-    const { shouldBeClosed } = this.state;
+    const { children, isVisible } = this.props
+    const { shouldBeClosed } = this.state
 
-    if (!isVisible || shouldBeClosed) return null;
+    if (!isVisible || shouldBeClosed) return null
 
-    return <StyledDropdown>{children}</StyledDropdown>;
+    return <StyledDropdown>{children}</StyledDropdown>
   }
 }
 
-export default Dropdown;
+export default Dropdown

@@ -1,3 +1,3 @@
-import { Autocomplete as AutocompleteUI } from "evergreen-ui";
+import { Autocomplete as AutocompleteUI } from 'evergreen-ui'
 
-export default AutocompleteUI;
+export default AutocompleteUI

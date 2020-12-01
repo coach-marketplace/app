@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 
-import { COLOR } from "../../../helper/constants";
+import { COLOR } from '../../../helper/constants'
 
 const MetricsCharts = ({ metrics }) => {
-  console.log("me", metrics);
+  console.log('me', metrics)
   return (
-    <div style={{ width: "100%", height: "300px" }}>
+    <div style={{ width: '100%', height: '300px' }}>
       <ResponsiveContainer>
         <LineChart data={metrics}>
           <Line type="monotone" dataKey="weight.value" stroke={COLOR.PRIMARY} />
@@ -16,8 +16,8 @@ const MetricsCharts = ({ metrics }) => {
         </LineChart>
       </ResponsiveContainer>
     </div>
-  );
-};
+  )
+}
 
 MetricsCharts.propTypes = {
   metrics: PropTypes.arrayOf(
@@ -27,10 +27,10 @@ MetricsCharts.propTypes = {
         unit: PropTypes.string,
       }),
       date: PropTypes.string,
-    })
+    }),
   ),
-};
+}
 
-MetricsCharts.defaultProps = {};
+MetricsCharts.defaultProps = {}
 
-export default MetricsCharts;
+export default MetricsCharts

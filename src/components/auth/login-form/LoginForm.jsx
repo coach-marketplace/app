@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useFormik } from "formik";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
 
-import validationSchema from "./validation";
-import { Form, Field, Button, Pane } from "../../../components/ui";
+import validationSchema from './validation'
+import { Form, Field, Button, Pane } from '../../../components/ui'
 
 const LoginForm = ({ initialValues, onRegister, onSubmit, isLoading }) => {
   const {
@@ -15,14 +15,14 @@ const LoginForm = ({ initialValues, onRegister, onSubmit, isLoading }) => {
     errors,
   } = useFormik({
     initialValues: {
-      email: initialValues.email || "",
-      password: initialValues.password || "",
+      email: initialValues.email || '',
+      password: initialValues.password || '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      onSubmit(values);
+      onSubmit(values)
     },
-  });
+  })
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -66,15 +66,15 @@ const LoginForm = ({ initialValues, onRegister, onSubmit, isLoading }) => {
         )}
       </Pane>
     </Form>
-  );
-};
+  )
+}
 
 LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-};
+}
 
 LoginForm.defaultProps = {
   initialValues: {},
-};
+}
 
-export default LoginForm;
+export default LoginForm

@@ -1,8 +1,8 @@
-import React from "react";
-import { Menu } from "evergreen-ui";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import React from 'react'
+import { Menu } from 'evergreen-ui'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const AuthMenu = ({ logout, user }) => {
   return (
@@ -19,15 +19,15 @@ const AuthMenu = ({ logout, user }) => {
         </Menu.Item>
       </Menu.Group>
     </Menu>
-  );
-};
+  )
+}
 
 AuthMenu.propTypes = {
   logout: PropTypes.func.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
   user: state.user.current,
-});
+})
 
-export default connect(mapStateToProps)(AuthMenu);
+export default connect(mapStateToProps)(AuthMenu)

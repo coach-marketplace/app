@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Pane, Text, Button } from "../../ui";
+import { Pane, Text, Button } from '../../ui'
 
 const ExerciseCard = ({ title, onEdit }) => {
   return (
@@ -20,12 +20,12 @@ const ExerciseCard = ({ title, onEdit }) => {
       <Text>{title}</Text>
       <Button iconBefore="edit" appearance="minimal" onClick={onEdit} />
     </Pane>
-  );
-};
+  )
+}
 
 ExerciseCard.propTypes = {
   title: PropTypes.string,
   onEdit: PropTypes.func,
-};
+}
 
-export default ExerciseCard;
+export default ExerciseCard

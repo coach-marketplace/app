@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
-import Text from "../typography/Text";
+import Text from '../typography/Text'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -12,14 +12,14 @@ const StyledContainer = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: auto;
-`;
+`
 
 const NoResultText = () => (
   <StyledContainer>
     <Text>No result</Text>
   </StyledContainer>
-);
+)
 
-NoResultText.displayName = "NoResultText";
+NoResultText.displayName = 'NoResultText'
 
-export default NoResultText;
+export default NoResultText

@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 // import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled from 'styled-components'
 
 // const DAYS = [
 //   "Monday",
@@ -16,21 +16,21 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-`;
+`
 
 class Day extends Component {
-  static propTypes = {};
+  static propTypes = {}
 
-  static defaultProps = {};
+  static defaultProps = {}
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.state = {};
+    this.state = {}
   }
 
   render() {
-    const { date } = this.props;
+    const { date } = this.props
     // console.log("a", day);
     return (
       <StyledContainer>
@@ -39,8 +39,8 @@ class Day extends Component {
         <div>{day.getDate()}</div>
         <div>{day.getWeek()}</div> */}
       </StyledContainer>
-    );
+    )
   }
 }
 
-export default Day;
+export default Day

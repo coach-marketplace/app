@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import debounce from "lodash.debounce";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import debounce from 'lodash.debounce'
 
-import { StyledContainer, StyledDropdownItem } from "./style";
-import Dropdown from "./Dropdown";
-import Input from "../input/Input";
-import Spinner from "../../loader/Spinner";
-import NoResultText from "../../empty-states/NoResultText";
-import {Text} from "../../index";
+import { StyledContainer, StyledDropdownItem } from './style'
+import Dropdown from './Dropdown'
+import Input from '../input/Input'
+import Spinner from '../../loader/Spinner'
+import NoResultText from '../../empty-states/NoResultText'
+import { Text } from '../../index'
 
 class AutoComplete extends Component {
   static propTypes = {
@@ -17,37 +17,37 @@ class AutoComplete extends Component {
       PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.arrayOf(PropTypes.string),
-      })
+      }),
     ),
     isLoading: PropTypes.bool,
     value: PropTypes.string,
     placeholder: PropTypes.string,
     id: PropTypes.string,
-  };
+  }
 
   static defaultProps = {
     propositions: [],
     isLoading: false,
-  };
+  }
 
-  onSearchFunction = debounce(() => this.props.onSearch(), 200);
+  onSearchFunction = debounce(() => this.props.onSearch(), 200)
 
   onChange = (e) => {
     const {
       target: { value },
-    } = e;
-    const { onChange } = this.props;
+    } = e
+    const { onChange } = this.props
 
-    onChange(value);
-    value.length > 3 && this.onSearchFunction();
-  };
+    onChange(value)
+    value.length > 3 && this.onSearchFunction()
+  }
 
   renderDropdownContent = () => {
-    const { isLoading, propositions, onSelect } = this.props;
+    const { isLoading, propositions, onSelect } = this.props
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <Spinner />
 
-    if (!propositions.length) return <NoResultText />;
+    if (!propositions.length) return <NoResultText />
 
     return (
       <ul>
@@ -57,13 +57,13 @@ class AutoComplete extends Component {
           </StyledDropdownItem>
         ))}
       </ul>
-    );
-  };
+    )
+  }
 
   render() {
-    const { value, propositions, placeholder, id } = this.props;
+    const { value, propositions, placeholder, id } = this.props
     const isDropdownVisible =
-      value.length >= 3 && !propositions.some((item) => item.label === value);
+      value.length >= 3 && !propositions.some((item) => item.label === value)
 
     return (
       <StyledContainer>
@@ -79,8 +79,8 @@ class AutoComplete extends Component {
           {this.renderDropdownContent()}
         </Dropdown>
       </StyledContainer>
-    );
+    )
   }
 }
 
-export default AutoComplete;
+export default AutoComplete

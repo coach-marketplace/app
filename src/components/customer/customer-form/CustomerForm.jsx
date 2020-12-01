@@ -1,8 +1,8 @@
-import React from "react";
-import { useFormik } from "formik";
+import React from 'react'
+import { useFormik } from 'formik'
 
-import validationSchema from "./validation";
-import { Form, Field, Button, Pane } from "../../ui";
+import validationSchema from './validation'
+import { Form, Field, Button, Pane } from '../../ui'
 
 const AddCustomerForm = ({ initialValues, onSubmit, ButtonLabel }) => {
   const {
@@ -14,15 +14,15 @@ const AddCustomerForm = ({ initialValues, onSubmit, ButtonLabel }) => {
     errors,
   } = useFormik({
     initialValues: {
-      firstName: initialValues.firstName || "",
-      lastName: initialValues.lastName || "",
-      email: initialValues.email || "",
+      firstName: initialValues.firstName || '',
+      lastName: initialValues.lastName || '',
+      email: initialValues.email || '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      onSubmit(values);
+      onSubmit(values)
     },
-  });
+  })
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -76,10 +76,10 @@ const AddCustomerForm = ({ initialValues, onSubmit, ButtonLabel }) => {
         type="submit"
         disabled={!!Object.keys(errors).length || !Object.keys(touched).length}
       >
-        {ButtonLabel || "Submit"}
+        {ButtonLabel || 'Submit'}
       </Button>
     </Form>
-  );
-};
+  )
+}
 
-export default AddCustomerForm;
+export default AddCustomerForm

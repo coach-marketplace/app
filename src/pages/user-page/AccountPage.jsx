@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import Layout from "../../components/layout/main-page-layout/MainPageLayout";
-import Header from "../../components/layout/header/Header";
-import AsideLeftLayout from "../../components/layout/aside-left-layout/AsideLeftLayout";
-import AsideAccountNav from "../../components/account/aside-account-nav/AsideAccountNav";
+import Layout from '../../components/layout/main-page-layout/MainPageLayout'
+import Header from '../../components/layout/header/Header'
+import AsideLeftLayout from '../../components/layout/aside-left-layout/AsideLeftLayout'
+import AsideAccountNav from '../../components/account/aside-account-nav/AsideAccountNav'
 
-import ProfileForm from "../../components/profile/profile-form/ProfileForm";
-import UserMetricsContainer from "../../components/profile/user-metrics-container/UserMetricsContainer";
-import SecuritySection from "../../components/account/security-section/SecuritySection";
-import CoachProfileForm from "../../components/profile/coach-profile-form/CoachProfileForm"
+import ProfileForm from '../../components/profile/profile-form/ProfileForm'
+import UserMetricsContainer from '../../components/profile/user-metrics-container/UserMetricsContainer'
+import SecuritySection from '../../components/account/security-section/SecuritySection'
+import CoachProfileForm from '../../components/profile/coach-profile-form/CoachProfileForm'
 
 class AccountPage extends Component {
   renderSection = () => {
@@ -16,21 +16,21 @@ class AccountPage extends Component {
       match: {
         params: { section },
       },
-    } = this.props;
+    } = this.props
 
     switch (section) {
-      case "profile":
-        return <ProfileForm />;
-      case "metrics":
-        return <UserMetricsContainer />;
-      case "account-and-security":
-        return <SecuritySection />;
-      case "coach-profile":
-        return <CoachProfileForm />;
+      case 'profile':
+        return <ProfileForm />
+      case 'metrics':
+        return <UserMetricsContainer />
+      case 'account-and-security':
+        return <SecuritySection />
+      case 'coach-profile':
+        return <CoachProfileForm />
       default:
-        return <ProfileForm />;
+        return <ProfileForm />
     }
-  };
+  }
 
   render() {
     return (
@@ -43,8 +43,8 @@ class AccountPage extends Component {
           />
         }
       />
-    );
+    )
   }
 }
 
-export default AccountPage;
+export default AccountPage
