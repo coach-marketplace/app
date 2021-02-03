@@ -11,7 +11,7 @@ import { retrieveAll as getAllSports } from "../../../store/modules/sport/action
 import { createCoachProfile, fetchCoachProfile, updateCoachProfile } from "../../../store/modules/coach/actions"
 
 
-export default function CoachProfileForm () {
+export default function CoachProfileForm ({feedbackFunction = null}) {
 
   const sportsList = useSelector(state => state.sport.list)
   const sportsNameList = sportsList.map(({ name }) => name)
@@ -50,8 +50,14 @@ export default function CoachProfileForm () {
     }
     if (updateCoachProfileStatus === ACTION_TYPE.SUCCESS) {
       toaster.success("Your changes have been saved");
+      if(feedbackFunction) {
+        feedbackFunction(ACTION_TYPE.SUCCESS)
+      }
     } else if (updateCoachProfileStatus === ACTION_TYPE.FAILED) {
       toaster.danger("An error occurred, please try again later");
+      if(feedbackFunction) {
+        feedbackFunction(ACTION_TYPE.FAILED)
+      }
     }
   }, [dispatch, getSportsStatus, fetchCoachProfileStatus, updateCoachProfileStatus]);
 
